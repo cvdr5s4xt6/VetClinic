@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VetClinicEntities2 : DbContext
+    public partial class VetClinicaEntities : DbContext
     {
-        public VetClinicEntities2()
-            : base("name=VetClinicEntities2")
+        public VetClinicaEntities()
+            : base("name=VetClinicaEntities")
         {
         }
     
@@ -31,8 +31,8 @@ namespace WpfApp1
         public virtual DbSet<LabTest> LabTest { get; set; }
         public virtual DbSet<Owner> Owner { get; set; }
         public virtual DbSet<Specialty> Specialty { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Veterenarian> Veterenarian { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
     }
 }

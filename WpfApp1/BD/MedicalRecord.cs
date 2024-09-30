@@ -7,17 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class MedicalRecord
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int record_id { get; set; }
+        public Nullable<int> animal_id { get; set; }
+        public Nullable<int> veterenarian_id { get; set; }
+        public string diagnosis { get; set; }
+        public string treatment { get; set; }
+        public Nullable<System.DateTime> created_at { get; set; }
+    
+        public virtual Animal Animal { get; set; }
+        public virtual LabTest LabTest { get; set; }
+        public virtual Veterenarian Veterenarian { get; set; }
     }
 }

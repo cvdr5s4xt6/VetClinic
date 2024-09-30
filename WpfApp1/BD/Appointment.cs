@@ -7,22 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TestTypes
+    public partial class Appointment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TestTypes()
+        public Appointment()
         {
             this.LabTest = new HashSet<LabTest>();
         }
     
-        public int test_types_id { get; set; }
-        public string test_type_name { get; set; }
+        public int appointment_id { get; set; }
+        public Nullable<int> animal_id { get; set; }
+        public Nullable<int> veterenarian_id { get; set; }
+        public Nullable<System.DateTime> appointment_date { get; set; }
+        public string reason { get; set; }
+        public string appointment_result { get; set; }
     
+        public virtual Animal Animal { get; set; }
+        public virtual Veterenarian Veterenarian { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabTest> LabTest { get; set; }
     }

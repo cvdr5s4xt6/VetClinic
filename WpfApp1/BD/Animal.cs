@@ -7,23 +7,32 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AnimalType
+    public partial class Animal
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AnimalType()
+        public Animal()
         {
-            this.Animal = new HashSet<Animal>();
+            this.Appointment = new HashSet<Appointment>();
+            this.MedicalRecord = new HashSet<MedicalRecord>();
         }
     
-        public int animal_type_id { get; set; }
-        public string animal_type_name { get; set; }
+        public int animal_id { get; set; }
+        public string name { get; set; }
+        public Nullable<int> animal_type_id { get; set; }
+        public string breed { get; set; }
+        public string age { get; set; }
+        public Nullable<int> owner_id { get; set; }
     
+        public virtual AnimalType AnimalType { get; set; }
+        public virtual Owner Owner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal> Animal { get; set; }
+        public virtual ICollection<Appointment> Appointment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalRecord> MedicalRecord { get; set; }
     }
 }

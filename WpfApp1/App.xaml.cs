@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfApp1.BD;
 
 namespace WpfApp1
 {
@@ -13,6 +14,6 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
-        public static VetClinicEntities2 bd = new VetClinicEntities2();
+        public static VetClinicaEntities bd = new VetClinicaEntities();
     }
 }

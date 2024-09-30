@@ -7,30 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Veterenarian
+    public partial class Specialty
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Veterenarian()
+        public Specialty()
         {
-            this.Appointment = new HashSet<Appointment>();
+            this.Veterenarian = new HashSet<Veterenarian>();
         }
     
-        public int veterenarian_id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string phone_number { get; set; }
-        public Nullable<int> specialty_id { get; set; }
-        public string email { get; set; }
-        public string login { get; set; }
-        public Nullable<int> password { get; set; }
+        public int specialty_id { get; set; }
+        public string specialty_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Appointment> Appointment { get; set; }
-        public virtual Specialty Specialty { get; set; }
+        public virtual ICollection<Veterenarian> Veterenarian { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Переменная для отслеживания состояния входа
+        
 
         private bool isPasswordVisible = false;
         public MainWindow()
@@ -44,25 +44,25 @@ namespace WpfApp1
 
             if (isPasswordVisible)
             {
-                // Скрыть пароль
+                
                 PasswordVisibleTb.Visibility = Visibility.Collapsed;
                 PasswordTb.Visibility = Visibility.Visible;
-                PasswordTb.Password = PasswordVisibleTb.Text; // Синхронизация
+                PasswordTb.Password = PasswordVisibleTb.Text; 
                 ShowPasswordButton.Content = "🔒";
                 isPasswordVisible = false;
             }
             else
             {
-                // Показать пароль
+                
                 PasswordVisibleTb.Visibility = Visibility.Visible;
                 PasswordTb.Visibility = Visibility.Collapsed;
-                PasswordVisibleTb.Text = PasswordTb.Password; // Синхронизация
+                PasswordVisibleTb.Text = PasswordTb.Password; 
                 ShowPasswordButton.Content = "🔓";
                 isPasswordVisible = true;
             }
         }
 
-        // Синхронизация скрытого пароля с видимым
+        
         private void PasswordTb_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (!isPasswordVisible)
@@ -71,7 +71,7 @@ namespace WpfApp1
             }
         }
 
-        // Синхронизация видимого пароля со скрытым
+        
         private void PasswordVisibleTb_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (isPasswordVisible)
@@ -82,11 +82,11 @@ namespace WpfApp1
 
         public void logBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем значения из полей ввода
+            
             string username = Username.Text.Trim();
             string enteredPassword = isPasswordVisible ? PasswordVisibleTb.Text.Trim() : PasswordTb.Password.Trim();
 
-            // Проверка на пустые поля
+            
             if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(enteredPassword))
             {
                 MessageBox.Show("Оба поля пустые. Пожалуйста, заполните все поля.");
@@ -104,27 +104,13 @@ namespace WpfApp1
             }
 
            
-
-          
-
-
            
             if (App.bd.Owner.Any(x => x.login.ToString() == Username.Text) && App.bd.Owner.Any(x => x.password.ToString() == enteredPassword))
             {
-                MessageBox.Show("Пароль верен. Вход выполнен. Пользователь");
-
-
-                // Скрываем только элементы, связанные с логином
                 LogPassPanel.Visibility = Visibility.Collapsed;
-
-
-
-                
-                var appointmentPage = new AddAppointmentPage();
-                // Предполагается, что MainFrame - это Frame в вашем MainWindow
+                MessageBox.Show("Пароль верен. Вход выполнен. Пользователь");         
+                var appointmentPage = new AddAppointmentPage();        
                 ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(appointmentPage);
-
-
 
             }
             else if(App.bd.Owner.Any(x => x.password.ToString() == enteredPassword) && App.bd.Owner.Any(x => x.login.ToString() == Username.Text))
@@ -133,17 +119,9 @@ namespace WpfApp1
             }
             else if(App.bd.Veterenarian.Any(x => x.login.ToString() == Username.Text) && App.bd.Veterenarian.Any(x => x.password.ToString() == enteredPassword))
             {
-                MessageBox.Show("Пароль верен. Вход выполнен. Ветеринар");
-
-
-                // Скрываем только элементы, связанные с логином
                 LogPassPanel.Visibility = Visibility.Collapsed;
-
-
-
-
-                var appointmentPage = new AddAppointmentPage();
-                // Предполагается, что MainFrame - это Frame в вашем MainWindow
+                MessageBox.Show("Пароль верен. Вход выполнен. Ветеринар");
+                var appointmentPage = new AddAppointmentPage();             
                 ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(appointmentPage);
 
             }
@@ -151,9 +129,8 @@ namespace WpfApp1
 
         private void regBtn_Click(object sender, RoutedEventArgs e)
         {
-            
-            var registerPage = new RegisterUserPage();
-            // Предполагается, что MainFrame - это Frame в вашем MainWindow
+            LogPassPanel.Visibility = Visibility.Collapsed;
+            var registerPage = new RegisterUserPage();  
             ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(registerPage);
         }
     }

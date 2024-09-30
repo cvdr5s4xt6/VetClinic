@@ -7,23 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp1
+namespace WpfApp1.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Specialty
+    public partial class LabTest
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Specialty()
-        {
-            this.Veterenarian = new HashSet<Veterenarian>();
-        }
+        public int labtest_id { get; set; }
+        public Nullable<int> appointment_id { get; set; }
+        public Nullable<int> test_type_id { get; set; }
+        public string result { get; set; }
+        public Nullable<System.DateTime> conducted_at { get; set; }
     
-        public int specialty_id { get; set; }
-        public string specialty_name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Veterenarian> Veterenarian { get; set; }
+        public virtual Appointment Appointment { get; set; }
+        public virtual TestTypes TestTypes { get; set; }
+        public virtual MedicalRecord MedicalRecord { get; set; }
     }
 }
