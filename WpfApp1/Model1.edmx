@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище VetClinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="animal_id" />
+          </Key>
+          <Property Name="animal_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="animal_type_id" Type="int" />
+          <Property Name="breed" Type="nvarchar" MaxLength="50" />
+          <Property Name="age" Type="nvarchar" MaxLength="50" />
+          <Property Name="owner_id" Type="int" />
+        </EntityType>
+        <EntityType Name="AnimalType">
+          <Key>
+            <PropertyRef Name="animal_type_id" />
+          </Key>
+          <Property Name="animal_type_id" Type="int" Nullable="false" />
+          <Property Name="animal_type_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="appointment_id" />
+          </Key>
+          <Property Name="appointment_id" Type="int" Nullable="false" />
+          <Property Name="animal_id" Type="int" />
+          <Property Name="veterenarian_id" Type="int" />
+          <Property Name="appointment_date" Type="datetime" />
+          <Property Name="reason" Type="nvarchar" MaxLength="50" />
+          <Property Name="appointment_result" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LabTest">
+          <Key>
+            <PropertyRef Name="labtest_id" />
+          </Key>
+          <Property Name="labtest_id" Type="int" Nullable="false" />
+          <Property Name="appointment_id" Type="int" />
+          <Property Name="test_type_id" Type="int" />
+          <Property Name="result" Type="nvarchar" MaxLength="50" />
+          <Property Name="conducted_at" Type="datetime" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "VetClinic.dbo.MedicalRecord" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="MedicalRecord">
+          <Property Name="record_id" Type="int" />
+          <Property Name="animal_id" Type="int" />
+          <Property Name="veterenarian_id" Type="int" />
+          <Property Name="diagnosis" Type="nvarchar" MaxLength="50" />
+          <Property Name="treatment" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>-->
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="15" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="int" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="specialty_id" />
+          </Key>
+          <Property Name="specialty_id" Type="int" Nullable="false" />
+          <Property Name="specialty_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TestTypes">
+          <Key>
+            <PropertyRef Name="test_types_id" />
+          </Key>
+          <Property Name="test_types_id" Type="int" Nullable="false" />
+          <Property Name="test_type_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Veterenarian">
+          <Key>
+            <PropertyRef Name="veterenarian_id" />
+          </Key>
+          <Property Name="veterenarian_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="15" />
+          <Property Name="specialty_id" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="int" />
+        </EntityType>
+        <Association Name="FK_Animal_AnimalType">
+          <End Role="AnimalType" Type="Self.AnimalType" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalType">
+              <PropertyRef Name="animal_type_id" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="animal_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Animal_Owner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Animal">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="animal_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="animal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Veterenarian">
+          <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterenarian">
+              <PropertyRef Name="veterenarian_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="veterenarian_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabTest_Appointment">
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="0..1" />
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="appointment_id" />
+            </Principal>
+            <Dependent Role="LabTest">
+              <PropertyRef Name="appointment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabTest_TestTypes">
+          <End Role="TestTypes" Type="Self.TestTypes" Multiplicity="0..1" />
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestTypes">
+              <PropertyRef Name="test_types_id" />
+            </Principal>
+            <Dependent Role="LabTest">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Ошибки, обнаруженные при создании:
+ошибка 6004: Невозможно найти таблицу "VetClinic.dbo.MedicalRecord", на которую ссылается связь.
+        <Association Name="FK_MedicalRecord_Animal" />-->
+        <!--Ошибки, обнаруженные при создании:
+ошибка 6004: Невозможно найти таблицу "VetClinic.dbo.MedicalRecord", на которую ссылается связь.
+        <Association Name="FK_MedicalRecord_LabTest" />-->
+        <!--Ошибки, обнаруженные при создании:
+ошибка 6004: Невозможно найти таблицу "VetClinic.dbo.MedicalRecord", на которую ссылается связь.
+        <Association Name="FK_MedicalRecord_Veterenarian" />-->
+        <Association Name="FK_Veterenarian_Specialty">
+          <End Role="Specialty" Type="Self.Specialty" Multiplicity="0..1" />
+          <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialty">
+              <PropertyRef Name="specialty_id" />
+            </Principal>
+            <Dependent Role="Veterenarian">
+              <PropertyRef Name="specialty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище VetClinicModelContainer">
+          <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnimalType" EntityType="Self.AnimalType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabTest" EntityType="Self.LabTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestTypes" EntityType="Self.TestTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Veterenarian" EntityType="Self.Veterenarian" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Animal_AnimalType" Association="Self.FK_Animal_AnimalType">
+            <End Role="AnimalType" EntitySet="AnimalType" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Animal_Owner" Association="Self.FK_Animal_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Animal" Association="Self.FK_Appointment_Animal">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Veterenarian" Association="Self.FK_Appointment_Veterenarian">
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabTest_Appointment" Association="Self.FK_LabTest_Appointment">
+            <End Role="Appointment" EntitySet="Appointment" />
+            <End Role="LabTest" EntitySet="LabTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabTest_TestTypes" Association="Self.FK_LabTest_TestTypes">
+            <End Role="TestTypes" EntitySet="TestTypes" />
+            <End Role="LabTest" EntitySet="LabTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veterenarian_Specialty" Association="Self.FK_Veterenarian_Specialty">
+            <End Role="Specialty" EntitySet="Specialty" />
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VetClinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="animal_id" />
+          </Key>
+          <Property Name="animal_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="animal_type_id" Type="Int32" />
+          <Property Name="breed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="owner_id" Type="Int32" />
+          <NavigationProperty Name="AnimalType" Relationship="Self.FK_Animal_AnimalType" FromRole="Animal" ToRole="AnimalType" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_Animal_Owner" FromRole="Animal" ToRole="Owner" />
+          <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Animal" FromRole="Animal" ToRole="Appointment" />
+        </EntityType>
+        <EntityType Name="AnimalType">
+          <Key>
+            <PropertyRef Name="animal_type_id" />
+          </Key>
+          <Property Name="animal_type_id" Type="Int32" Nullable="false" />
+          <Property Name="animal_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK_Animal_AnimalType" FromRole="AnimalType" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="appointment_id" />
+          </Key>
+          <Property Name="appointment_id" Type="Int32" Nullable="false" />
+          <Property Name="animal_id" Type="Int32" />
+          <Property Name="veterenarian_id" Type="Int32" />
+          <Property Name="appointment_date" Type="DateTime" Precision="3" />
+          <Property Name="reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="appointment_result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK_Appointment_Animal" FromRole="Appointment" ToRole="Animal" />
+          <NavigationProperty Name="Veterenarian" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Appointment" ToRole="Veterenarian" />
+          <NavigationProperty Name="LabTest" Relationship="Self.FK_LabTest_Appointment" FromRole="Appointment" ToRole="LabTest" />
+        </EntityType>
+        <EntityType Name="LabTest">
+          <Key>
+            <PropertyRef Name="labtest_id" />
+          </Key>
+          <Property Name="labtest_id" Type="Int32" Nullable="false" />
+          <Property Name="appointment_id" Type="Int32" />
+          <Property Name="test_type_id" Type="Int32" />
+          <Property Name="result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="conducted_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Appointment" Relationship="Self.FK_LabTest_Appointment" FromRole="LabTest" ToRole="Appointment" />
+          <NavigationProperty Name="TestTypes" Relationship="Self.FK_LabTest_TestTypes" FromRole="LabTest" ToRole="TestTypes" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="Int32" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK_Animal_Owner" FromRole="Owner" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="specialty_id" />
+          </Key>
+          <Property Name="specialty_id" Type="Int32" Nullable="false" />
+          <Property Name="specialty_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Veterenarian" Relationship="Self.FK_Veterenarian_Specialty" FromRole="Specialty" ToRole="Veterenarian" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TestTypes">
+          <Key>
+            <PropertyRef Name="test_types_id" />
+          </Key>
+          <Property Name="test_types_id" Type="Int32" Nullable="false" />
+          <Property Name="test_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LabTest" Relationship="Self.FK_LabTest_TestTypes" FromRole="TestTypes" ToRole="LabTest" />
+        </EntityType>
+        <EntityType Name="Veterenarian">
+          <Key>
+            <PropertyRef Name="veterenarian_id" />
+          </Key>
+          <Property Name="veterenarian_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="specialty_id" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="Int32" />
+          <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Veterenarian" ToRole="Appointment" />
+          <NavigationProperty Name="Specialty" Relationship="Self.FK_Veterenarian_Specialty" FromRole="Veterenarian" ToRole="Specialty" />
+        </EntityType>
+        <Association Name="FK_Animal_AnimalType">
+          <End Role="AnimalType" Type="Self.AnimalType" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalType">
+              <PropertyRef Name="animal_type_id" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="animal_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Animal_Owner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Animal">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="animal_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="animal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Veterenarian">
+          <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterenarian">
+              <PropertyRef Name="veterenarian_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="veterenarian_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabTest_Appointment">
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="0..1" />
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="appointment_id" />
+            </Principal>
+            <Dependent Role="LabTest">
+              <PropertyRef Name="appointment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabTest_TestTypes">
+          <End Role="TestTypes" Type="Self.TestTypes" Multiplicity="0..1" />
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestTypes">
+              <PropertyRef Name="test_types_id" />
+            </Principal>
+            <Dependent Role="LabTest">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Veterenarian_Specialty">
+          <End Role="Specialty" Type="Self.Specialty" Multiplicity="0..1" />
+          <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialty">
+              <PropertyRef Name="specialty_id" />
+            </Principal>
+            <Dependent Role="Veterenarian">
+              <PropertyRef Name="specialty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VetClinicEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animal" EntityType="Self.Animal" />
+          <EntitySet Name="AnimalType" EntityType="Self.AnimalType" />
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" />
+          <EntitySet Name="LabTest" EntityType="Self.LabTest" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" />
+          <EntitySet Name="Specialty" EntityType="Self.Specialty" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TestTypes" EntityType="Self.TestTypes" />
+          <EntitySet Name="Veterenarian" EntityType="Self.Veterenarian" />
+          <AssociationSet Name="FK_Animal_AnimalType" Association="Self.FK_Animal_AnimalType">
+            <End Role="AnimalType" EntitySet="AnimalType" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Animal_Owner" Association="Self.FK_Animal_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Animal" Association="Self.FK_Appointment_Animal">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Veterenarian" Association="Self.FK_Appointment_Veterenarian">
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabTest_Appointment" Association="Self.FK_LabTest_Appointment">
+            <End Role="Appointment" EntitySet="Appointment" />
+            <End Role="LabTest" EntitySet="LabTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabTest_TestTypes" Association="Self.FK_LabTest_TestTypes">
+            <End Role="TestTypes" EntitySet="TestTypes" />
+            <End Role="LabTest" EntitySet="LabTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veterenarian_Specialty" Association="Self.FK_Veterenarian_Specialty">
+            <End Role="Specialty" EntitySet="Specialty" />
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinicModelContainer" CdmEntityContainer="VetClinicEntities2">
+          <EntitySetMapping Name="Animal">
+            <EntityTypeMapping TypeName="VetClinicModel.Animal">
+              <MappingFragment StoreEntitySet="Animal">
+                <ScalarProperty Name="animal_id" ColumnName="animal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="animal_type_id" ColumnName="animal_type_id" />
+                <ScalarProperty Name="breed" ColumnName="breed" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnimalType">
+            <EntityTypeMapping TypeName="VetClinicModel.AnimalType">
+              <MappingFragment StoreEntitySet="AnimalType">
+                <ScalarProperty Name="animal_type_id" ColumnName="animal_type_id" />
+                <ScalarProperty Name="animal_type_name" ColumnName="animal_type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointment">
+            <EntityTypeMapping TypeName="VetClinicModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
+                <ScalarProperty Name="animal_id" ColumnName="animal_id" />
+                <ScalarProperty Name="veterenarian_id" ColumnName="veterenarian_id" />
+                <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
+                <ScalarProperty Name="reason" ColumnName="reason" />
+                <ScalarProperty Name="appointment_result" ColumnName="appointment_result" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabTest">
+            <EntityTypeMapping TypeName="VetClinicModel.LabTest">
+              <MappingFragment StoreEntitySet="LabTest">
+                <ScalarProperty Name="labtest_id" ColumnName="labtest_id" />
+                <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
+                <ScalarProperty Name="test_type_id" ColumnName="test_type_id" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="conducted_at" ColumnName="conducted_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owner">
+            <EntityTypeMapping TypeName="VetClinicModel.Owner">
+              <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialty">
+            <EntityTypeMapping TypeName="VetClinicModel.Specialty">
+              <MappingFragment StoreEntitySet="Specialty">
+                <ScalarProperty Name="specialty_id" ColumnName="specialty_id" />
+                <ScalarProperty Name="specialty_name" ColumnName="specialty_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VetClinicModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestTypes">
+            <EntityTypeMapping TypeName="VetClinicModel.TestTypes">
+              <MappingFragment StoreEntitySet="TestTypes">
+                <ScalarProperty Name="test_types_id" ColumnName="test_types_id" />
+                <ScalarProperty Name="test_type_name" ColumnName="test_type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Veterenarian">
+            <EntityTypeMapping TypeName="VetClinicModel.Veterenarian">
+              <MappingFragment StoreEntitySet="Veterenarian">
+                <ScalarProperty Name="veterenarian_id" ColumnName="veterenarian_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="specialty_id" ColumnName="specialty_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
