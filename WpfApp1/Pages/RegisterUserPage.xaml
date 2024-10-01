@@ -65,8 +65,8 @@ Background="Transparent" Foreground="White" BorderThickness="0"/>
 
             <TextBlock Text="Роль" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
             <ComboBox x:Name="RoleComboBox" FontSize="15" Margin="0,5,0,0" Background="Silver" BorderBrush="Silver" Opacity="0.3">
-                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Owner"/>
-                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Veterinarian"/>
+                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Клиент"/>
+                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Ветеринар"/>
             </ComboBox>
 
 
