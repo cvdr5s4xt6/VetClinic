@@ -10,14 +10,14 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="82"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Регистрация" HorizontalAlignment="Center"
-                   FontSize="30" FontWeight="Bold" Foreground="Black" Margin="0,70,0,0"/>
+                   FontSize="30" FontWeight="Bold" Foreground="Black" Margin="0,0,0,490" Grid.RowSpan="2" Width="182"/>
 
-        <StackPanel x:Name="LogPassPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Margin="0,0,0,0">
+        <StackPanel x:Name="LogPassPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Height="472">
 
             <TextBlock Text="Фамилия" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
             <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
@@ -29,7 +29,7 @@
                 <TextBox FontWeight="Bold" FontSize="15" x:Name="Name" MaxLength="20" Margin="0,6,0,2" 
                  Background="Transparent" Foreground="White" BorderThickness="0"/>
             </Border>
-           
+
             <TextBlock Text="Телефон" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
             <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
                 <TextBox FontWeight="Bold" FontSize="15" x:Name="Phone" MaxLength="20" Margin="0,6,0,2" 
@@ -38,6 +38,11 @@ Background="Transparent" Foreground="White" BorderThickness="0"/>
             <TextBlock Text="Почта" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
             <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
                 <TextBox FontWeight="Bold" FontSize="15" x:Name="Email" MaxLength="20" Margin="0,6,0,2" 
+Background="Transparent" Foreground="White" BorderThickness="0"/>
+            </Border>
+            <TextBlock Text="Логин" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
+            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
+                <TextBox FontWeight="Bold" FontSize="15" x:Name="Login" MaxLength="20" Margin="0,6,0,2" 
 Background="Transparent" Foreground="White" BorderThickness="0"/>
             </Border>
             <TextBlock x:Name="TextBlock" Text="Пароль" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
@@ -59,9 +64,9 @@ Background="Transparent" Foreground="White" BorderThickness="0"/>
 
 
             <TextBlock Text="Роль" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <ComboBox x:Name="RoleComboBox" FontSize="15" Margin="0,5,0,0" Background="Transparent" Foreground="White">
-                <ComboBoxItem Content="Owner"/>
-                <ComboBoxItem Content="Veterinarian"/>
+            <ComboBox x:Name="RoleComboBox" FontSize="15" Margin="0,5,0,0" Background="Silver" BorderBrush="Silver" Opacity="0.3">
+                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Owner"/>
+                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Veterinarian"/>
             </ComboBox>
 
 
@@ -80,7 +85,7 @@ Background="Transparent" Foreground="White" BorderThickness="0"/>
             </StackPanel>
         </StackPanel>
 
-        <Frame x:Name="MainFrame" />
+        <Frame x:Name="MainFrame" Margin="0,0,0,490" Grid.RowSpan="2" />
 
     </Grid>
 </Page>

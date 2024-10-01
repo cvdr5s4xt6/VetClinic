@@ -81,18 +81,20 @@ namespace WpfApp1.Pages
             string phone = Phone.Text.Trim();
             string email = Email.Text.Trim();
             string password = PasswordTb.Password;
+            string login = Login.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(surname) ||
                 string.IsNullOrWhiteSpace(name) ||
                 string.IsNullOrWhiteSpace(phone) ||
                 string.IsNullOrWhiteSpace(email) ||
-                string.IsNullOrWhiteSpace(password))
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(login))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (!(phone.StartsWith("8") || phone.StartsWith("+7")))
+            if (!(phone.StartsWith("8") || !phone.StartsWith("+7")))
             {
                 MessageBox.Show("Номер телефона должен начинаться с 8 или +7.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -100,8 +102,8 @@ namespace WpfApp1.Pages
 
             string selectedRole = ((ComboBoxItem)RoleComboBox.SelectedItem)?.Content.ToString();
 
-            using (var context = new VetClinicaEntities()) 
-            {
+            var context = new VetClinicaEntities();
+            
                 if (selectedRole == "Owner")
                 {
                     var owner = new Owner
@@ -110,6 +112,7 @@ namespace WpfApp1.Pages
                         first_name = name,
                         phone_number = phone,
                         email = email,
+                        login = login,
                         password = password 
                     };
                     context.Owner.Add(owner);
@@ -123,26 +126,17 @@ namespace WpfApp1.Pages
                         first_name = name,
                         phone_number = phone,
                         email = email,
+                        login = login,
                         password = password
                     };
                     context.Veterenarian.Add(veterinarian);
                 }
 
                 context.SaveChanges();
-            }
+            
 
             MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            Surname.Text = string.Empty;
-            Name.Text = string.Empty;
-            Phone.Text = string.Empty;
-            Email.Text = string.Empty;
-            PasswordTb.Password = string.Empty;
-            RoleComboBox.SelectedIndex = -1;
-
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.LogPassPanel.Visibility = Visibility.Visible;
-            mainWindow.MainFrame.Visibility = Visibility.Collapsed; /*короче я не знаю хули еще раз когда тыкаешь зарегаться не работает*/
+            NavigationService.Navigate(new LoginPage());
         }
     }
 }

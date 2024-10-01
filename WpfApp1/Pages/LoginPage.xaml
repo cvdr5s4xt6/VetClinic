@@ -1,0 +1,69 @@
+﻿<Page x:Class="WpfApp1.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="LoginPage">
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Ветеринарная клиника" HorizontalAlignment="Center"
+                   FontSize="30" FontWeight="Bold" Foreground="Black" Margin="0,70,0,0"/>
+
+        <StackPanel x:Name="LogPassPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Margin="0,0,0,50">
+
+            <TextBlock Text="ЛОГИН" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
+            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
+                <TextBox FontWeight="Bold" FontSize="15" x:Name="Username" MaxLength="20" Margin="0,6,0,2" 
+                 Background="Transparent" Foreground="White" BorderThickness="0"/>
+            </Border>
+
+            <TextBlock x:Name="TextBlock" Text="ПАРОЛЬ" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
+            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
+                <Grid>
+                    <PasswordBox x:Name="PasswordTb" FontWeight="Bold" FontSize="15" MaxLength="20" Margin="0,2,0,2"  
+                                 Background="Transparent" Foreground="White" BorderThickness="0"
+                                 Visibility="Visible" PasswordChanged="PasswordTb_PasswordChanged" />
+
+                    <TextBox x:Name="PasswordVisibleTb" FontWeight="Bold" FontSize="15" MaxLength="20"
+                             Background="Transparent" Foreground="White" BorderThickness="0"
+                             Visibility="Collapsed" TextChanged="PasswordVisibleTb_TextChanged"/>
+
+                    <Button x:Name="ShowPasswordButton" Foreground="White" Content="🔒" Width="30" Height="30" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" Background="Transparent" BorderThickness="0" 
+                            Click="ShowPasswordButton_Click"/>
+                </Grid>
+            </Border>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="logBtn" Content="Авторизироваться" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Width="150" Margin="0,10,0,0"
+                    Background="White" Foreground="Black"
+                    BorderThickness="0" Height="40" Click="logBtn_Click" >
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="30"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="regBtn" Content="Зарегистрироваться" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Width="160" Margin="0,10,0,0"
+             Background="White" Foreground="Black"
+            BorderThickness="0" Height="40" Click="regBtn_Click" >
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="30"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <Frame x:Name="MainFrame" />
+
+    </Grid>
+</Page>
