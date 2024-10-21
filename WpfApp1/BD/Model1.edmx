@@ -510,7 +510,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VetClinica1Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VetClinica1Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Animal" EntityType="Self.Animal" />
           <EntitySet Name="AnimalType" EntityType="Self.AnimalType" />
           <EntitySet Name="Appointment" EntityType="Self.Appointment" />
@@ -566,7 +566,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinica1ModelContainer" CdmEntityContainer="VetClinica1Entities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinica1ModelContainer" CdmEntityContainer="VetClinica1Entities1">
           <EntitySetMapping Name="Animal">
             <EntityTypeMapping TypeName="VetClinica1Model.Animal">
               <MappingFragment StoreEntitySet="Animal">

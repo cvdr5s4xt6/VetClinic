@@ -14,78 +14,247 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Регистрация" HorizontalAlignment="Center"
-                   FontSize="30" FontWeight="Bold" Foreground="Black" Margin="0,0,0,490" Grid.RowSpan="2" Width="182"/>
+        <TextBlock Grid.Row="0" 
+                   Text="Регистрация" 
+                   HorizontalAlignment="Center"
+                   FontSize="30" 
+                   FontWeight="Bold" 
+                   Foreground="Black" 
+                   Margin="0,0,0,490" 
+                   Grid.RowSpan="2" 
+                   Width="182"/>
 
-        <StackPanel x:Name="LogPassPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Height="472">
+        <StackPanel x:Name="LogPassPanel" 
+                    Grid.Row="1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="310" 
+                    Height="472">
 
-            <TextBlock Text="Фамилия" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
-                <TextBox FontWeight="Bold" FontSize="15" x:Name="Surname" MaxLength="20" Margin="0,6,0,2" 
-                 Background="Transparent" Foreground="White" BorderThickness="0"/>
+            <TextBlock Text="Фамилия" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+            <Border BorderBrush="Black" 
+                    BorderThickness="3" 
+                    CornerRadius="20">
+                
+                <TextBox 
+                    PreviewTextInput="TextBox_PreviewTextInput"  
+                    FontWeight="Bold" 
+                    FontSize="15" 
+                    x:Name="Surname" 
+                    MaxLength="20"
+                    Margin="0,6,0,2" 
+                    Background="Transparent" 
+                    Foreground="White" 
+                    BorderThickness="0"/>
             </Border>
-            <TextBlock Text="Имя" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
-                <TextBox FontWeight="Bold" FontSize="15" x:Name="Name" MaxLength="20" Margin="0,6,0,2" 
-                 Background="Transparent" Foreground="White" BorderThickness="0"/>
+            
+            <TextBlock Text="Имя" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+            <Border BorderBrush="Black" 
+                    BorderThickness="3" 
+                    CornerRadius="20">
+
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"
+                         FontWeight="Bold" 
+                         FontSize="15" 
+                         x:Name="Name" 
+                         MaxLength="20"
+                         Margin="0,6,0,2" 
+                         Background="Transparent" 
+                         Foreground="White" 
+                         BorderThickness="0"/>
             </Border>
 
-            <TextBlock Text="Телефон" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
-                <TextBox FontWeight="Bold" FontSize="15" x:Name="Phone" MaxLength="20" Margin="0,6,0,2" 
-Background="Transparent" Foreground="White" BorderThickness="0"/>
+            <TextBlock Text="Телефон" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+            <Border BorderBrush="Black" 
+                    BorderThickness="3"
+                    CornerRadius="20">
+                
+                <TextBox PreviewTextInput="Phone_PreviewTextInput" 
+                         FontWeight="Bold" 
+                         FontSize="15" 
+                         x:Name="Phone" 
+                         MaxLength="20" 
+                         Margin="0,6,0,2" 
+                         Background="Transparent" 
+                         Foreground="White" 
+                         BorderThickness="0"/>
             </Border>
-            <TextBlock Text="Почта" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
-                <TextBox FontWeight="Bold" FontSize="15" x:Name="Email" MaxLength="20" Margin="0,6,0,2" 
-Background="Transparent" Foreground="White" BorderThickness="0"/>
-            </Border>
-            <TextBlock Text="Логин" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
-                <TextBox FontWeight="Bold" FontSize="15" x:Name="Login" MaxLength="20" Margin="0,6,0,2" 
-Background="Transparent" Foreground="White" BorderThickness="0"/>
-            </Border>
-            <TextBlock x:Name="TextBlock" Text="Пароль" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="20">
+            
+            <TextBlock Text="Почта" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+             <Border BorderBrush="Black" 
+                     BorderThickness="3" 
+                     CornerRadius="20">
+                 
+                <TextBox FontWeight="Bold" 
+                         FontSize="15" 
+                         x:Name="Email" 
+                         MaxLength="20" 
+                         Margin="0,6,0,2" 
+                         Background="Transparent" 
+                         Foreground="White" 
+                         BorderThickness="0"/>
+             </Border>
+            
+            <TextBlock Text="Логин" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+              <Border BorderBrush="Black" 
+                      BorderThickness="3" 
+                      CornerRadius="20">
+                  
+                <TextBox FontWeight="Bold" 
+                         FontSize="15" 
+                         x:Name="Login" 
+                         MaxLength="20" 
+                         Margin="0,6,0,2" 
+                         Background="Transparent" 
+                         Foreground="White" 
+                         BorderThickness="0"/>
+              </Border>
+            
+            <TextBlock x:Name="TextBlock" 
+                       Text="Пароль" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+            <Border BorderBrush="Black" 
+                    BorderThickness="3" 
+                    CornerRadius="20">
                 <Grid>
-                    <PasswordBox x:Name="PasswordTb" FontWeight="Bold" FontSize="15" MaxLength="20" Margin="0,2,0,2"  
-              Background="Transparent" Foreground="White" BorderThickness="0"
-              Visibility="Visible" PasswordChanged="PasswordTb_PasswordChanged"/>
+                    <PasswordBox x:Name="PasswordTb" 
+                                 FontWeight="Bold" 
+                                 FontSize="15" 
+                                 MaxLength="20" 
+                                 Margin="0,2,0,2"  
+                                 Background="Transparent" 
+                                 Foreground="White" 
+                                 BorderThickness="0"
+                                 Visibility="Visible" 
+                     PasswordChanged="PasswordTb_PasswordChanged"/>
 
-                    <TextBox x:Name="PasswordVisibleTb" FontWeight="Bold" FontSize="15" MaxLength="20"
-          Background="Transparent" Foreground="White" BorderThickness="0"
-          Visibility="Collapsed" TextChanged="PasswordVisibleTb_TextChanged"/>
+                    <TextBox x:Name="PasswordVisibleTb" 
+                             FontWeight="Bold" 
+                             FontSize="15" 
+                             MaxLength="20"
+                             Background="Transparent" 
+                             Foreground="White" 
+                             BorderThickness="0"
+                             Visibility="Collapsed" 
+                     TextChanged="PasswordVisibleTb_TextChanged"/>
 
-                    <Button x:Name="ShowPasswordButton" Foreground="White" Content="🔒" Width="30" Height="30" HorizontalAlignment="Right"
-         VerticalAlignment="Center" Background="Transparent" BorderThickness="0" 
-         Click="ShowPasswordButton_Click"/>
+                    <Button x:Name="ShowPasswordButton" 
+                            Foreground="White" 
+                            Content="🔒" 
+                            Width="30" 
+                            Height="30" 
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" 
+                            Background="Transparent" 
+                            BorderThickness="0" 
+                     Click="ShowPasswordButton_Click"/>
                 </Grid>
             </Border>
 
+            <TextBlock Text="Роль" 
+                       FontSize="15" 
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0" 
+                       Foreground="White"/>
+            
+            <ComboBox x:Name="RoleComboBox" 
+                      FontSize="15" 
+                      Margin="0,5,0,0" 
+                      Background="Silver" 
+                      BorderBrush="Silver" 
+                      Opacity="0.3">
+                
+             <ComboBoxItem Background="Silver" 
+                           BorderBrush="Silver" 
+                           Opacity="0.8" 
+                           Content="Клиент"/>
+                
+             <ComboBoxItem Background="Silver"
+                           BorderBrush="Silver" 
+                           Opacity="0.8"
+                           Content="Ветеринар"/>
+             </ComboBox>
 
-            <TextBlock Text="Роль" FontSize="15" FontWeight="Bold" Margin="0,5,0,0" Foreground="White"/>
-            <ComboBox x:Name="RoleComboBox" FontSize="15" Margin="0,5,0,0" Background="Silver" BorderBrush="Silver" Opacity="0.3">
-                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Клиент"/>
-                <ComboBoxItem Background="Silver" BorderBrush="Silver" Opacity="0.8" Content="Ветеринар"/>
-            </ComboBox>
-
-
-
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="regBtn" Content="Зарегистрироваться" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Width="160" Margin="0,10,0,0"
-             Background="White" Foreground="Black"
-            BorderThickness="0" Height="40" Click="regBtn_Click" >
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                
+                <Button x:Name="regBtn" 
+                        Content="Зарегистрироваться" 
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        HorizontalAlignment="Center" 
+                        Width="160" Margin="0,10,0,0"
+                        Background="White" 
+                        Foreground="Black"
+                        BorderThickness="0" Height="40" 
+                        Click="regBtn_Click">
+                    
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="30"></Setter>
+                            <Setter Property="CornerRadius" 
+                                    Value="30"></Setter>
                         </Style>
                     </Button.Resources>
                 </Button>
             </StackPanel>
         </StackPanel>
 
-        <Frame x:Name="MainFrame" Margin="0,0,0,490" Grid.RowSpan="2" />
+        <Frame x:Name="MainFrame" 
+               Margin="0,0,0,490" 
+               Grid.RowSpan="2" />
 
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right">
+
+            <Button x:Name="BackButton" 
+                    Content="Назад" 
+                    FontSize="15" 
+                    FontWeight="Bold" 
+                    Width="110" Height="30" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom"
+                    Margin="0,10,0,0" 
+                    Background="White" 
+                    Foreground="Black" 
+                    BorderThickness="0" 
+                    Click="BackButton_Click">
+
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" 
+                                Value="30"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

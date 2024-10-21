@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp1.BD;
+
 
 namespace WpfApp1.Pages
 {
@@ -45,39 +48,29 @@ namespace WpfApp1.Pages
         {
             if (PetComboBox.SelectedItem is Animal selectedPet)
             {
+
                 var medicalRecord = new MedicalRecord
                 {
                     animal_id = selectedPet.animal_id,
 
-
                     diagnosis = DiagnosisTextBox.Text, 
                     treatment = PrescriptionsTextBox.Text 
                 };
-
                 
                 App.bd.MedicalRecord.Add(medicalRecord);
+               
 
                 if (!string.IsNullOrWhiteSpace(AnalysisTextBox.Text))
                 {
                     var testType = new TestTypes
                     {
-                        test_type_name = AnalysisTextBox.Text 
+                        test_type_name = AnalysisTextBox.Text,
                     };
 
                     App.bd.TestTypes.Add(testType);
                 }
 
-
                 App.bd.SaveChanges();
-
-                //try
-                //{
-                //    App.bd.SaveChanges();
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show($"Ошибка при сохранении: {ex.Message}");
-                //}
             }
             else
             {

@@ -94,15 +94,20 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            if (!(phone.StartsWith("8") || !phone.StartsWith("+7")))
+            if (!(phone.StartsWith("8") || phone.StartsWith("+7")))
             {
                 MessageBox.Show("Номер телефона должен начинаться с 8 или +7.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             string selectedRole = ((ComboBoxItem)RoleComboBox.SelectedItem)?.Content.ToString();
+            if (string.IsNullOrEmpty(selectedRole))
+            {
+                MessageBox.Show("Пожалуйста, выберите роль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            var context = new VetClinica1Entities();
+            var context = new VetClinica1Entities1();
             
                 if (selectedRole == "Owner")
                 {
@@ -132,11 +137,48 @@ namespace WpfApp1.Pages
                     context.Veterenarian.Add(veterinarian);
                 }
 
-            //context.SaveChanges();
+            context.SaveChanges();
 
 
             MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             NavigationService.Navigate(new LoginPage());
         }
+
+        private void Phone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsPhoneInputValid(e.Text) || Phone.Text.Length >= 11; ;
+        }
+
+        private bool IsPhoneInputValid(string input)
+        {
+            return input.All(c => char.IsDigit(c) || c == '+');
+        }
+
+
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsRussianLetter(e.Text);
+        }
+
+        private bool IsRussianLetter(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!((c >= 'А' && c <= 'я') || c == 'ё' || c == 'Ё'))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginPage loginPage = new LoginPage();
+            this.NavigationService.Navigate(loginPage);
+        }
     }
 }
+
+
