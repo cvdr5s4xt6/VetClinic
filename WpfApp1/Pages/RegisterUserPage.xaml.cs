@@ -102,7 +102,7 @@ namespace WpfApp1.Pages
 
             string selectedRole = ((ComboBoxItem)RoleComboBox.SelectedItem)?.Content.ToString();
 
-            var context = new VetClinicaEntities();
+            var context = new VetClinica1Entities();
             
                 if (selectedRole == "Owner")
                 {
@@ -132,8 +132,8 @@ namespace WpfApp1.Pages
                     context.Veterenarian.Add(veterinarian);
                 }
 
-                context.SaveChanges();
-            
+            //context.SaveChanges();
+
 
             MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             NavigationService.Navigate(new LoginPage());

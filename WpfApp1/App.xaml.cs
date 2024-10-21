@@ -15,6 +15,6 @@ namespace WpfApp1
     public partial class App : Application
     {
         public static MainWindow mainWindow;
-        public static VetClinicaEntities bd = new VetClinicaEntities();
+        public static VetClinica1Entities bd = new VetClinica1Entities();
     }
 }
