@@ -94,12 +94,6 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            if (!(phone.StartsWith("8") || phone.StartsWith("+7")))
-            {
-                MessageBox.Show("Номер телефона должен начинаться с 8 или +7.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             string selectedRole = ((ComboBoxItem)RoleComboBox.SelectedItem)?.Content.ToString();
             if (string.IsNullOrEmpty(selectedRole))
             {
@@ -146,19 +140,51 @@ namespace WpfApp1.Pages
 
         private void Phone_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsPhoneInputValid(e.Text) || Phone.Text.Length >= 11; ;
+            if (!IsPhoneInputValid(Phone.Text + e.Text))
+            {
+                MessageBox.Show("Введите только цифры, а также один из префиксов +7 или 8.");
+                e.Handled = true;
+            }
         }
 
         private bool IsPhoneInputValid(string input)
         {
-            return input.All(c => char.IsDigit(c) || c == '+');
+            if (input.Length == 0) return true; 
+
+            if (input.Length == 1)
+            {
+                return input == "8" || input == "+";
+            }
+
+            if (input.StartsWith("+"))
+            {
+                return input.Length == 2 && input[1] == '7' || input.Substring(0, 2) == "+7" && input.Substring(2).All(char.IsDigit);
+            }
+            else if (input.StartsWith("8"))
+            {
+                return input.Substring(1).All(char.IsDigit);
+            }
+
+            return input.All(char.IsDigit);
         }
 
 
-
+        private bool hasShownMessage = false;
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsRussianLetter(e.Text);
+            if (!IsRussianLetter(e.Text))
+            {
+                if (!hasShownMessage)
+                {
+                    MessageBox.Show("Используйте русскую раскладку для ввода данных.");
+                    hasShownMessage = true; 
+                }
+                e.Handled = true; 
+            }
+            else
+            {
+                hasShownMessage = false; 
+            }
         }
 
         private bool IsRussianLetter(string input)
@@ -171,6 +197,45 @@ namespace WpfApp1.Pages
                 }
             }
             return true;
+        }
+
+
+        private void TextBox_PreviewTextInputEmail(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsEnglishLetterOrSpecialChar(e.Text))
+            {
+                MessageBox.Show("Введите английские буквы и специальные символы, такие как @, #, $, %, &, и т.д.");
+                e.Handled = true; 
+            }
+        }
+
+        private bool IsEnglishLetterOrSpecialChar(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+                      (c == '@' || c == '.' || c == '-' || c == '_' || c == '#' || c == '$' || c == '%' || c == '&')))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void Email_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string email = Email.Text.Trim();
+
+            if (!email.Contains("@"))
+            {
+                MessageBox.Show("Пожалуйста, укажите домен почты (например, @gmail.com или @mail.ru).");
+                return;
+            }
+
+            if (!(email.EndsWith("@gmail.com") || email.EndsWith("@mail.ru")))
+            {
+                MessageBox.Show("Введите корректный домен почты: @gmail.com или @mail.ru.");
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

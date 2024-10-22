@@ -112,7 +112,9 @@
                          Margin="0,6,0,2" 
                          Background="Transparent" 
                          Foreground="White" 
-                         BorderThickness="0"/>
+                         BorderThickness="0"
+                         PreviewTextInput="TextBox_PreviewTextInputEmail" 
+                         LostFocus="Email_LostFocus"/>
              </Border>
             
             <TextBlock Text="Логин" 
