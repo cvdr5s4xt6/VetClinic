@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="530" d:DesignWidth="800"
       Background="Silver"
       Title="Прием питомца">
 
@@ -17,62 +17,93 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Прием питомца" 
-                   FontSize="24" 
-                   HorizontalAlignment="Center" 
-                   Margin="0,10" />
+               FontSize="24" 
+               HorizontalAlignment="Center" 
+               Margin="0,10" />
 
         <StackPanel Grid.Row="1" 
-                    Margin="0,20">
-            
+                Margin="0,20">
+
             <StackPanel Orientation="Horizontal" 
-                        Margin="0,5">
-                
+                    Margin="0,5">
                 <TextBlock Text="Выберите питомца:" 
-                           Width="150" 
-                           VerticalAlignment="Center"/>
-                
+                       Width="150" 
+                       VerticalAlignment="Center"/>
                 <ComboBox Name="PetComboBox" 
-                          Width="300" />
+                      Width="300" 
+                      MinHeight="30" 
+                      Margin="5,0" />
+                <Button Content="Очистить" 
+                    Width="80" 
+                    Margin="5,0" 
+                    Click="ClearPetComboBoxButton_Click"/>
             </StackPanel>
 
             <TextBlock Text="Диагноз:" 
-                       Margin="0,10"/>
-            
-            <TextBox Name="DiagnosisTextBox" 
+                   Margin="0,10"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="DiagnosisTextBox" 
                      Height="60" 
+                     Width="500" 
                      TextWrapping="Wrap" 
-                     VerticalScrollBarVisibility="Auto"/>
+                     VerticalScrollBarVisibility="Auto"
+                     Margin="0,5"/>
+                <Button Content="Очистить" 
+                    Width="80" 
+                    Margin="5,0" 
+                    Click="ClearDiagnosisButton_Click"/>
+            </StackPanel>
 
             <TextBlock Text="Назначения:" 
-                       Margin="0,10"/>
-            
-            <TextBox Name="PrescriptionsTextBox" 
+                   Margin="0,10"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="PrescriptionsTextBox" 
                      Height="60" 
+                     Width="500" 
                      TextWrapping="Wrap" 
-                     VerticalScrollBarVisibility="Auto"/>
+                     VerticalScrollBarVisibility="Auto"
+                     Margin="0,5"/>
+                <Button Content="Очистить" 
+                    Width="80" 
+                    Margin="5,0" 
+                    Click="ClearPrescriptionsButton_Click"/>
+            </StackPanel>
 
             <TextBlock Text="Направления на анализы (если нужны):" 
-                       Margin="0,10"/>
-            
-            <TextBox Name="AnalysisTextBox" 
+                   Margin="0,10"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="AnalysisTextBox" 
                      Height="40" 
-                     TextWrapping="Wrap"/>
+                     Width="500" 
+                     TextWrapping="Wrap"
+                     Margin="0,5"/>
+                <Button Content="Очистить" 
+                    Width="80" 
+                    Margin="5,0" 
+                    Click="ClearAnalysisButton_Click"/>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Center" 
-                    Margin="10">
-            
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center" 
+                Margin="10">
+
             <Button Content="Сохранить прием" 
-                    Width="120" 
-                    Margin="5"
-                    Click="SaveVisitButton_Click"/>
-            
+                Width="120" 
+                Height="35"
+                Margin="5"
+                Click="SaveVisitButton_Click"/>
+
             <Button Content="Отмена" 
-                    Width="120" 
-                    Margin="5" 
-                    Click="CancelButton_Click"/>
+                Width="120" 
+                Height="35"
+                Margin="5" 
+                Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
+
 </Page>

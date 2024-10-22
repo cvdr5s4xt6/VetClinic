@@ -92,5 +92,28 @@ namespace WpfApp1.Pages
             ClearInputs();
          
         }
+
+
+        private void ClearDiagnosisButton_Click(object sender, RoutedEventArgs e)
+        {
+            DiagnosisTextBox.Clear();
+        }
+
+        private void ClearPrescriptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrescriptionsTextBox.Clear();
+        }
+
+        private void ClearAnalysisButton_Click(object sender, RoutedEventArgs e)
+        {
+            AnalysisTextBox.Clear();
+        }
+
+        private void ClearPetComboBoxButton_Click(object sender, RoutedEventArgs e)
+        {
+            PetComboBox.SelectedItem = null; // Очистка выбранного элемента
+        }
+
+
     }
 }
