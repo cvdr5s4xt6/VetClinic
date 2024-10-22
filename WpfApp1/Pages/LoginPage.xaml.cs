@@ -37,7 +37,6 @@ namespace WpfApp1.Pages
 
             if (isPasswordVisible)
             {
-
                 PasswordVisibleTb.Visibility = Visibility.Collapsed;
                 PasswordTb.Visibility = Visibility.Visible;
                 PasswordTb.Password = PasswordVisibleTb.Text;
@@ -46,7 +45,6 @@ namespace WpfApp1.Pages
             }
             else
             {
-
                 PasswordVisibleTb.Visibility = Visibility.Visible;
                 PasswordTb.Visibility = Visibility.Collapsed;
                 PasswordVisibleTb.Text = PasswordTb.Password;
@@ -55,7 +53,6 @@ namespace WpfApp1.Pages
             }
         }
 
-
         private void PasswordTb_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (!isPasswordVisible)
@@ -63,7 +60,6 @@ namespace WpfApp1.Pages
                 PasswordVisibleTb.Text = PasswordTb.Password;
             }
         }
-
 
         private void PasswordVisibleTb_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -75,10 +71,8 @@ namespace WpfApp1.Pages
 
         public void logBtn_Click(object sender, RoutedEventArgs e)
         {
-
             string username = Username.Text.Trim();
             string enteredPassword = isPasswordVisible ? PasswordVisibleTb.Text.Trim() : PasswordTb.Password.Trim();
-
 
             if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(enteredPassword))
             {
@@ -96,26 +90,39 @@ namespace WpfApp1.Pages
                 return;
             }
 
+            bool isLoginCorrect = App.bd.Owner.Any(x => x.login == username) || App.bd.Veterenarian.Any(x => x.login == username);
+            bool isPasswordCorrect = App.bd.Owner.Any(x => x.password == enteredPassword) || App.bd.Veterenarian.Any(x => x.password == enteredPassword);
 
-
-            if (App.bd.Owner.Any(x => x.login.ToString() == Username.Text) && App.bd.Owner.Any(x => x.password.ToString() == enteredPassword))
+            if (isLoginCorrect && isPasswordCorrect)
             {
                 LogPassPanel.Visibility = Visibility.Collapsed;
-                MessageBox.Show("Пароль верен. Вход выполнен. Пользователь");
-                var appointmentPage = new AddAppointmentPage();
-                NavigationService.Navigate(appointmentPage);
-            }
-            else if (App.bd.Owner.Any(x => x.password.ToString() == enteredPassword) && App.bd.Owner.Any(x => x.login.ToString() == Username.Text))
-            {
-                MessageBox.Show("Неправильный пароль. Пожалуйста, проверьте пароль.");
-            }
-            else if (App.bd.Veterenarian.Any(x => x.login.ToString() == Username.Text) && App.bd.Veterenarian.Any(x => x.password.ToString() == enteredPassword))
-            {
-                LogPassPanel.Visibility = Visibility.Collapsed;
-                MessageBox.Show("Пароль верен. Вход выполнен. Ветеринар");
-                var appointmentPage = new AddAppointmentPage();
-                NavigationService.Navigate(appointmentPage);
+                MessageBox.Show("Пароль верен. Вход выполнен.");
 
+                if (App.bd.Owner.Any(x => x.login == username && x.password == enteredPassword))
+                {
+                    var appointmentPage = new AddAppointmentPage();
+                    NavigationService.Navigate(appointmentPage);
+                }
+                else if (App.bd.Veterenarian.Any(x => x.login == username && x.password == enteredPassword))
+                {
+                    var appointmentPage = new AddAppointmentPage();
+                    NavigationService.Navigate(appointmentPage);
+                }
+            }
+            else
+            {
+                if (!isLoginCorrect && !isPasswordCorrect)
+                {
+                    MessageBox.Show("Ошибка в логине и пароле. Проверьте правильность данных.");
+                }
+                else if (!isLoginCorrect)
+                {
+                    MessageBox.Show("Ошибка в логине. Проверьте логин.");
+                }
+                else if (!isPasswordCorrect)
+                {
+                    MessageBox.Show("Ошибка в пароле. Проверьте пароль.");
+                }
             }
         }
 
