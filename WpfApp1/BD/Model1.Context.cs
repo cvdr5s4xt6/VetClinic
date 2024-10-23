@@ -13,10 +13,10 @@ namespace WpfApp1.BD
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VetClinica1Entities1 : DbContext
+    public partial class VetClinicaEntities2 : DbContext
     {
-        public VetClinica1Entities1()
-            : base("name=VetClinica1Entities1")
+        public VetClinicaEntities2()
+            : base("name=VetClinicaEntities2")
         {
         }
     
@@ -29,10 +29,10 @@ namespace WpfApp1.BD
         public virtual DbSet<AnimalType> AnimalType { get; set; }
         public virtual DbSet<Appointment> Appointment { get; set; }
         public virtual DbSet<LabTest> LabTest { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
         public virtual DbSet<Owner> Owner { get; set; }
         public virtual DbSet<Specialty> Specialty { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Veterenarian> Veterenarian { get; set; }
-        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
     }
 }

@@ -95,16 +95,15 @@ namespace WpfApp1.Pages
 
             if (isLoginCorrect && isPasswordCorrect)
             {
-                LogPassPanel.Visibility = Visibility.Collapsed;
-                MessageBox.Show("Пароль верен. Вход выполнен.");
-
                 if (App.bd.Owner.Any(x => x.login == username && x.password == enteredPassword))
                 {
-                    var appointmentPage = new AddAppointmentPage();
-                    NavigationService.Navigate(appointmentPage);
+                    MessageBox.Show("Пароль верен. Вход выполнен. Клиент.");
+                    
                 }
                 else if (App.bd.Veterenarian.Any(x => x.login == username && x.password == enteredPassword))
                 {
+                    CurrentUser.VeterinarianId = 1;
+                    MessageBox.Show("Пароль верен. Вход выполнен. Ветеринар.");
                     var appointmentPage = new AddAppointmentPage();
                     NavigationService.Navigate(appointmentPage);
                 }

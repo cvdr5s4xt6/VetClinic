@@ -106,8 +106,13 @@
     <Compile Include="BD\Veterenarian.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CurrentUser.cs" />
+    <Compile Include="CurrentUserClient.cs" />
     <Compile Include="Pages\AddAppointmentPage.xaml.cs">
       <DependentUpon>AddAppointmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddPetPage.xaml.cs">
+      <DependentUpon>AddPetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminReportsPage.xaml.cs">
       <DependentUpon>AdminReportsPage.xaml</DependentUpon>
@@ -131,6 +136,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\AddAppointmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddPetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

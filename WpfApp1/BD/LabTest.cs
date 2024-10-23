@@ -15,13 +15,12 @@ namespace WpfApp1.BD
     public partial class LabTest
     {
         public int labtest_id { get; set; }
-        public Nullable<int> appointment_id { get; set; }
-        public Nullable<int> test_type_id { get; set; }
+        public int appointment_id { get; set; }
+        public int test_type_id { get; set; }
         public string result { get; set; }
         public Nullable<System.DateTime> conducted_at { get; set; }
     
         public virtual Appointment Appointment { get; set; }
         public virtual TestTypes TestTypes { get; set; }
-        public virtual MedicalRecord MedicalRecord { get; set; }
     }
 }

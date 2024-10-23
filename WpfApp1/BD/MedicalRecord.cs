@@ -15,14 +15,13 @@ namespace WpfApp1.BD
     public partial class MedicalRecord
     {
         public int record_id { get; set; }
-        public Nullable<int> animal_id { get; set; }
-        public Nullable<int> veterenarian_id { get; set; }
+        public int animal_id { get; set; }
+        public int veterenarian_id { get; set; }
         public string diagnosis { get; set; }
         public string treatment { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
     
         public virtual Animal Animal { get; set; }
-        public virtual LabTest LabTest { get; set; }
         public virtual Veterenarian Veterenarian { get; set; }
     }
 }

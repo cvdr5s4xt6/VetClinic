@@ -76,6 +76,8 @@ namespace WpfApp1.Pages
 
         private void regBtn_Click(object sender, RoutedEventArgs e)
         {
+            CurrentUserClient.OwnerId = 1;
+
             string surname = Surname.Text.Trim();
             string name = Name.Text.Trim();
             string phone = Phone.Text.Trim();
@@ -101,43 +103,61 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var context = new VetClinica1Entities1();
-            
-                if (selectedRole == "Owner")
-                {
-                    var owner = new Owner
-                    {
-                        last_name = surname,
-                        first_name = name,
-                        phone_number = phone,
-                        email = email,
-                        login = login,
-                        password = password 
-                    };
-                    context.Owner.Add(owner);
-                }
-                else if (selectedRole == "Veterinarian")
-                {
-                    var veterinarian = new Veterenarian
+            var context = new VetClinicaEntities2();
 
-                    {
-                        last_name = surname,
-                        first_name = name,
-                        phone_number = phone,
-                        email = email,
-                        login = login,
-                        password = password
-                    };
-                    context.Veterenarian.Add(veterinarian);
-                }
+            if (selectedRole == "Owner")
+            {
+                var owner = new Owner
+                {
+                    last_name = surname,
+                    first_name = name,
+                    phone_number = phone,
+                    email = email,
+                    login = login,
+                    password = password
+                };
+                context.Owner.Add(owner);
+            }
+            else if (selectedRole == "Veterinarian")
+            {
+                var veterinarian = new Veterenarian
+                {
+                    last_name = surname,
+                    first_name = name,
+                    phone_number = phone,
+                    email = email,
+                    login = login,
+                    password = password
+                };
+                context.Veterenarian.Add(veterinarian);
+            }
+            else if (selectedRole == "Клиент")
+            {
+                var owner = new Owner
+                {
+                    last_name = surname,
+                    first_name = name,
+                    phone_number = phone,
+                    email = email,
+                    login = login,
+                    password = password
+                };
+                context.Owner.Add(owner);
+            }
 
             context.SaveChanges();
 
-
             MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new LoginPage());
-        }
 
+            if (selectedRole == "Клиент")
+            {
+                NavigationService.Navigate(new AddPetPage());
+            }
+            else
+            {
+                NavigationService.Navigate(new LoginPage());
+            }
+        }
         private void Phone_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!IsPhoneInputValid(Phone.Text + e.Text))
@@ -243,6 +263,9 @@ namespace WpfApp1.Pages
             LoginPage loginPage = new LoginPage();
             this.NavigationService.Navigate(loginPage);
         }
+
+      
+
     }
 }
 

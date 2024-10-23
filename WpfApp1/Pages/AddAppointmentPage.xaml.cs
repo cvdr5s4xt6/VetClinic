@@ -43,34 +43,46 @@ namespace WpfApp1.Pages
                 MessageBox.Show($"Ошибка загрузки питомцев: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private void SaveVisitButton_Click(object sender, RoutedEventArgs e)
         {
             if (PetComboBox.SelectedItem is Animal selectedPet)
             {
-
-                var medicalRecord = new MedicalRecord
+                using (var context = new VetClinicaEntities2())
                 {
-                    animal_id = selectedPet.animal_id,
 
-                    diagnosis = DiagnosisTextBox.Text, 
-                    treatment = PrescriptionsTextBox.Text 
-                };
-                
-                App.bd.MedicalRecord.Add(medicalRecord);
-               
+                 var existingRecord = context.MedicalRecord.FirstOrDefault(m => m.animal_id == selectedPet.animal_id && m.diagnosis == DiagnosisTextBox.Text);
 
-                if (!string.IsNullOrWhiteSpace(AnalysisTextBox.Text))
-                {
-                    var testType = new TestTypes
+                    if (existingRecord != null)
                     {
-                        test_type_name = AnalysisTextBox.Text,
+                        MessageBox.Show("Запись о приеме уже существует для этого питомца.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(AnalysisTextBox.Text))
+                    {
+                        var testType = new TestTypes
+                        {
+                            test_type_name = AnalysisTextBox.Text
+                        };
+
+                        context.TestTypes.Add(testType);
+                    }
+
+                    var medicalRecord = new MedicalRecord
+                    {
+                        animal_id = selectedPet.animal_id,
+                        diagnosis = DiagnosisTextBox.Text,
+                        treatment = PrescriptionsTextBox.Text,
+                        //veterenarian_id = 1
+                        veterenarian_id = CurrentUser.VeterinarianId
                     };
 
-                    App.bd.TestTypes.Add(testType);
-                }
+                    context.MedicalRecord.Add(medicalRecord);
+                    context.SaveChanges();
 
-                App.bd.SaveChanges();
+                    MessageBox.Show("Прием успешно сохранен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             else
             {
@@ -93,7 +105,6 @@ namespace WpfApp1.Pages
          
         }
 
-
         private void ClearDiagnosisButton_Click(object sender, RoutedEventArgs e)
         {
             DiagnosisTextBox.Clear();
@@ -111,9 +122,8 @@ namespace WpfApp1.Pages
 
         private void ClearPetComboBoxButton_Click(object sender, RoutedEventArgs e)
         {
-            PetComboBox.SelectedItem = null; // Очистка выбранного элемента
+            PetComboBox.SelectedItem = null;
         }
-
 
     }
 }

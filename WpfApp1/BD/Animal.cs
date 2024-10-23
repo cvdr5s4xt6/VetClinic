@@ -23,10 +23,10 @@ namespace WpfApp1.BD
     
         public int animal_id { get; set; }
         public string name { get; set; }
-        public Nullable<int> animal_type_id { get; set; }
+        public int animal_type_id { get; set; }
         public string breed { get; set; }
         public string age { get; set; }
-        public Nullable<int> owner_id { get; set; }
+        public int owner_id { get; set; }
     
         public virtual AnimalType AnimalType { get; set; }
         public virtual Owner Owner { get; set; }

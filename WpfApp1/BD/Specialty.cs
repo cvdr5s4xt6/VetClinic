@@ -14,16 +14,7 @@ namespace WpfApp1.BD
     
     public partial class Specialty
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Specialty()
-        {
-            this.Veterenarian = new HashSet<Veterenarian>();
-        }
-    
         public int specialty_id { get; set; }
         public string specialty_name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Veterenarian> Veterenarian { get; set; }
     }
 }

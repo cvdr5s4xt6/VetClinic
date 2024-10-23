@@ -5,105 +5,209 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="530" d:DesignWidth="800"
+      d:DesignHeight="600" 
+      d:DesignWidth="800"
       Background="Silver"
       Title="Прием питомца">
 
-    <Grid Margin="10">
+    <Grid x:Name="MainGrid">
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="82"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Прием питомца" 
-               FontSize="24" 
-               HorizontalAlignment="Center" 
-               Margin="0,10" />
+        <TextBlock Grid.Row="0" 
+                   Text="Прием питомца" 
+                   HorizontalAlignment="Center"
+                   FontSize="30" 
+                   FontWeight="Light" 
+                   Foreground="Black" 
+                   Margin="0,20,0,490" 
+                   Grid.RowSpan="2" 
+                   Width="250"/>
 
-        <StackPanel Grid.Row="1" 
-                Margin="0,20">
+        <StackPanel x:Name="VisitPanel" 
+                    Grid.Row="1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="610" 
+                    Height="500">
 
             <StackPanel Orientation="Horizontal" 
-                    Margin="0,5">
+                        Margin="0,10">
+                
                 <TextBlock Text="Выберите питомца:" 
-                       Width="150" 
-                       VerticalAlignment="Center"/>
-                <ComboBox Name="PetComboBox" 
-                      Width="300" 
-                      MinHeight="30" 
-                      Margin="5,0" />
+                           Margin="0,0,10,0"
+                           Width="157" 
+                           VerticalAlignment="Center" 
+                           FontSize="17" 
+                           FontWeight="Light"
+                           Foreground="Black"/>
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="150">
+                    
+                    <ComboBox x:Name="PetComboBox" 
+                        FontSize="15" 
+                        Width="150" 
+                        MinHeight="30" 
+                        Opacity="0.1" 
+                        Foreground="Black">
+                    </ComboBox>
+                    
+                </Border>
+                
                 <Button Content="Очистить" 
-                    Width="80" 
-                    Margin="5,0" 
-                    Click="ClearPetComboBoxButton_Click"/>
+                        FontWeight="Light"
+                        Width="80" 
+                        Margin="5,0" 
+                        Foreground="Black" 
+                        Background="Transparent" 
+                        BorderThickness="1"
+                        BorderBrush="Black" 
+                        Click="ClearPetComboBoxButton_Click"/>
+                
             </StackPanel>
 
             <TextBlock Text="Диагноз:" 
-                   Margin="0,10"/>
+                       Margin="0,10" 
+                       FontSize="17" 
+                       FontWeight="Light" 
+                       Foreground="Black"/>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBox Name="DiagnosisTextBox" 
-                     Height="60" 
-                     Width="500" 
-                     TextWrapping="Wrap" 
-                     VerticalScrollBarVisibility="Auto"
-                     Margin="0,5"/>
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,10">
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="500" 
+                        Height="60">
+                    
+                    <TextBox x:Name="DiagnosisTextBox" 
+                             TextWrapping="Wrap" 
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="5" 
+                             Background="Transparent" 
+                             Foreground="Black" 
+                             BorderThickness="0"/>
+                </Border>
+                
                 <Button Content="Очистить" 
-                    Width="80" 
-                    Margin="5,0" 
-                    Click="ClearDiagnosisButton_Click"/>
+                        FontWeight="Light"
+                        Width="80" 
+                        Margin="5,0" 
+                        Foreground="Black" 
+                        Background="Transparent" 
+                        BorderThickness="1"
+                        BorderBrush="Black" 
+                        Click="ClearDiagnosisButton_Click"/>
+                
             </StackPanel>
 
             <TextBlock Text="Назначения:" 
-                   Margin="0,10"/>
+                       Margin="0,10" 
+                       FontSize="17" 
+                       FontWeight="Light" 
+                       Foreground="Black"/>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBox Name="PrescriptionsTextBox" 
-                     Height="60" 
-                     Width="500" 
-                     TextWrapping="Wrap" 
-                     VerticalScrollBarVisibility="Auto"
-                     Margin="0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10">
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="500" 
+                        Height="60">
+                    
+                    <TextBox x:Name="PrescriptionsTextBox" 
+                             TextWrapping="Wrap" 
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="5" 
+                             Background="Transparent" 
+                             Foreground="Black" 
+                             BorderThickness="0"/>
+                </Border>
+                
                 <Button Content="Очистить" 
-                    Width="80" 
-                    Margin="5,0" 
-                    Click="ClearPrescriptionsButton_Click"/>
+                        FontWeight="Light"
+                        Width="80" 
+                        Margin="5,0" 
+                        Foreground="Black" 
+                        Background="Transparent" 
+                        BorderThickness="1"
+                        BorderBrush="Black" 
+                        Click="ClearPrescriptionsButton_Click"/>
+                
             </StackPanel>
 
             <TextBlock Text="Направления на анализы (если нужны):" 
-                   Margin="0,10"/>
+                       Margin="0,10" 
+                       FontSize="17" 
+                       FontWeight="Light" 
+                       Foreground="Black"/>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBox Name="AnalysisTextBox" 
-                     Height="40" 
-                     Width="500" 
-                     TextWrapping="Wrap"
-                     Margin="0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10">
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="500" 
+                        Height="40">
+                    
+                    <TextBox x:Name="AnalysisTextBox" 
+                             TextWrapping="Wrap"
+                             Margin="5" 
+                             Background="Transparent" 
+                             Foreground="Black" 
+                             BorderThickness="0"/>
+                </Border>
+                
                 <Button Content="Очистить" 
-                    Width="80" 
-                    Margin="5,0" 
-                    Click="ClearAnalysisButton_Click"/>
+                        FontWeight="Light"
+                        Width="80" 
+                        Margin="5,0" 
+                        Foreground="Black" 
+                        Background="Transparent" 
+                        BorderThickness="1"
+                        BorderBrush="Black" 
+                        Click="ClearAnalysisButton_Click"/>
+                
             </StackPanel>
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center" 
+                        Margin="20,30,0,10">
+                
+                <Button Content="Сохранить прием" 
+                        FontSize="15" 
+                        FontWeight="Light" 
+                        Width="160" 
+                        Foreground="Black"
+                        BorderBrush="Black"
+                        Background="Transparent" 
+                        BorderThickness="1" 
+                        Height="40" 
+                        Click="SaveVisitButton_Click"/>
+                
+                <Button Content="Отмена приема" 
+                        FontSize="15" 
+                        FontWeight="Light" 
+                        Width="160" 
+                        Foreground="Black"
+                        BorderBrush="Black"
+                        Background="Transparent" 
+                        BorderThickness="1" 
+                        Height="40" 
+                        Margin="20,0,0,0" 
+                        Click="CancelButton_Click"/>
+                
+            </StackPanel>
+            
         </StackPanel>
-
-        <StackPanel Grid.Row="2" 
-                Orientation="Horizontal" 
-                HorizontalAlignment="Center" 
-                Margin="10">
-
-            <Button Content="Сохранить прием" 
-                Width="120" 
-                Height="35"
-                Margin="5"
-                Click="SaveVisitButton_Click"/>
-
-            <Button Content="Отмена" 
-                Width="120" 
-                Height="35"
-                Margin="5" 
-                Click="CancelButton_Click"/>
-        </StackPanel>
+        
     </Grid>
-
+    
 </Page>

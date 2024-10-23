@@ -21,8 +21,8 @@ namespace WpfApp1.BD
         }
     
         public int appointment_id { get; set; }
-        public Nullable<int> animal_id { get; set; }
-        public Nullable<int> veterenarian_id { get; set; }
+        public int animal_id { get; set; }
+        public int veterenarian_id { get; set; }
         public Nullable<System.DateTime> appointment_date { get; set; }
         public string reason { get; set; }
         public string appointment_result { get; set; }
