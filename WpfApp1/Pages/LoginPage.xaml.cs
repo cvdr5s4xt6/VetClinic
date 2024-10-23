@@ -90,15 +90,19 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            bool isLoginCorrect = App.bd.Owner.Any(x => x.login == username) || App.bd.Veterenarian.Any(x => x.login == username);
-            bool isPasswordCorrect = App.bd.Owner.Any(x => x.password == enteredPassword) || App.bd.Veterenarian.Any(x => x.password == enteredPassword);
+            bool isLoginCorrect = App.bd.Owner.Any(x => x.login == username) ||
+                      App.bd.Veterenarian.Any(x => x.login == username) ||
+                      App.bd.Admin.Any(x => x.login == username); 
+
+            bool isPasswordCorrect = App.bd.Owner.Any(x => x.password == enteredPassword) ||
+                                     App.bd.Veterenarian.Any(x => x.password == enteredPassword) ||
+                                     App.bd.Admin.Any(x => x.password == enteredPassword); 
 
             if (isLoginCorrect && isPasswordCorrect)
             {
                 if (App.bd.Owner.Any(x => x.login == username && x.password == enteredPassword))
                 {
                     MessageBox.Show("Пароль верен. Вход выполнен. Клиент.");
-                    
                 }
                 else if (App.bd.Veterenarian.Any(x => x.login == username && x.password == enteredPassword))
                 {
@@ -106,6 +110,12 @@ namespace WpfApp1.Pages
                     MessageBox.Show("Пароль верен. Вход выполнен. Ветеринар.");
                     var appointmentPage = new AddAppointmentPage();
                     NavigationService.Navigate(appointmentPage);
+                }
+                else if (App.bd.Admin.Any(x => x.login == username && x.password == enteredPassword)) 
+                {
+                    MessageBox.Show("Пароль верен. Вход выполнен. Администратор.");
+                    var adminPage = new AdminReportsPage(); 
+                    NavigationService.Navigate(adminPage);
                 }
             }
             else
@@ -125,7 +135,7 @@ namespace WpfApp1.Pages
             }
         }
 
-        private void regBtn_Click(object sender, RoutedEventArgs e)
+            private void regBtn_Click(object sender, RoutedEventArgs e)
         {
             LogPassPanel.Visibility = Visibility.Collapsed;
             var registerPage = new RegisterUserPage();

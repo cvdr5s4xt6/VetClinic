@@ -34,5 +34,6 @@ namespace WpfApp1.BD
         public virtual DbSet<Specialty> Specialty { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Veterenarian> Veterenarian { get; set; }
+        public virtual DbSet<Admin> Admin { get; set; }
     }
 }

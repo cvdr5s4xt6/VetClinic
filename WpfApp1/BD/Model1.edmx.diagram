@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4f01acbe25ae4cdc82323ef711c016ca" Name="Diagram1">
+      <Diagram DiagramId="4f01acbe25ae4cdc82323ef711c016ca" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="VetClinicaModel.Animal" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VetClinicaModel.AnimalType" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VetClinicaModel.Appointment" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
@@ -22,6 +22,7 @@
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_Appointment" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_TestTypes" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_MedicalRecord_Veterenarian" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VetClinicaModel.Admin" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
