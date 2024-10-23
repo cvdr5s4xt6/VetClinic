@@ -100,7 +100,7 @@ namespace WpfApp1.Pages
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-           
+            NavigationService.Navigate(new LoginPage());
             ClearInputs();
          
         }

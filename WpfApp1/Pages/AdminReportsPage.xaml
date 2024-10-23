@@ -10,6 +10,15 @@
       Width="800"
       Background="Silver">
     <Grid>
+
+        <TextBlock Grid.Row="0" 
+       Text="Отчеты о работе ветеринара для администратора" 
+       HorizontalAlignment="Center"
+       FontSize="24" 
+       FontWeight="Light" 
+       Foreground="Black" 
+       Margin="0,20"/>
+
         <TabControl Height="300" Width="600" Margin="10">
             <TabItem Header="Приёмы за неделю">
                 <DataGrid x:Name="AppointmentsDataGrid" 
