@@ -29,20 +29,15 @@ namespace WpfApp1.Pages
 
         private void LoadAnimalTypes()
         {
-            try
+
+            using (var context = new VetClinicaEntities2())
             {
-                using (var context = new VetClinicaEntities2())
-                {
-                    var animalTypes = context.AnimalType.ToList();
-                    AnimalTypeComboBox.ItemsSource = animalTypes;
-                    AnimalTypeComboBox.DisplayMemberPath = "animal_type_name";
-                    AnimalTypeComboBox.SelectedValuePath = "animal_type_id";
-                }
+                var animalTypes = context.AnimalType.ToList();
+                AnimalTypeComboBox.ItemsSource = animalTypes;
+                AnimalTypeComboBox.DisplayMemberPath = "animal_type_name";
+                AnimalTypeComboBox.SelectedValuePath = "animal_type_id";
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки типов животных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
         }
 
         private void SaveAnimalButton_Click(object sender, RoutedEventArgs e)
@@ -58,24 +53,24 @@ namespace WpfApp1.Pages
 
             using (var context = new VetClinicaEntities2())
             {
-                    var selectedType = (AnimalType)AnimalTypeComboBox.SelectedItem;
+                var selectedType = (AnimalType)AnimalTypeComboBox.SelectedItem;
 
-                    var newAnimal = new Animal
-                    {
-                        name = AnimalNameTextBox.Text.Trim(),
-                        animal_type_id = selectedType.animal_type_id,
-                        breed = AnimalBreedTextBox.Text.Trim(),
-                        age = AnimalAgeTextBox.Text.Trim(),
-                        owner_id = CurrentUserClient.OwnerId 
-                    };
+                var newAnimal = new Animal
+                {
+                    name = AnimalNameTextBox.Text.Trim(),
+                    animal_type_id = selectedType.animal_type_id,
+                    breed = AnimalBreedTextBox.Text.Trim(),
+                    age = AnimalAgeTextBox.Text.Trim(),
+                    owner_id = CurrentUserClient.OwnerId
+                };
 
-             var existingAnimal = context.Animal.FirstOrDefault(a => a.name == newAnimal.name && a.owner_id == newAnimal.owner_id);
+                var existingAnimal = context.Animal.FirstOrDefault(a => a.name == newAnimal.name && a.owner_id == newAnimal.owner_id);
 
-                    context.Animal.Add(newAnimal);
-                    context.SaveChanges();
+                context.Animal.Add(newAnimal);
+                context.SaveChanges();
 
-                    MessageBox.Show("Животное успешно зарегистрировано.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ClearInputs();
+                MessageBox.Show("Животное успешно зарегистрировано.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearInputs();
             }
         }
 

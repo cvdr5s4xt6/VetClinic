@@ -26,6 +26,7 @@ namespace WpfApp1.BD
         public Nullable<System.DateTime> appointment_date { get; set; }
         public string reason { get; set; }
         public string appointment_result { get; set; }
+        public string status { get; set; }
     
         public virtual Animal Animal { get; set; }
         public virtual Veterenarian Veterenarian { get; set; }

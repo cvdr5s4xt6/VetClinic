@@ -102,7 +102,12 @@ namespace WpfApp1.Pages
             {
                 if (App.bd.Owner.Any(x => x.login == username && x.password == enteredPassword))
                 {
+                    var owner = App.bd.Owner.FirstOrDefault(x => x.login == username);
+                    if (owner != null)
+                        CurrentUserClient.OwnerId = owner.owner_id;
                     MessageBox.Show("Пароль верен. Вход выполнен. Клиент.");
+                    var addPetPage = new AddPetPage();
+                    NavigationService.Navigate(addPetPage);
                 }
                 else if (App.bd.Veterenarian.Any(x => x.login == username && x.password == enteredPassword))
                 {

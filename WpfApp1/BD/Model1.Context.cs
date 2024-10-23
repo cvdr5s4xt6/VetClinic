@@ -25,6 +25,7 @@ namespace WpfApp1.BD
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<AnimalType> AnimalType { get; set; }
         public virtual DbSet<Appointment> Appointment { get; set; }
@@ -34,6 +35,5 @@ namespace WpfApp1.BD
         public virtual DbSet<Specialty> Specialty { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Veterenarian> Veterenarian { get; set; }
-        public virtual DbSet<Admin> Admin { get; set; }
     }
 }

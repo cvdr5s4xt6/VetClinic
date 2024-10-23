@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -45,6 +45,7 @@
           <Property Name="appointment_date" Type="datetime2" Precision="7" />
           <Property Name="reason" Type="nvarchar" MaxLength="50" />
           <Property Name="appointment_result" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LabTest">
           <Key>
@@ -246,10 +247,23 @@
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VetClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Animal">
           <Key>
             <PropertyRef Name="animal_id" />
@@ -283,6 +297,7 @@
           <Property Name="appointment_date" Type="DateTime" Precision="7" />
           <Property Name="reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="appointment_result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Animal" Relationship="Self.FK_Appointment_Animal" FromRole="Appointment" ToRole="Animal" />
           <NavigationProperty Name="Veterenarian" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Appointment" ToRole="Veterenarian" />
           <NavigationProperty Name="LabTest" Relationship="Self.FK_LabTest_Appointment" FromRole="Appointment" ToRole="LabTest" />
@@ -452,6 +467,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="VetClinicaEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
           <EntitySet Name="Animal" EntityType="Self.Animal" />
           <EntitySet Name="AnimalType" EntityType="Self.AnimalType" />
           <EntitySet Name="Appointment" EntityType="Self.Appointment" />
@@ -493,26 +509,26 @@
             <End Role="Veterenarian" EntitySet="Veterenarian" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
-          <EntitySet Name="Admin" EntityType="VetClinicaModel.Admin" />
         </EntityContainer>
-        <EntityType Name="Admin">
-          <Key>
-            <PropertyRef Name="admin_id" />
-          </Key>
-          <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище VetClinicaModelContainer" CdmEntityContainer="VetClinicaEntities2">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="VetClinicaModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Animal">
             <EntityTypeMapping TypeName="VetClinicaModel.Animal">
               <MappingFragment StoreEntitySet="Animal">
@@ -542,6 +558,7 @@
                 <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
                 <ScalarProperty Name="reason" ColumnName="reason" />
                 <ScalarProperty Name="appointment_result" ColumnName="appointment_result" />
+                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -608,19 +625,6 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Admin">
-            <EntityTypeMapping TypeName="VetClinicaModel.Admin">
-              <MappingFragment StoreEntitySet="Admin">
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
