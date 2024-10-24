@@ -103,7 +103,43 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var context = new VetClinicaEntities2();
+            var context = new VetClinicaEntities();
+
+            bool loginExists = context.Owner.Any(o => o.login == login) ||
+                               context.Veterenarian.Any(v => v.login == login);
+
+            if (loginExists)
+            {
+                MessageBox.Show("Такой логин уже существует, придумайте другой логин.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            bool passwordExists = context.Owner.Any(o => o.password == password) ||
+                                  context.Veterenarian.Any(v => v.password == password);
+
+            if (passwordExists)
+            {
+                MessageBox.Show("Такой пароль уже существует, придумайте другой пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            bool emailExists = context.Owner.Any(o => o.email == email) ||
+                               context.Veterenarian.Any(v => v.email == email);
+
+            if (emailExists)
+            {
+                MessageBox.Show("Такая почта уже существует, придумайте другую почту.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            bool phoneExists = context.Owner.Any(o => o.phone_number == phone) ||
+                   context.Veterenarian.Any(v => v.phone_number == phone);
+
+            if (phoneExists)
+            {
+                MessageBox.Show("Этот номер телефона уже зарегистрирован, используйте другой номер.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             if (selectedRole == "Owner")
             {

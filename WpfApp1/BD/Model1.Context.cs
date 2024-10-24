@@ -13,10 +13,10 @@ namespace WpfApp1.BD
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VetClinicaEntities2 : DbContext
+    public partial class VetClinicaEntities : DbContext
     {
-        public VetClinicaEntities2()
-            : base("name=VetClinicaEntities2")
+        public VetClinicaEntities()
+            : base("name=VetClinicaEntities")
         {
         }
     

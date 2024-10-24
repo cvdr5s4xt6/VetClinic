@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -45,7 +45,7 @@
           <Property Name="appointment_date" Type="datetime2" Precision="7" />
           <Property Name="reason" Type="nvarchar" MaxLength="50" />
           <Property Name="appointment_result" Type="nvarchar" MaxLength="50" />
-          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="comment" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="LabTest">
           <Key>
@@ -247,8 +247,7 @@
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VetClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -297,10 +296,10 @@
           <Property Name="appointment_date" Type="DateTime" Precision="7" />
           <Property Name="reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="appointment_result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Animal" Relationship="Self.FK_Appointment_Animal" FromRole="Appointment" ToRole="Animal" />
           <NavigationProperty Name="Veterenarian" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Appointment" ToRole="Veterenarian" />
           <NavigationProperty Name="LabTest" Relationship="Self.FK_LabTest_Appointment" FromRole="Appointment" ToRole="LabTest" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LabTest">
           <Key>
@@ -466,7 +465,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VetClinicaEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VetClinicaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admin" EntityType="Self.Admin" />
           <EntitySet Name="Animal" EntityType="Self.Animal" />
           <EntitySet Name="AnimalType" EntityType="Self.AnimalType" />
@@ -515,7 +514,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinicaModelContainer" CdmEntityContainer="VetClinicaEntities2">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinicaModelContainer" CdmEntityContainer="VetClinicaEntities">
           <EntitySetMapping Name="Admin">
             <EntityTypeMapping TypeName="VetClinicaModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
@@ -552,13 +551,13 @@
           <EntitySetMapping Name="Appointment">
             <EntityTypeMapping TypeName="VetClinicaModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
                 <ScalarProperty Name="animal_id" ColumnName="animal_id" />
                 <ScalarProperty Name="veterenarian_id" ColumnName="veterenarian_id" />
                 <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
                 <ScalarProperty Name="reason" ColumnName="reason" />
                 <ScalarProperty Name="appointment_result" ColumnName="appointment_result" />
-                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

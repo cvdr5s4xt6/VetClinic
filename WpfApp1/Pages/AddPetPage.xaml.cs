@@ -30,7 +30,7 @@ namespace WpfApp1.Pages
         private void LoadAnimalTypes()
         {
 
-            using (var context = new VetClinicaEntities2())
+            using (var context = new VetClinicaEntities())
             {
                 var animalTypes = context.AnimalType.ToList();
                 AnimalTypeComboBox.ItemsSource = animalTypes;
@@ -51,7 +51,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            using (var context = new VetClinicaEntities2())
+            using (var context = new VetClinicaEntities())
             {
                 var selectedType = (AnimalType)AnimalTypeComboBox.SelectedItem;
 

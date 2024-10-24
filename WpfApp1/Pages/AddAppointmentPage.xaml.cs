@@ -48,7 +48,7 @@ namespace WpfApp1.Pages
         {
             if (PetComboBox.SelectedItem is Animal selectedPet)
             {
-                using (var context = new VetClinicaEntities2())
+                using (var context = new VetClinicaEntities())
                 {
 
                  var existingRecord = context.MedicalRecord.FirstOrDefault(m => m.animal_id == selectedPet.animal_id && m.diagnosis == DiagnosisTextBox.Text);
