@@ -24,10 +24,15 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AddAppointmentPage : Page
     {
-        public AddAppointmentPage()
+        private string _username;
+        private VetClinicaEntities _context = new VetClinicaEntities();
+        public AddAppointmentPage(string username)
         {
+
+            _username = username;
             InitializeComponent();
             LoadPets();
+            LoadVeterinarianData();
         }
         private void LoadPets()
         {
@@ -35,8 +40,8 @@ namespace WpfApp1.Pages
             {
                 var pets = App.bd.Animal.ToList();
                 PetComboBox.ItemsSource = pets;
-                PetComboBox.DisplayMemberPath = "name"; 
-                PetComboBox.SelectedValuePath = "animal_id"; 
+                PetComboBox.DisplayMemberPath = "name";
+                PetComboBox.SelectedValuePath = "animal_id";
             }
             catch (Exception ex)
             {
@@ -51,7 +56,7 @@ namespace WpfApp1.Pages
                 using (var context = new VetClinicaEntities())
                 {
 
-                 var existingRecord = context.MedicalRecord.FirstOrDefault(m => m.animal_id == selectedPet.animal_id && m.diagnosis == DiagnosisTextBox.Text);
+                    var existingRecord = context.MedicalRecord.FirstOrDefault(m => m.animal_id == selectedPet.animal_id && m.diagnosis == DiagnosisTextBox.Text);
 
                     if (existingRecord != null)
                     {
@@ -74,7 +79,7 @@ namespace WpfApp1.Pages
                         animal_id = selectedPet.animal_id,
                         diagnosis = DiagnosisTextBox.Text,
                         treatment = PrescriptionsTextBox.Text,
-                        //veterenarian_id = 1
+
                         veterenarian_id = CurrentUser.VeterinarianId
                     };
 
@@ -95,14 +100,14 @@ namespace WpfApp1.Pages
             DiagnosisTextBox.Clear();
             PrescriptionsTextBox.Clear();
             AnalysisTextBox.Clear();
-            PetComboBox.SelectedIndex = -1; 
+            PetComboBox.SelectedIndex = -1;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new LoginPage());
             ClearInputs();
-         
+
         }
 
         private void ClearDiagnosisButton_Click(object sender, RoutedEventArgs e)
@@ -125,5 +130,36 @@ namespace WpfApp1.Pages
             PetComboBox.SelectedItem = null;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new RegisterUserPage());
+        }
+
+
+        private Veterenarian GetVeterinarianByLogin(string login)
+        {
+            using (var context = new VetClinicaEntities())
+            {
+                return context.Veterenarian.FirstOrDefault(v => v.login == login);
+            }
+        }
+
+        private void LoadVeterinarianData()
+        {
+            var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == _username);
+
+            if (veterinarian != null)
+            {
+                MessageBox.Show($"Добро пожаловать, {veterinarian.first_name} {veterinarian.last_name}!");
+                LoggedInVeterinarianTextBlock.Text = $"Врач: {veterinarian.first_name} {veterinarian.last_name}";
+
+            }
+            else
+            {
+                MessageBox.Show("Ветеринар не найден.");
+                LoggedInVeterinarianTextBlock.Text = "Ветеринар не найден.";
+            }
+        
+        }
     }
 }

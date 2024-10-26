@@ -9,5 +9,7 @@ namespace WpfApp1
     public static class CurrentUser
     {
         public static int VeterinarianId { get; set; }
+        //public static int? PreviousVeterinarianId { get; set; } // Для хранения последнего ветеринара
     }
 }
+

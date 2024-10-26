@@ -23,6 +23,7 @@
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_Appointment" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_TestTypes" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_MedicalRecord_Veterenarian" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VetClinicaModel.sysdiagrams" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

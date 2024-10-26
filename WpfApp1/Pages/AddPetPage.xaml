@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="340" 
+      d:DesignHeight="380" 
       d:DesignWidth="700"
       Background="Silver"
       Title="Регистрация Питомца">
@@ -92,11 +92,16 @@
                              MaxLength="50"/>
                     
                 </StackPanel>
-                
-                <Button Content="Зарегистрировать" 
-                        Click="SaveAnimalButton_Click" 
-                        Margin="5" />
-                
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                    <Button Content="Зарегистрировать" 
+            Click="SaveAnimalButton_Click" 
+            Margin="5" />
+
+                  
+                </StackPanel>
+
+
             </StackPanel>
             
         </StackPanel>

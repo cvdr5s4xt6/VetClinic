@@ -42,7 +42,7 @@ namespace WpfApp1.Pages
                 PasswordVisibleTb.Visibility = Visibility.Collapsed;
                 PasswordTb.Visibility = Visibility.Visible;
                 PasswordTb.Password = PasswordVisibleTb.Text;
-                ShowPasswordButton.Content = "🔒"; // Закрытый замок
+                ShowPasswordButton.Content = "🔒"; 
                 isPasswordVisible = false;
             }
             else
@@ -50,7 +50,7 @@ namespace WpfApp1.Pages
                 PasswordVisibleTb.Visibility = Visibility.Visible;
                 PasswordTb.Visibility = Visibility.Collapsed;
                 PasswordVisibleTb.Text = PasswordTb.Password;
-                ShowPasswordButton.Content = "🔓"; // Открытый замок
+                ShowPasswordButton.Content = "🔓";
                 isPasswordVisible = true;
             }
         }
@@ -88,26 +88,40 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            // Ищем пользователя в базе данных
             var owner = _context.Owner.FirstOrDefault(o => o.login == username && o.password == enteredPassword);
             if (owner != null)
             {
-                // Если пользователь найден, сохраняем ownerId
-                int ownerId = owner.owner_id;
-                // Открываем страницу записи на прием
-                MakePetPage makePetPage = new MakePetPage(ownerId); 
+                MakePetPage makePetPage = new MakePetPage(owner.owner_id);
                 NavigationService.Navigate(makePetPage);
+                return;
             }
-            else
+
+            var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username && v.password == enteredPassword);
+            if (veterinarian != null)
             {
-                MessageBox.Show("Неправильный логин или пароль");
+                // Передача логина на страницу AddAppointmentPage при успешной авторизации ветеринара
+                AddAppointmentPage appointmentPage = new AddAppointmentPage(username);
+                NavigationService.Navigate(appointmentPage);
+                return;
             }
+
+            var admin = _context.Admin.FirstOrDefault(a => a.login == username && a.password == enteredPassword);
+            if (admin != null)
+            {
+                NavigationService.Navigate(new AdminReportsPage());
+                return;
+            }
+
+            MessageBox.Show("Неправильный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+
         }
+
 
         private void regBtn_Click(object sender, RoutedEventArgs e)
         {
             LogPassPanel.Visibility = Visibility.Collapsed;
             var registerPage = new RegisterUserPage();
+            registerPage.IsReturnButtonVisible = false; // Скрываем кнопку
             NavigationService.Navigate(registerPage);
         }
     }

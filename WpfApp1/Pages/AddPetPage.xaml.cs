@@ -86,5 +86,7 @@ namespace WpfApp1.Pages
         {
             AnimalTypeComboBox.SelectedItem = null;
         }
+
+       
     }
 }

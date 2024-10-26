@@ -22,9 +22,17 @@ namespace WpfApp1.Pages
     public partial class RegisterUserPage : Page
     {
         private bool isPasswordVisible = false;
+
+        public bool IsReturnButtonVisible
+        {
+            get => ReturnToAppointmentButton.Visibility == Visibility.Visible;
+            set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         public RegisterUserPage()
         {
             InitializeComponent();
+
         }
 
 
@@ -300,8 +308,10 @@ namespace WpfApp1.Pages
             this.NavigationService.Navigate(loginPage);
         }
 
-      
-
+        private void ReturnToAppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            //NavigationService.Navigate(new AddAppointmentPage(username));
+        }
     }
 }
 
