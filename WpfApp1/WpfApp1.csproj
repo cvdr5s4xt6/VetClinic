@@ -129,6 +129,9 @@
     <Compile Include="Pages\MakePetPage.xaml.cs">
       <DependentUpon>MakePetPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NavigationAdminPage.xaml.cs">
+      <DependentUpon>NavigationAdminPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RegisterUserPage.xaml.cs">
       <DependentUpon>RegisterUserPage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MakePetPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NavigationAdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

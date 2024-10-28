@@ -29,10 +29,38 @@ namespace WpfApp1.Pages
             set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
         }
 
+
+        private bool _isAdminMode;
+
+        public bool IsAdminMode
+        {
+            get => _isAdminMode;
+            set
+            {
+                _isAdminMode = value;
+                if (_isAdminMode)
+                {
+                    HideRole("Клиент");  // Скрываем роль "Клиент" для администратора
+                }
+                else
+                {
+                    HideRole("Ветеринар");  // Скрываем роль "Ветеринар" для клиента
+                }
+            }
+        }
+
+        private void HideRole(string role)
+        {
+            var item = RoleComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault(i => i.Content.ToString() == role);
+            if (item != null)
+            {
+                RoleComboBox.Items.Remove(item);
+            }
+        }
+
         public RegisterUserPage()
         {
             InitializeComponent();
-
         }
 
 
@@ -84,6 +112,7 @@ namespace WpfApp1.Pages
 
         private void regBtn_Click(object sender, RoutedEventArgs e)
         {
+
             CurrentUserClient.OwnerId = 1;
 
             string surname = Surname.Text.Trim();

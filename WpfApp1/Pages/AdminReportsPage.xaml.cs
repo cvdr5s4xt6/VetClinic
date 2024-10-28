@@ -80,7 +80,7 @@ namespace WpfApp1.Pages
 
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new LoginPage());
+            NavigationService.Navigate(new NavigationAdminPage());
         }
 
         private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)

@@ -108,7 +108,7 @@ namespace WpfApp1.Pages
             var admin = _context.Admin.FirstOrDefault(a => a.login == username && a.password == enteredPassword);
             if (admin != null)
             {
-                NavigationService.Navigate(new AdminReportsPage());
+                NavigationService.Navigate(new NavigationAdminPage());
                 return;
             }
 
@@ -121,6 +121,7 @@ namespace WpfApp1.Pages
         {
             LogPassPanel.Visibility = Visibility.Collapsed;
             var registerPage = new RegisterUserPage();
+            registerPage.IsAdminMode = false;  // Устанавливаем режим для клиента
             registerPage.IsReturnButtonVisible = false; // Скрываем кнопку
             NavigationService.Navigate(registerPage);
         }

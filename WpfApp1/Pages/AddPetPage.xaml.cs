@@ -82,11 +82,9 @@ namespace WpfApp1.Pages
             AnimalTypeComboBox.SelectedIndex = -1;
         }
 
-        private void ClearAnimalTypeComboBoxButton_Click(object sender, RoutedEventArgs e)
+        private void ClearAnimalTypeComboBoxButton(object sender, RoutedEventArgs e)
         {
             AnimalTypeComboBox.SelectedItem = null;
         }
-
-       
     }
 }
