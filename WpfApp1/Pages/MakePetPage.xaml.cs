@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using WpfApp1.BD;
+using System.IO;
+using System.Globalization;
 
 namespace WpfApp1.Pages
 {
@@ -22,6 +24,7 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class MakePetPage : Page
     {
+       
         private VetClinicaEntities _context;
         private int _ownerId;
         public MakePetPage(int ownerId)
@@ -34,10 +37,7 @@ namespace WpfApp1.Pages
         }
         private void LoadAnimals()
         {
-            var animals = _context.Animal
-                                  .Where(a => a.owner_id == _ownerId)
-                                  .Select(a => new { a.animal_id, a.name })
-                                  .ToList();
+            var animals = _context.Animal.Where(a => a.owner_id == _ownerId).Select(a => new { a.animal_id, a.name }).ToList();
 
             AnimalComboBox.ItemsSource = animals;
             AnimalComboBox.DisplayMemberPath = "name";
@@ -46,14 +46,14 @@ namespace WpfApp1.Pages
 
         private void LoadVeterinarians()
         {
-            var veterinarians = _context.Veterenarian
-                                        .Select(v => new { v.veterenarian_id, FullName = v.first_name + " " + v.last_name })
-                                        .ToList();
+            var veterinarians = _context.Veterenarian.Select(v => new { v.veterenarian_id, FullName = v.first_name + " " + v.last_name }).ToList();
 
             VeterinarianComboBox.ItemsSource = veterinarians;
             VeterinarianComboBox.DisplayMemberPath = "FullName";
             VeterinarianComboBox.SelectedValuePath = "veterenarian_id";
         }
+
+        private List<byte[]> _selectedImages = new List<byte[]>();
 
         private void OnAppointmentButtonClick(object sender, RoutedEventArgs e)
         {
@@ -74,6 +74,9 @@ namespace WpfApp1.Pages
                 MessageBox.Show("Пожалуйста, выберите дату приема.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+          
+
 
             string selectedTime = (TimeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             if (string.IsNullOrEmpty(selectedTime))
@@ -103,6 +106,8 @@ namespace WpfApp1.Pages
                 return;
             }
 
+
+
             // Проверка 1: Запрещаем запись одного и того же питомца к одному и тому же врачу на одно и то же время
             var existingAppointmentForAnimal = _context.Appointment
                 .FirstOrDefault(a => a.animal_id == selectedAnimalId && a.veterenarian_id == selectedVeterinarianId && a.appointment_date == appointmentDateTime);
@@ -122,6 +127,21 @@ namespace WpfApp1.Pages
                 MessageBox.Show("У данного врача уже есть запись на это время.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+
+
+            foreach (var image in _selectedImages)
+            {
+                var animalImage = new PetImages
+                {
+                    animal_id = selectedAnimalId,
+                    image = image,
+                    // Можно добавить описание, если нужно
+                };
+
+                _context.PetImages.Add(animalImage);
+            }
+
 
             string comment = AnalysisTextBox.Text;
 
@@ -145,9 +165,17 @@ namespace WpfApp1.Pages
             AnalysisTextBox.Clear();
         }
 
+        private void OnPetAdded()
+        {
+            LoadAnimals(); 
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddPetPage());
+            
+            AddPetPage addPetPage = new AddPetPage();
+            addPetPage.PetAdded += OnPetAdded;
+            NavigationService.Navigate(addPetPage);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -155,5 +183,30 @@ namespace WpfApp1.Pages
             CurrentUserClient.OwnerId = 0;
             NavigationService.GoBack();
         }
+
+
+
+
+
+        private void SelectImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            openFileDialog.Multiselect = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string fileName in openFileDialog.FileNames)
+                {
+                    // Загружаем изображение в массив байтов
+                    var image = File.ReadAllBytes(fileName);
+                    _selectedImages.Add(image);
+
+                    // Добавляем изображение в ItemsControl для отображения
+                    ImageItemsControl.Items.Add(new BitmapImage(new Uri(fileName)));
+                }
+            }
+        }
+
     }
 }

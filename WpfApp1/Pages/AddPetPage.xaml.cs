@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,23 +22,54 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AddPetPage : Page
     {
+        public event Action PetAdded; // Событие для уведомления о добавлении питомца
+        private List<string> animalTypeSuggestions = new List<string>();
+
         public AddPetPage()
         {
             InitializeComponent();
-            LoadAnimalTypes();
         }
 
-        private void LoadAnimalTypes()
+        private void AnimalTypeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            string input = AnimalTypeTextBox.Text.Trim();
+            if (input.Length > 0)
+            {
+                LoadAnimalTypeSuggestions(input);
+            }
+            else
+            {
+                animalTypeSuggestions.Clear();
+            }
+        }
 
+        private void LoadAnimalTypeSuggestions(string query)
+        {
             using (var context = new VetClinicaEntities())
             {
-                var animalTypes = context.AnimalType.ToList();
-                AnimalTypeComboBox.ItemsSource = animalTypes;
-                AnimalTypeComboBox.DisplayMemberPath = "animal_type_name";
-                AnimalTypeComboBox.SelectedValuePath = "animal_type_id";
+                animalTypeSuggestions = context.AnimalType
+                    .Where(at => at.animal_type_name.StartsWith(query))
+                    .Select(at => at.animal_type_name)
+                    .ToList();
             }
 
+            // Показать первую подсказку, если она есть
+            if (animalTypeSuggestions.Any())
+            {
+                AnimalTypeTextBox.Text = animalTypeSuggestions.First();
+                AnimalTypeTextBox.SelectionStart = query.Length;
+                AnimalTypeTextBox.SelectionLength = animalTypeSuggestions.First().Length - query.Length;
+            }
+        }
+
+        private void AnimalTypeTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab && AnimalTypeTextBox.SelectionLength > 0)
+            {
+                AnimalTypeTextBox.SelectionStart = AnimalTypeTextBox.Text.Length;
+                AnimalTypeTextBox.SelectionLength = 0;
+                e.Handled = true;
+            }
         }
 
         private void SaveAnimalButton_Click(object sender, RoutedEventArgs e)
@@ -45,7 +77,7 @@ namespace WpfApp1.Pages
             if (string.IsNullOrWhiteSpace(AnimalNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(AnimalBreedTextBox.Text) ||
                 string.IsNullOrWhiteSpace(AnimalAgeTextBox.Text) ||
-                AnimalTypeComboBox.SelectedItem == null)
+                string.IsNullOrWhiteSpace(AnimalTypeTextBox.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -53,21 +85,32 @@ namespace WpfApp1.Pages
 
             using (var context = new VetClinicaEntities())
             {
-                var selectedType = (AnimalType)AnimalTypeComboBox.SelectedItem;
+                // Проверяем наличие типа животного
+                string animalTypeName = AnimalTypeTextBox.Text.Trim();
+                var animalType = context.AnimalType.FirstOrDefault(at => at.animal_type_name == animalTypeName);
+
+                if (animalType == null)
+                {
+                    // Если тип не найден, создаем новый
+                    animalType = new AnimalType { animal_type_name = animalTypeName };
+                    context.AnimalType.Add(animalType);
+                    context.SaveChanges();
+                }
 
                 var newAnimal = new Animal
                 {
                     name = AnimalNameTextBox.Text.Trim(),
-                    animal_type_id = selectedType.animal_type_id,
+                    animal_type_id = animalType.animal_type_id,
                     breed = AnimalBreedTextBox.Text.Trim(),
                     age = AnimalAgeTextBox.Text.Trim(),
                     owner_id = CurrentUserClient.OwnerId
                 };
 
-                var existingAnimal = context.Animal.FirstOrDefault(a => a.name == newAnimal.name && a.owner_id == newAnimal.owner_id);
-
                 context.Animal.Add(newAnimal);
                 context.SaveChanges();
+
+                PetAdded?.Invoke(); // Вызываем событие
+                NavigationService.GoBack(); // Возврат на предыдущую страницу
 
                 MessageBox.Show("Животное успешно зарегистрировано.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearInputs();
@@ -79,17 +122,34 @@ namespace WpfApp1.Pages
             AnimalNameTextBox.Clear();
             AnimalBreedTextBox.Clear();
             AnimalAgeTextBox.Clear();
-            AnimalTypeComboBox.SelectedIndex = -1;
+            AnimalTypeTextBox.Clear();
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^[а-яА-Яa-zA-Z]+$"))
+            {
+                e.Handled = true;
+                MessageBox.Show("Вводить можно только буквы.", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void AgeTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^\d+$"))
+            {
+                e.Handled = true;
+                MessageBox.Show("Вводить можно только цифры.", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ClearAnimalTypeComboBoxButton(object sender, RoutedEventArgs e)
         {
-            AnimalTypeComboBox.SelectedItem = null;
+            ClearInputs();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             NavigationService.GoBack();
         }
     }

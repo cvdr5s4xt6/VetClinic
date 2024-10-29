@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VetClinica3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -80,6 +80,15 @@
           <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PetImages">
+          <Key>
+            <PropertyRef Name="image_id" />
+          </Key>
+          <Property Name="image_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="animal_id" Type="int" Nullable="false" />
+          <Property Name="image" Type="varbinary(max)" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Specialty">
           <Key>
@@ -204,7 +213,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище VetClinica3ModelContainer">
+        <Association Name="FK_PetImages_Animal">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
+          <End Role="PetImages" Type="Self.PetImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="animal_id" />
+            </Principal>
+            <Dependent Role="PetImages">
+              <PropertyRef Name="animal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище VetClinicaModelContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnimalType" EntityType="Self.AnimalType" Schema="dbo" store:Type="Tables" />
@@ -212,6 +233,7 @@
           <EntitySet Name="LabTest" EntityType="Self.LabTest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PetImages" EntityType="Self.PetImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestTypes" EntityType="Self.TestTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veterenarian" EntityType="Self.Veterenarian" Schema="dbo" store:Type="Tables" />
@@ -247,12 +269,16 @@
             <End Role="Veterenarian" EntitySet="Veterenarian" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
+          <AssociationSet Name="FK_PetImages_Animal" Association="Self.FK_PetImages_Animal">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="PetImages" EntitySet="PetImages" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="VetClinica3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="VetClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -279,6 +305,7 @@
           <NavigationProperty Name="Owner" Relationship="Self.FK_Animal_Owner" FromRole="Animal" ToRole="Owner" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Animal" FromRole="Animal" ToRole="Appointment" />
           <NavigationProperty Name="MedicalRecord" Relationship="Self.FK_MedicalRecord_Animal" FromRole="Animal" ToRole="MedicalRecord" />
+          <NavigationProperty Name="PetImages" Relationship="Self.FK_PetImages_Animal" FromRole="Animal" ToRole="PetImages" />
         </EntityType>
         <EntityType Name="AnimalType">
           <Key>
@@ -341,6 +368,16 @@
           <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Animal" Relationship="Self.FK_Animal_Owner" FromRole="Owner" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="PetImages">
+          <Key>
+            <PropertyRef Name="image_id" />
+          </Key>
+          <Property Name="image_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="animal_id" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK_PetImages_Animal" FromRole="PetImages" ToRole="Animal" />
         </EntityType>
         <EntityType Name="Specialty">
           <Key>
@@ -420,6 +457,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PetImages_Animal">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
+          <End Role="PetImages" Type="Self.PetImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="animal_id" />
+            </Principal>
+            <Dependent Role="PetImages">
+              <PropertyRef Name="animal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Appointment_Veterenarian">
           <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
@@ -476,6 +525,7 @@
           <EntitySet Name="LabTest" EntityType="Self.LabTest" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" />
           <EntitySet Name="Owner" EntityType="Self.Owner" />
+          <EntitySet Name="PetImages" EntityType="Self.PetImages" />
           <EntitySet Name="Specialty" EntityType="Self.Specialty" />
           <EntitySet Name="TestTypes" EntityType="Self.TestTypes" />
           <EntitySet Name="Veterenarian" EntityType="Self.Veterenarian" />
@@ -494,6 +544,10 @@
           <AssociationSet Name="FK_MedicalRecord_Animal" Association="Self.FK_MedicalRecord_Animal">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PetImages_Animal" Association="Self.FK_PetImages_Animal">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="PetImages" EntitySet="PetImages" />
           </AssociationSet>
           <AssociationSet Name="FK_Appointment_Veterenarian" Association="Self.FK_Appointment_Veterenarian">
             <End Role="Veterenarian" EntitySet="Veterenarian" />
@@ -517,9 +571,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinica3ModelContainer" CdmEntityContainer="VetClinicaEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VetClinicaModelContainer" CdmEntityContainer="VetClinicaEntities">
           <EntitySetMapping Name="Admin">
-            <EntityTypeMapping TypeName="VetClinica3Model.Admin">
+            <EntityTypeMapping TypeName="VetClinicaModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
                 <ScalarProperty Name="admin_id" ColumnName="admin_id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
@@ -532,7 +586,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Animal">
-            <EntityTypeMapping TypeName="VetClinica3Model.Animal">
+            <EntityTypeMapping TypeName="VetClinicaModel.Animal">
               <MappingFragment StoreEntitySet="Animal">
                 <ScalarProperty Name="animal_id" ColumnName="animal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -544,7 +598,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AnimalType">
-            <EntityTypeMapping TypeName="VetClinica3Model.AnimalType">
+            <EntityTypeMapping TypeName="VetClinicaModel.AnimalType">
               <MappingFragment StoreEntitySet="AnimalType">
                 <ScalarProperty Name="animal_type_id" ColumnName="animal_type_id" />
                 <ScalarProperty Name="animal_type_name" ColumnName="animal_type_name" />
@@ -552,7 +606,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Appointment">
-            <EntityTypeMapping TypeName="VetClinica3Model.Appointment">
+            <EntityTypeMapping TypeName="VetClinicaModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
                 <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
                 <ScalarProperty Name="animal_id" ColumnName="animal_id" />
@@ -566,7 +620,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LabTest">
-            <EntityTypeMapping TypeName="VetClinica3Model.LabTest">
+            <EntityTypeMapping TypeName="VetClinicaModel.LabTest">
               <MappingFragment StoreEntitySet="LabTest">
                 <ScalarProperty Name="labtest_id" ColumnName="labtest_id" />
                 <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
@@ -577,7 +631,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MedicalRecord">
-            <EntityTypeMapping TypeName="VetClinica3Model.MedicalRecord">
+            <EntityTypeMapping TypeName="VetClinicaModel.MedicalRecord">
               <MappingFragment StoreEntitySet="MedicalRecord">
                 <ScalarProperty Name="record_id" ColumnName="record_id" />
                 <ScalarProperty Name="animal_id" ColumnName="animal_id" />
@@ -589,7 +643,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Owner">
-            <EntityTypeMapping TypeName="VetClinica3Model.Owner">
+            <EntityTypeMapping TypeName="VetClinicaModel.Owner">
               <MappingFragment StoreEntitySet="Owner">
                 <ScalarProperty Name="owner_id" ColumnName="owner_id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
@@ -601,8 +655,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PetImages">
+            <EntityTypeMapping TypeName="VetClinicaModel.PetImages">
+              <MappingFragment StoreEntitySet="PetImages">
+                <ScalarProperty Name="image_id" ColumnName="image_id" />
+                <ScalarProperty Name="animal_id" ColumnName="animal_id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Specialty">
-            <EntityTypeMapping TypeName="VetClinica3Model.Specialty">
+            <EntityTypeMapping TypeName="VetClinicaModel.Specialty">
               <MappingFragment StoreEntitySet="Specialty">
                 <ScalarProperty Name="specialty_id" ColumnName="specialty_id" />
                 <ScalarProperty Name="specialty_name" ColumnName="specialty_name" />
@@ -610,7 +674,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TestTypes">
-            <EntityTypeMapping TypeName="VetClinica3Model.TestTypes">
+            <EntityTypeMapping TypeName="VetClinicaModel.TestTypes">
               <MappingFragment StoreEntitySet="TestTypes">
                 <ScalarProperty Name="test_types_id" ColumnName="test_types_id" />
                 <ScalarProperty Name="test_type_name" ColumnName="test_type_name" />
@@ -618,7 +682,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Veterenarian">
-            <EntityTypeMapping TypeName="VetClinica3Model.Veterenarian">
+            <EntityTypeMapping TypeName="VetClinicaModel.Veterenarian">
               <MappingFragment StoreEntitySet="Veterenarian">
                 <ScalarProperty Name="veterenarian_id" ColumnName="veterenarian_id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />

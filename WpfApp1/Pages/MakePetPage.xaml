@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="470" 
+      d:DesignHeight="500" 
       d:DesignWidth="700"
       Title="MakePetPage"
       Background="Silver">
@@ -19,44 +19,45 @@
         <StackPanel Orientation="Vertical" 
                     Margin="0,50,0,0" 
                     HorizontalAlignment="Center">
-            
+
             <StackPanel Orientation="Horizontal" 
                         Margin="0,10"
                         HorizontalAlignment="Center">
-                
+
                 <TextBlock Text="Выберите животное:" 
                            VerticalAlignment="Center" 
                            Margin="0,0,10,0"/>
-                
+
                 <Border BorderBrush="Black" 
                         BorderThickness="1" 
                         CornerRadius="0" 
                         Width="200">
-                    
+
                     <ComboBox x:Name="AnimalComboBox" 
                               VerticalAlignment="Center" 
                               MinHeight="30" 
                               Opacity="0.1"
-                          DisplayMemberPath="animal_type_name" 
+                              DisplayMemberPath="animal_type_name" 
                               SelectedValuePath="animal_type_id" 
-                          Foreground="Black" FontSize="15"/>
+                              Foreground="Black" 
+                              FontSize="15"/>
                 </Border>
-                
+
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" 
                         Margin="0,10" 
                         HorizontalAlignment="Center">
-                
+
                 <TextBlock Text="Выберите ветеринара:" 
                            VerticalAlignment="Center" 
                            Margin="0,0,10,0"/>
-                
+
                 <Border BorderBrush="Black" 
                         BorderThickness="1" 
                         CornerRadius="0"
                         Width="200">
-                    
+
                     <ComboBox x:Name="VeterinarianComboBox" 
                               VerticalAlignment="Center" 
                               MinHeight="30" 
@@ -64,27 +65,27 @@
                               Foreground="Black" 
                               FontSize="15"/>
                 </Border>
-                
+
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" 
                         Margin="0,10" 
                         HorizontalAlignment="Center">
-                
+
                 <TextBlock Text="Выберите время приема:" 
                            VerticalAlignment="Center" 
                            Margin="0,0,10,0"/>
-                
+
                 <Border BorderBrush="Black" 
                         BorderThickness="1" 
                         CornerRadius="0" 
                         Width="200">
-                    
+
                     <ComboBox x:Name="TimeComboBox" 
                               VerticalAlignment="Center" 
                               MinHeight="30"
                               Opacity="0.1">
-                        
+
                         <ComboBoxItem Content="09:00"/>
                         <ComboBoxItem Content="10:00"/>
                         <ComboBoxItem Content="11:00"/>
@@ -94,28 +95,28 @@
                         <ComboBoxItem Content="15:00"/>
                         <ComboBoxItem Content="16:00"/>
                         <ComboBoxItem Content="17:00"/>
-                        
+
                     </ComboBox>
-                    
+
                 </Border>
-                
+
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" 
                         Margin="0,10" 
                         HorizontalAlignment="Center">
-                
+
                 <TextBlock Text="Выберите дату приема:" 
                            VerticalAlignment="Center" 
                            Margin="0,0,10,0"/>
-                
+
                 <Border Width="200">
-                    
+
                     <DatePicker x:Name="AppointmentDatePicker" 
                                 VerticalAlignment="Center" 
                                 Height="30"/>
                 </Border>
-                
+
             </StackPanel>
 
             <StackPanel Orientation="Vertical" 
@@ -128,7 +129,7 @@
                            HorizontalAlignment="Left"/>
 
                 <Grid Margin="0,0,0,0" Width="400">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -138,14 +139,14 @@
                             BorderThickness="1" 
                             CornerRadius="0" 
                             Height="80">
-                        
+
                         <TextBox x:Name="AnalysisTextBox" 
                              TextWrapping="Wrap" 
                              Margin="5" 
                              Background="Transparent" 
                              Foreground="Black" 
                              BorderThickness="0"/>
-                        
+
                     </Border>
 
                     <Button Content="Очистить" 
@@ -159,46 +160,82 @@
                         Click="ClearAnalysisButton_Click" 
                         Margin="10,0,0,0" 
                         Grid.Column="1" />
-
                 </Grid>
-
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,10" 
+                        HorizontalAlignment="Center">
+
+                <TextBlock Text="Выберите изображение:" 
+                           VerticalAlignment="Center" 
+                           Margin="0,0,10,0"/>
+
+                <ItemsControl x:Name="ImageItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding}" 
+                                   Width="100" 
+                                   Height="100" 
+                                   Margin="5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Button x:Name="SelectImageButton" 
+                        Content="Выбрать" 
+                        Click="SelectImageButton_Click"
+                        Width="100"/>
+                
+            </StackPanel>
+
+            <Image x:Name="SelectedImage" 
+                   Width="200" 
+                   Height="200" 
+                   Margin="0,10" 
+                   Visibility="Collapsed"/>
         </StackPanel>
 
         <Button Content="Записать на прием" 
-            VerticalAlignment="Bottom" 
-            HorizontalAlignment="Center" 
-            Width="150" 
-            Height="40" 
-            Click="OnAppointmentButtonClick" 
-            Margin="0,10,0,0" 
-            Background="Transparent" 
-            BorderBrush="Black" 
-            BorderThickness="1" 
-            Foreground="Black" />
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center" 
+                Width="150" 
+                Height="40" 
+                Click="OnAppointmentButtonClick" 
+                Margin="0,10,0,0" 
+                Background="Transparent" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                Foreground="Black" />
+
         <Button Content="Добавить животное" 
-    VerticalAlignment="Bottom" 
-    HorizontalAlignment="Center" 
-    Width="150" 
-    Height="40" 
-    Click="Button_Click" 
-    Margin="320,0,0,0" 
-    Background="Transparent" 
-    BorderBrush="Black" 
-    BorderThickness="1" 
-    Foreground="Black" />
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center" 
+                Width="150" 
+                Height="40" 
+                Click="Button_Click" 
+                Margin="320,0,0,0" 
+                Background="Transparent" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                Foreground="Black" />
+
         <Button Content="Назад" 
-VerticalAlignment="Bottom" 
-HorizontalAlignment="Center" 
-Width="150" 
-Height="40" 
-Click="Button_Click_1" 
-Margin="-320,0,0,0" 
-Background="Transparent" 
-BorderBrush="Black" 
-BorderThickness="1" 
-Foreground="Black" />
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center" 
+                Width="150" 
+                Height="40" 
+                Click="Button_Click_1" 
+                Margin="-320,0,0,0" 
+                Background="Transparent" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                Foreground="Black" />
     </Grid>
-    
+
 </Page>

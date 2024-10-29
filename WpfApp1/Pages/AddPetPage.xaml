@@ -34,7 +34,9 @@
                     Height="400"
                     Margin="0,20,0,0">
 
-            <StackPanel Orientation="Horizontal" Margin="0,10">
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,10">
+                
                 <TextBlock Text="Имя:" 
                            Margin="0,0,10,0"
                            Width="157" 
@@ -42,18 +44,28 @@
                            FontSize="17" 
                            FontWeight="Light"
                            Foreground="Black"/>
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="0" Width="300">
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="300">
+                    
                     <TextBox x:Name="AnimalNameTextBox" 
                              Width="300" 
                              Margin="5" 
                              MaxLength="50" 
                              Background="Transparent" 
                              Foreground="Black" 
-                             BorderThickness="0"/>
+                             BorderThickness="0"
+                             PreviewTextInput="TextBox_PreviewTextInput"/>
+                    
                 </Border>
+                
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10">
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,10">
+                
                 <TextBlock Text="Тип:" 
                            Margin="0,0,10,0"
                            Width="157" 
@@ -62,31 +74,29 @@
                            FontWeight="Light"
                            Foreground="Black"/>
 
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="0" Width="150">
-                    <ComboBox x:Name="AnimalTypeComboBox" 
-                              Opacity="0.1"
-                              FontSize="15" 
-                              Width="150" 
-                              MinHeight="30" 
-                              DisplayMemberPath="animal_type_name" 
-                              SelectedValuePath="animal_type_id" 
-                              Foreground="Black"/>
-                </Border>
-
-                <TextBlock Text="или" VerticalAlignment="Center" Margin="10,0" FontSize="17"/>
-
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="0" Width="150">
-                    <TextBox x:Name="CustomAnimalTypeName" 
-                             Width="150" 
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="300">
+                    
+                    <TextBox x:Name="AnimalTypeTextBox" 
+                             Width="300" 
                              Margin="5" 
                              MaxLength="50" 
                              Background="Transparent" 
                              Foreground="Black" 
-                             BorderThickness="0"/>
+                             BorderThickness="0"
+                             TextChanged="AnimalTypeTextBox_TextChanged"
+                             KeyDown="AnimalTypeTextBox_KeyDown"
+                             ToolTip="Введите тип питомца"
+                             PreviewTextInput="TextBox_PreviewTextInput"/>
                 </Border>
+                
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,10">
+                
                 <TextBlock Text="Порода:" 
                            Margin="0,0,10,0"
                            Width="157" 
@@ -94,18 +104,27 @@
                            FontSize="17" 
                            FontWeight="Light"
                            Foreground="Black"/>
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="0" Width="300">
+                
+                <Border BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="0" 
+                        Width="300">
+                    
                     <TextBox x:Name="AnimalBreedTextBox" 
                              Width="300" 
                              Margin="5" 
                              MaxLength="50" 
                              Background="Transparent" 
                              Foreground="Black" 
-                             BorderThickness="0"/>
+                             BorderThickness="0"
+                             PreviewTextInput="TextBox_PreviewTextInput"/>
                 </Border>
+                
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10">
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,10">
+                
                 <TextBlock Text="Возраст:" 
                            Margin="0,0,10,0"
                            Width="157" 
@@ -113,18 +132,29 @@
                            FontSize="17" 
                            FontWeight="Light"
                            Foreground="Black"/>
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="0" Width="300">
+                
+                <Border BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="0" 
+                        Width="300">
+                    
                     <TextBox x:Name="AnimalAgeTextBox" 
                              Width="300" 
                              Margin="5" 
                              MaxLength="50" 
                              Background="Transparent" 
                              Foreground="Black" 
-                             BorderThickness="0"/>
+                             BorderThickness="0"
+                             PreviewTextInput="AgeTextBox_PreviewTextInput"/>
+                    
                 </Border>
+                
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,30,0,10">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center" 
+                        Margin="20,30,0,10">
+                
                 <Button Content="Зарегистрировать" 
                         FontSize="15" 
                         FontWeight="Light" 
@@ -148,16 +178,16 @@
                         Margin="20,0,0,0"
                         Click="ClearAnimalTypeComboBoxButton"/>
                 <Button Content="Назад" 
-        FontSize="15" 
-        FontWeight="Light" 
-        Width="160" 
-        Foreground="Black"
-        BorderBrush="Black"
-        Background="Transparent" 
-        BorderThickness="1" 
-        Height="40" 
-        Margin="20,0,0,0"
-        Click="Button_Click"/>
+                        FontSize="15" 
+                        FontWeight="Light" 
+                        Width="160" 
+                        Foreground="Black"
+                        BorderBrush="Black"
+                        Background="Transparent" 
+                        BorderThickness="1" 
+                        Height="40" 
+                        Margin="20,0,0,0"
+                        Click="Button_Click"/>
             </StackPanel>
 
         </StackPanel>
