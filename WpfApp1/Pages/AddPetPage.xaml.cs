@@ -86,5 +86,11 @@ namespace WpfApp1.Pages
         {
             AnimalTypeComboBox.SelectedItem = null;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            NavigationService.GoBack();
+        }
     }
 }

@@ -130,7 +130,7 @@ namespace WpfApp1.Pages
                 animal_id = selectedAnimalId,
                 veterenarian_id = selectedVeterinarianId,
                 appointment_date = appointmentDateTime,
-                reason = "п",
+                reason = " ",
                 comment = comment
             };
 
@@ -143,6 +143,17 @@ namespace WpfApp1.Pages
         private void ClearAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
             AnalysisTextBox.Clear();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddPetPage());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CurrentUserClient.OwnerId = 0;
+            NavigationService.GoBack();
         }
     }
 }

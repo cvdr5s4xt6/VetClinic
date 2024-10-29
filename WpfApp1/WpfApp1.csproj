@@ -103,9 +103,6 @@
     <Compile Include="BD\Specialty.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="BD\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="BD\TestTypes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -131,6 +128,9 @@
     </Compile>
     <Compile Include="Pages\NavigationAdminPage.xaml.cs">
       <DependentUpon>NavigationAdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RegisterAdminPage.xaml.cs">
+      <DependentUpon>RegisterAdminPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\RegisterUserPage.xaml.cs">
       <DependentUpon>RegisterUserPage.xaml</DependentUpon>
@@ -168,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NavigationAdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RegisterAdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

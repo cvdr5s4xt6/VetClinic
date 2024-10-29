@@ -177,7 +177,28 @@
             BorderBrush="Black" 
             BorderThickness="1" 
             Foreground="Black" />
-        
+        <Button Content="Добавить животное" 
+    VerticalAlignment="Bottom" 
+    HorizontalAlignment="Center" 
+    Width="150" 
+    Height="40" 
+    Click="Button_Click" 
+    Margin="320,0,0,0" 
+    Background="Transparent" 
+    BorderBrush="Black" 
+    BorderThickness="1" 
+    Foreground="Black" />
+        <Button Content="Назад" 
+VerticalAlignment="Bottom" 
+HorizontalAlignment="Center" 
+Width="150" 
+Height="40" 
+Click="Button_Click_1" 
+Margin="-320,0,0,0" 
+Background="Transparent" 
+BorderBrush="Black" 
+BorderThickness="1" 
+Foreground="Black" />
     </Grid>
     
 </Page>

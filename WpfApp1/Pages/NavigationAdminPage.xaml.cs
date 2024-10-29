@@ -32,9 +32,9 @@ namespace WpfApp1.Pages
 
         private void RegisterVeterinarian_Click(object sender, RoutedEventArgs e)
         {
-            var registerPage = new RegisterUserPage();
+            var registerPage = new RegisterAdminPage();
             registerPage.IsAdminMode = true;
-            NavigationService.Navigate(new RegisterUserPage());
+            NavigationService.Navigate(registerPage);
         }
     }
 }

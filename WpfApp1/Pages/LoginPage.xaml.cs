@@ -92,6 +92,7 @@ namespace WpfApp1.Pages
             if (owner != null)
             {
                 MakePetPage makePetPage = new MakePetPage(owner.owner_id);
+                CurrentUserClient.OwnerId = owner.owner_id;
                 NavigationService.Navigate(makePetPage);
                 return;
             }
