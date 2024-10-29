@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -42,7 +42,7 @@
           <Property Name="appointment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="animal_id" Type="int" Nullable="false" />
           <Property Name="veterenarian_id" Type="int" Nullable="false" />
-          <Property Name="appointment_date" Type="datetime2" Precision="7" />
+          <Property Name="appointment_date" Type="datetime" Nullable="false" />
           <Property Name="reason" Type="nvarchar" MaxLength="50" />
           <Property Name="appointment_result" Type="nvarchar" MaxLength="50" />
           <Property Name="comment" Type="nvarchar(max)" />
@@ -56,7 +56,7 @@
           <Property Name="appointment_id" Type="int" Nullable="false" />
           <Property Name="test_type_id" Type="int" Nullable="false" />
           <Property Name="result" Type="nvarchar" MaxLength="50" />
-          <Property Name="conducted_at" Type="datetime2" Precision="7" />
+          <Property Name="conducted_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MedicalRecord">
           <Key>
@@ -67,7 +67,7 @@
           <Property Name="veterenarian_id" Type="int" Nullable="false" />
           <Property Name="diagnosis" Type="nvarchar" MaxLength="50" />
           <Property Name="treatment" Type="nvarchar" MaxLength="50" />
-          <Property Name="created_at" Type="datetime2" Precision="7" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -274,8 +274,7 @@
             <End Role="PetImages" EntitySet="PetImages" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VetClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -322,7 +321,7 @@
           <Property Name="appointment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="animal_id" Type="Int32" Nullable="false" />
           <Property Name="veterenarian_id" Type="Int32" Nullable="false" />
-          <Property Name="appointment_date" Type="DateTime" Precision="7" />
+          <Property Name="appointment_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="appointment_result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -339,7 +338,7 @@
           <Property Name="appointment_id" Type="Int32" Nullable="false" />
           <Property Name="test_type_id" Type="Int32" Nullable="false" />
           <Property Name="result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="conducted_at" Type="DateTime" Precision="7" />
+          <Property Name="conducted_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_LabTest_Appointment" FromRole="LabTest" ToRole="Appointment" />
           <NavigationProperty Name="TestTypes" Relationship="Self.FK_LabTest_TestTypes" FromRole="LabTest" ToRole="TestTypes" />
         </EntityType>
@@ -352,7 +351,7 @@
           <Property Name="veterenarian_id" Type="Int32" Nullable="false" />
           <Property Name="diagnosis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Animal" Relationship="Self.FK_MedicalRecord_Animal" FromRole="MedicalRecord" ToRole="Animal" />
           <NavigationProperty Name="Veterenarian" Relationship="Self.FK_MedicalRecord_Veterenarian" FromRole="MedicalRecord" ToRole="Veterenarian" />
         </EntityType>

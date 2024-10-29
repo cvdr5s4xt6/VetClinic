@@ -69,14 +69,12 @@ namespace WpfApp1.Pages
                 return;
             }
 
+
             if (AppointmentDatePicker.SelectedDate == null)
             {
                 MessageBox.Show("Пожалуйста, выберите дату приема.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-          
-
 
             string selectedTime = (TimeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             if (string.IsNullOrEmpty(selectedTime))
@@ -87,7 +85,9 @@ namespace WpfApp1.Pages
 
             int selectedAnimalId = (int)AnimalComboBox.SelectedValue;
             int selectedVeterinarianId = (int)VeterinarianComboBox.SelectedValue;
+
             DateTime selectedDate = AppointmentDatePicker.SelectedDate.Value;
+
             DateTime appointmentDateTime;
 
             try
@@ -106,6 +106,11 @@ namespace WpfApp1.Pages
                 return;
             }
 
+            if (selectedDate < new DateTime(1753, 1, 1) || selectedDate > new DateTime(9999, 12, 31))
+            {
+                MessageBox.Show("Дата приема выходит за пределы допустимого диапазона.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
 
             // Проверка 1: Запрещаем запись одного и того же питомца к одному и тому же врачу на одно и то же время
@@ -136,6 +141,7 @@ namespace WpfApp1.Pages
                 {
                     animal_id = selectedAnimalId,
                     image = image,
+                    created_at = DateTime.Now  // Явно указываем текущую дату
                     // Можно добавить описание, если нужно
                 };
 
@@ -163,6 +169,10 @@ namespace WpfApp1.Pages
         private void ClearAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
             AnalysisTextBox.Clear();
+            int imageId = 5;
+            NavigationService.Navigate(new PetImagePage(imageId));
+
+
         }
 
         private void OnPetAdded()
@@ -182,10 +192,9 @@ namespace WpfApp1.Pages
         {
             CurrentUserClient.OwnerId = 0;
             NavigationService.GoBack();
+           
+
         }
-
-
-
 
 
         private void SelectImageButton_Click(object sender, RoutedEventArgs e)

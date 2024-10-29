@@ -19,7 +19,7 @@ namespace WpfApp1.BD
         public int veterenarian_id { get; set; }
         public string diagnosis { get; set; }
         public string treatment { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
+        public System.DateTime created_at { get; set; }
     
         public virtual Animal Animal { get; set; }
         public virtual Veterenarian Veterenarian { get; set; }

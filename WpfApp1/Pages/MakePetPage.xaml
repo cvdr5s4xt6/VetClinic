@@ -158,8 +158,8 @@
                         BorderThickness="1" 
                         BorderBrush="Black" 
                         Click="ClearAnalysisButton_Click" 
-                        Margin="10,0,0,0" 
-                        Grid.Column="1" />
+                        Margin="10,15,0,15" 
+                        Grid.Column="1" HorizontalAlignment="Left" />
                 </Grid>
             </StackPanel>
 
@@ -191,7 +191,7 @@
                         Content="Выбрать" 
                         Click="SelectImageButton_Click"
                         Width="100"/>
-                
+
             </StackPanel>
 
             <Image x:Name="SelectedImage" 

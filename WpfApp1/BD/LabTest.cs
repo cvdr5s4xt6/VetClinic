@@ -18,7 +18,7 @@ namespace WpfApp1.BD
         public int appointment_id { get; set; }
         public int test_type_id { get; set; }
         public string result { get; set; }
-        public Nullable<System.DateTime> conducted_at { get; set; }
+        public System.DateTime conducted_at { get; set; }
     
         public virtual Appointment Appointment { get; set; }
         public virtual TestTypes TestTypes { get; set; }
