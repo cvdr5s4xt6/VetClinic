@@ -22,18 +22,18 @@ namespace WpfApp1.Pages
     public partial class NavigationVeterenarianPage : Page
     {
         private VetClinicaEntities _context;
-        private Veterenarian veterenarian; // Поле для хранения данных о владельце
-        public NavigationVeterenarianPage()
+        private Veterenarian _veterinarian;
+
+        public NavigationVeterenarianPage(Veterenarian veterinarian)
         {
             InitializeComponent();
-            this.veterenarian = veterenarian; // Сохраняем переданного владельца
+            this._veterinarian = veterinarian;
         }
 
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {
-            // Создаем страницы с передачей необходимых параметров
-            MakePetPage makePetPage = new MakePetPage(veterenarian.veterenarian_id);
-            //NavigationService.Navigate(new AddAppointmentPage(username));
+            AddAppointmentPage appointmentPage = new AddAppointmentPage(_veterinarian.login);
+            NavigationService.Navigate(appointmentPage);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -43,18 +43,17 @@ namespace WpfApp1.Pages
 
         private void Chat_Click(object sender, RoutedEventArgs e)
         {
-            ChatPage chatPage = new ChatPage("Veterinarian", veterenarian.veterenarian_id, veterenarian.login);
+            ChatPage chatPage = new ChatPage("Veterinarian", _veterinarian.veterenarian_id, _veterinarian.login);
 
-            // Сохраняем ID владельца
-            CurrentUser.VeterinarianId = veterenarian.veterenarian_id;
+            CurrentUser.VeterinarianId = _veterinarian.veterenarian_id;
 
-            NavigationService.Navigate(chatPage); // Переход на ChatPage, если нужно
+            NavigationService.Navigate(chatPage); 
             return;
         }
 
         private void A_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new VeterinaryRecordsPage());
         }
     }
 }

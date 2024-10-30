@@ -212,7 +212,7 @@
                         Margin="20,0,0,0" 
                         Click="CancelButton_Click"/>
 
-                <Button Content="Выйти из учетки" 
+                <!--<Button Content="Назад" 
                         FontSize="15" 
                         FontWeight="Light" 
                         Width="160" 
@@ -222,7 +222,7 @@
                         BorderThickness="1" 
                         Height="40" 
                         Margin="20,0,0,0" Click="Button_Click" 
-                   />
+                   />-->
 
             </StackPanel>
             

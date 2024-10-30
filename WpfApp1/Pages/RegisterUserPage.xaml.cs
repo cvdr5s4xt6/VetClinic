@@ -23,11 +23,11 @@ namespace WpfApp1.Pages
     {
         private bool isPasswordVisible = false;
 
-        public bool IsReturnButtonVisible
-        {
-            get => ReturnToAppointmentButton.Visibility == Visibility.Visible;
-            set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-        }
+        //public bool IsReturnButtonVisible
+        //{
+        //    get => ReturnToAppointmentButton.Visibility == Visibility.Visible;
+        //    set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+        //}
 
 
         private bool _isAdminMode;
@@ -337,10 +337,10 @@ namespace WpfApp1.Pages
             this.NavigationService.Navigate(loginPage);
         }
 
-        private void ReturnToAppointmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new AddAppointmentPage(username));
-        }
+        //private void ReturnToAppointmentButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //NavigationService.Navigate(new AddAppointmentPage(username));
+        //}
     }
 }
 

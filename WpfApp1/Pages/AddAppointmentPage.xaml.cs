@@ -24,11 +24,14 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AddAppointmentPage : Page
     {
+
+        public DateTime visit_date { get; set; }
+
         private string _username;
         private VetClinicaEntities _context = new VetClinicaEntities();
         public AddAppointmentPage(string username)
         {
-
+            visit_date = DateTime.Now;
             _username = username;
             InitializeComponent();
             LoadPets();
@@ -79,7 +82,7 @@ namespace WpfApp1.Pages
                         animal_id = selectedPet.animal_id,
                         diagnosis = DiagnosisTextBox.Text,
                         treatment = PrescriptionsTextBox.Text,
-
+                        
                         veterenarian_id = CurrentUser.VeterinarianId
                     };
 
@@ -130,10 +133,10 @@ namespace WpfApp1.Pages
             PetComboBox.SelectedItem = null;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new RegisterUserPage());
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    NavigationService.Navigate(new RegisterUserPage());
+        //}
 
 
         private Veterenarian GetVeterinarianByLogin(string login)

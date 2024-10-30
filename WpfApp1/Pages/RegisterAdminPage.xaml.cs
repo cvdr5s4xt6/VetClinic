@@ -33,11 +33,11 @@ namespace WpfApp1.Pages
 
         private bool isPasswordVisible = false;
 
-        public bool IsReturnButtonVisible
-        {
-            get => ReturnToAppointmentButton.Visibility == Visibility.Visible;
-            set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-        }
+        //public bool IsReturnButtonVisible
+        //{
+        //    get => ReturnToAppointmentButton.Visibility == Visibility.Visible;
+        //    set => ReturnToAppointmentButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+        //}
 
 
         private bool _isAdminMode;
@@ -299,10 +299,10 @@ NavigationService.GoBack();
                 MessageBox.Show("Введите корректный домен почты: @gmail.com или @mail.ru.");
             }
         }
-        private void ReturnToAppointmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new AddAppointmentPage(username));
-        }
+        //private void ReturnToAppointmentButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //NavigationService.Navigate(new AddAppointmentPage(username));
+        //}
 
     }
 }

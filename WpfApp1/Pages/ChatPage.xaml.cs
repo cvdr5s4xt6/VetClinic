@@ -38,7 +38,6 @@ namespace WpfApp1.Pages
             SetupPage();
         }
 
-        // Метод для аутентификации пользователя
         private void AuthenticateUser(string login)
         {
             var owner = db.Owner.FirstOrDefault(o => o.login == login );
@@ -58,10 +57,8 @@ namespace WpfApp1.Pages
             }
 
             MessageBox.Show("Неверный логин или пароль.");
-            // Закрыть или перенаправить пользователя при ошибке аутентификации
         }
 
-        // Настройка страницы в зависимости от роли пользователя
         private void SetupPage()
         {
             if (userRole == "Owner")
@@ -74,30 +71,26 @@ namespace WpfApp1.Pages
             }
         }
 
-        // Метод для загрузки клиентов для выбора в ComboBox
         private void LoadClients()
         {
             UserComboBox.ItemsSource = db.Owner.ToList();
-            UserComboBox.DisplayMemberPath = "first_name"; // Пример отображения имени клиента
+            UserComboBox.DisplayMemberPath = "first_name"; 
             UserComboBox.SelectedValuePath = "owner_id";
         }
 
-        // Метод для загрузки ветеринаров для выбора в ComboBox
         private void LoadVeterinarians()
         {
             UserComboBox.ItemsSource = db.Veterenarian.ToList();
-            UserComboBox.DisplayMemberPath = "first_name"; // Пример отображения имени ветеринара
+            UserComboBox.DisplayMemberPath = "first_name"; 
             UserComboBox.SelectedValuePath = "veterenarian_id";
         }
 
-        // Обработчик выбора собеседника
         private void UserComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedReceiverId = (int?)UserComboBox.SelectedValue;
             LoadMessages();
         }
 
-        // Метод для загрузки сообщений
         private void LoadMessages()
         {
             if (selectedReceiverId.HasValue)
@@ -116,7 +109,6 @@ namespace WpfApp1.Pages
             }
         }
 
-        // Отправка сообщения
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
             SendMessage();
@@ -162,7 +154,6 @@ namespace WpfApp1.Pages
             MessageTextBox.Clear();
         }
 
-        // Удаление истории чата
         private void DeleteChatHistory_Click(object sender, RoutedEventArgs e)
         {
             if (!selectedReceiverId.HasValue)
@@ -189,5 +180,15 @@ namespace WpfApp1.Pages
         {
             NavigationService.GoBack();
         }
+
+        //private string _veterinarianName; // Имя ветеринара
+        //private string _veterinarianSurname; // Фамилия ветеринара
+        //private void SendMessage(string message)
+        //{
+        //    // Логика для отправки сообщения
+        //    string fullMessage = $"{_veterinarianName} {_veterinarianSurname}: {message}";
+        //    // Отправить fullMessage в чат
+        //}
+
     }
 }

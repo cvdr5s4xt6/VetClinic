@@ -31,12 +31,12 @@ namespace WpfApp1.BD
         public virtual DbSet<Appointment> Appointment { get; set; }
         public virtual DbSet<LabTest> LabTest { get; set; }
         public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
+        public virtual DbSet<Messages> Messages { get; set; }
         public virtual DbSet<Owner> Owner { get; set; }
         public virtual DbSet<PetImages> PetImages { get; set; }
         public virtual DbSet<Specialty> Specialty { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Veterenarian> Veterenarian { get; set; }
-        public virtual DbSet<Messages> Messages { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }
