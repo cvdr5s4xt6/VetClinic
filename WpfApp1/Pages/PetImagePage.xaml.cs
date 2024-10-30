@@ -66,5 +66,10 @@ namespace WpfApp1.Pages
             DateTime? selectedDate = DatePicker.SelectedDate;
             LoadImagesByDate(selectedDate);
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

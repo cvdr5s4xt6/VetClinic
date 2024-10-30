@@ -8,7 +8,7 @@
       d:DesignHeight="600" 
       d:DesignWidth="800"
       Background="Silver"
-      Title="Регистрация Питомца">
+      Title="Регистрация Питомцев">
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" 
-                   Text="Регистрация Животных" 
+                   Text="Регистрация Питомцев" 
                    HorizontalAlignment="Center"
                    FontSize="30" 
                    FontWeight="Light" 

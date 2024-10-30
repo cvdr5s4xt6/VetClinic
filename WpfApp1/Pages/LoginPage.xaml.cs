@@ -88,33 +88,42 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var owner = _context.Owner.FirstOrDefault(o => o.login == username && o.password == enteredPassword);
-            if (owner != null)
+            var owner = _context.Owner.FirstOrDefault(o => o.login == username);
+            if (owner != null && VerifyPassword(enteredPassword, owner.password)) 
             {
-                MakePetPage makePetPage = new MakePetPage(owner.owner_id);
-                CurrentUserClient.OwnerId = owner.owner_id;
-                NavigationService.Navigate(makePetPage);
+                MessageBox.Show($"Добро пожаловать, {owner.last_name} {owner.first_name}!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new NavigationOwnerPage(owner));
                 return;
             }
 
-            var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username && v.password == enteredPassword);
-            if (veterinarian != null)
+            var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username);
+            if (veterinarian != null && VerifyPassword(enteredPassword, veterinarian.password)) 
             {
-                // Передача логина на страницу AddAppointmentPage при успешной авторизации ветеринара
+                // Создаем страницы с передачей необходимых параметров
                 AddAppointmentPage appointmentPage = new AddAppointmentPage(username);
-                NavigationService.Navigate(appointmentPage);
+                ChatPage chatPage = new ChatPage("Veterinarian", veterinarian.veterenarian_id, veterinarian.login);
+
+                // Навигация на страницы
+                NavigationService.Navigate(appointmentPage); // Переход на AddAppointmentPage
+                NavigationService.Navigate(chatPage); // Переход на ChatPage, если нужно
                 return;
             }
 
-            var admin = _context.Admin.FirstOrDefault(a => a.login == username && a.password == enteredPassword);
-            if (admin != null)
+            var admin = _context.Admin.FirstOrDefault(a => a.login == username);
+            if (admin != null && VerifyPassword(enteredPassword, admin.password))
             {
                 NavigationService.Navigate(new NavigationAdminPage());
                 return;
             }
 
+
             MessageBox.Show("Неправильный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
 
+        }
+
+        private bool VerifyPassword(string enteredPassword, string storedPassword)
+        {
+            return enteredPassword == storedPassword;
         }
 
 

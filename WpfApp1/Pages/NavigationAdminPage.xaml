@@ -11,9 +11,23 @@
       Title="Страница навигации админа">
     
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Content="Посмотреть отчеты" Width="200" Height="50" Click="ViewReports_Click"/>
-            <Button Content="Зарегистрировать ветеринара" Width="200" Height="50" Margin="0,20,0,0" Click="RegisterVeterinarian_Click"/>
+        
+        <StackPanel VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">
+            
+            <Button Content="Посмотреть отчеты" 
+                    Width="200" 
+                    Height="50" 
+                    Click="ViewReports_Click"/>
+            
+            <Button Content="Зарегистрировать ветеринара" 
+                    Width="200" 
+                    Height="50" 
+                    Margin="0,20,0,0" 
+                    Click="RegisterVeterinarian_Click"/>
+            
         </StackPanel>
+        
     </Grid>
+    
 </Page>

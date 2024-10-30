@@ -19,6 +19,7 @@ namespace WpfApp1.BD
         {
             this.Appointment = new HashSet<Appointment>();
             this.MedicalRecord = new HashSet<MedicalRecord>();
+            this.Messages = new HashSet<Messages>();
         }
     
         public int veterenarian_id { get; set; }
@@ -34,5 +35,7 @@ namespace WpfApp1.BD
         public virtual ICollection<Appointment> Appointment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicalRecord> MedicalRecord { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messages> Messages { get; set; }
     }
 }

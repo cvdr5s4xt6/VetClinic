@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="500" 
+      d:DesignHeight="700" 
       d:DesignWidth="700"
       Title="MakePetPage"
       Background="Silver">
@@ -152,14 +152,13 @@
                     <Button Content="Очистить" 
                         FontWeight="Light" 
                         Height="50" 
-                        Width="60" 
                         Foreground="Black" 
                         Background="Transparent" 
                         BorderThickness="1" 
                         BorderBrush="Black" 
                         Click="ClearAnalysisButton_Click" 
                         Margin="10,15,0,15" 
-                        Grid.Column="1" HorizontalAlignment="Left" />
+                        Grid.Column="1" />
                 </Grid>
             </StackPanel>
 
@@ -187,12 +186,13 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <Button x:Name="SelectImageButton" 
-                        Content="Выбрать" 
-                        Click="SelectImageButton_Click"
-                        Width="100"/>
-
             </StackPanel>
+
+            <Button x:Name="SelectImageButton" 
+        Content="Выбрать" 
+        Click="SelectImageButton_Click"
+        Width="100" 
+        HorizontalAlignment="Left"/>
 
             <Image x:Name="SelectedImage" 
                    Width="200" 
@@ -226,12 +226,12 @@
                 Foreground="Black" />
 
         <Button Content="Назад" 
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Left" 
                 Width="150" 
                 Height="40" 
                 Click="Button_Click_1" 
-                Margin="-320,0,0,0" 
+                Margin="105,640,0,0" 
                 Background="Transparent" 
                 BorderBrush="Black" 
                 BorderThickness="1" 

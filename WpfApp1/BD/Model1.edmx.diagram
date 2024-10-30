@@ -25,6 +25,10 @@
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_Appointment" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_LabTest_TestTypes" ManuallyRouted="false" />
         <AssociationConnector Association="VetClinicaModel.FK_MedicalRecord_Veterenarian" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VetClinicaModel.Messages" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="VetClinicaModel.sysdiagrams" Width="1.5" PointX="5.375" PointY="9.125" />
+        <AssociationConnector Association="VetClinicaModel.FK_Message_Receiver_Veterinarian" />
+        <AssociationConnector Association="VetClinicaModel.FK_Message_Sender_Owner" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

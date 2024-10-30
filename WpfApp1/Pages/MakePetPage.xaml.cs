@@ -24,7 +24,7 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class MakePetPage : Page
     {
-       
+
         private VetClinicaEntities _context;
         private int _ownerId;
         public MakePetPage(int ownerId)
@@ -54,6 +54,7 @@ namespace WpfApp1.Pages
         }
 
         private List<byte[]> _selectedImages = new List<byte[]>();
+
 
         private void OnAppointmentButtonClick(object sender, RoutedEventArgs e)
         {
@@ -169,20 +170,16 @@ namespace WpfApp1.Pages
         private void ClearAnalysisButton_Click(object sender, RoutedEventArgs e)
         {
             AnalysisTextBox.Clear();
-            int imageId = 5;
-            NavigationService.Navigate(new PetImagePage(imageId));
-
-
         }
 
         private void OnPetAdded()
         {
-            LoadAnimals(); 
+            LoadAnimals();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             AddPetPage addPetPage = new AddPetPage();
             addPetPage.PetAdded += OnPetAdded;
             NavigationService.Navigate(addPetPage);
@@ -192,8 +189,6 @@ namespace WpfApp1.Pages
         {
             CurrentUserClient.OwnerId = 0;
             NavigationService.GoBack();
-           
-
         }
 
 
@@ -207,15 +202,57 @@ namespace WpfApp1.Pages
             {
                 foreach (string fileName in openFileDialog.FileNames)
                 {
-                    // Загружаем изображение в массив байтов
-                    var image = File.ReadAllBytes(fileName);
-                    _selectedImages.Add(image);
+                    // Создаем StackPanel для изображения и кнопки удаления
+                    StackPanel imagePanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(5) };
 
-                    // Добавляем изображение в ItemsControl для отображения
-                    ImageItemsControl.Items.Add(new BitmapImage(new Uri(fileName)));
+                    var bitmap = new BitmapImage(new Uri(fileName));
+                    Image imageControl = new Image
+                    {
+                        Source = bitmap,
+                        Width = 100,
+                        Height = 100,
+                        Margin = new Thickness(5)
+                    };
+
+                    Button deleteButton = new Button
+                    {
+                        Content = "✖",
+                        Width = 20,
+                        Height = 20,
+                        Margin = new Thickness(5),
+                        Tag = fileName
+                    };
+                    deleteButton.Click += DeleteImageButton_Click;
+   
+                    imagePanel.Children.Add(imageControl);
+                    imagePanel.Children.Add(deleteButton);
+
+                    ImageItemsControl.Items.Add(imagePanel);
                 }
             }
         }
 
+        private void DeleteImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button deleteButton = sender as Button;
+            if (deleteButton != null)
+            {
+                string fileName = deleteButton.Tag as string;
+
+                // Удаляем изображение из списка _selectedImages, если оно есть
+                var image = _selectedImages.FirstOrDefault(img => img.SequenceEqual(File.ReadAllBytes(fileName)));
+                if (image != null)
+                {
+                    _selectedImages.Remove(image);
+                }
+
+                // Удаляем StackPanel с изображением и кнопкой из ItemsControl
+                var parentPanel = deleteButton.Parent as StackPanel;
+                if (parentPanel != null)
+                {
+                    ImageItemsControl.Items.Remove(parentPanel);
+                }
+            }
+        }
     }
 }

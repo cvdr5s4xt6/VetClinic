@@ -82,6 +82,9 @@
     <Compile Include="BD\MedicalRecord.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BD\Messages.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="BD\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -106,6 +109,9 @@
     <Compile Include="BD\Specialty.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BD\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="BD\TestTypes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -123,6 +129,9 @@
     <Compile Include="Pages\AdminReportsPage.xaml.cs">
       <DependentUpon>AdminReportsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -131,6 +140,12 @@
     </Compile>
     <Compile Include="Pages\NavigationAdminPage.xaml.cs">
       <DependentUpon>NavigationAdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NavigationOwnerPage.xaml.cs">
+      <DependentUpon>NavigationOwnerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NavigationVeterenarianPage.xaml.cs">
+      <DependentUpon>NavigationVeterenarianPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PetImagePage.xaml.cs">
       <DependentUpon>PetImagePage.xaml</DependentUpon>
@@ -165,6 +180,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,6 +193,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NavigationAdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NavigationOwnerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NavigationVeterenarianPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -69,6 +69,18 @@
           <Property Name="treatment" Type="nvarchar" MaxLength="50" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderId" Type="int" />
+          <Property Name="ReceiverId" Type="int" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="SenderRole" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ReceiverRole" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Owner">
           <Key>
             <PropertyRef Name="owner_id" />
@@ -96,6 +108,16 @@
           </Key>
           <Property Name="specialty_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="specialty_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TestTypes">
           <Key>
@@ -213,6 +235,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_Receiver_Veterinarian">
+          <End Role="Veterenarian" Type="Self.Veterenarian" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterenarian">
+              <PropertyRef Name="veterenarian_id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Sender_Owner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PetImages_Animal">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="PetImages" Type="Self.PetImages" Multiplicity="*" />
@@ -232,9 +280,11 @@
           <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LabTest" EntityType="Self.LabTest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PetImages" EntityType="Self.PetImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestTypes" EntityType="Self.TestTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veterenarian" EntityType="Self.Veterenarian" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Animal_AnimalType" Association="Self.FK_Animal_AnimalType">
@@ -268,6 +318,14 @@
           <AssociationSet Name="FK_MedicalRecord_Veterenarian" Association="Self.FK_MedicalRecord_Veterenarian">
             <End Role="Veterenarian" EntitySet="Veterenarian" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Receiver_Veterinarian" Association="Self.FK_Message_Receiver_Veterinarian">
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Sender_Owner" Association="Self.FK_Message_Sender_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_PetImages_Animal" Association="Self.FK_PetImages_Animal">
             <End Role="Animal" EntitySet="Animal" />
@@ -367,6 +425,7 @@
           <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Animal" Relationship="Self.FK_Animal_Owner" FromRole="Owner" ToRole="Animal" />
+          <NavigationProperty Name="Messages" Relationship="VetClinicaModel.FK_Message_Sender_Owner" FromRole="Owner" ToRole="Messages" />
         </EntityType>
         <EntityType Name="PetImages">
           <Key>
@@ -407,6 +466,7 @@
           <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Veterenarian" ToRole="Appointment" />
           <NavigationProperty Name="MedicalRecord" Relationship="Self.FK_MedicalRecord_Veterenarian" FromRole="Veterenarian" ToRole="MedicalRecord" />
+          <NavigationProperty Name="Messages" Relationship="VetClinicaModel.FK_Message_Receiver_Veterinarian" FromRole="Veterenarian" ToRole="Messages" />
         </EntityType>
         <Association Name="FK_Animal_AnimalType">
           <End Role="AnimalType" Type="Self.AnimalType" Multiplicity="1" />
@@ -564,7 +624,67 @@
             <End Role="Veterenarian" EntitySet="Veterenarian" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
+          <EntitySet Name="Messages" EntityType="VetClinicaModel.Messages" />
+          <EntitySet Name="sysdiagrams" EntityType="VetClinicaModel.sysdiagrams" />
+          <AssociationSet Name="FK_Message_Receiver_Veterinarian" Association="VetClinicaModel.FK_Message_Receiver_Veterinarian">
+            <End Role="Veterenarian" EntitySet="Veterenarian" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Sender_Owner" Association="VetClinicaModel.FK_Message_Sender_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" />
+          <Property Name="ReceiverId" Type="Int32" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SenderRole" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverRole" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Veterenarian" Relationship="VetClinicaModel.FK_Message_Receiver_Veterinarian" FromRole="Messages" ToRole="Veterenarian" />
+          <NavigationProperty Name="Owner" Relationship="VetClinicaModel.FK_Message_Sender_Owner" FromRole="Messages" ToRole="Owner" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Message_Receiver_Veterinarian">
+          <End Type="VetClinicaModel.Veterenarian" Role="Veterenarian" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VetClinicaModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterenarian">
+              <PropertyRef Name="veterenarian_id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ReceiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Sender_Owner">
+          <End Type="VetClinicaModel.Owner" Role="Owner" Multiplicity="0..1" />
+          <End Type="VetClinicaModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -691,6 +811,30 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="VetClinicaModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="ReceiverRole" ColumnName="ReceiverRole" />
+                <ScalarProperty Name="SenderRole" ColumnName="SenderRole" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VetClinicaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
