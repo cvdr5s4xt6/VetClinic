@@ -24,12 +24,12 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AdminReportsPage : Page
     {
-        private VetClinicaEntities _context;
+        private VetClinica1Entities _context;
 
         public AdminReportsPage()
         {
             InitializeComponent();
-            _context = new VetClinicaEntities();
+            _context = new VetClinica1Entities();
             LoadAppointmentsData();
             LoadMedicalTestsData();
             LoadAnimalInfoData();

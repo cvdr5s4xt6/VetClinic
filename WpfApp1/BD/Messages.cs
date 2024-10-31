@@ -15,8 +15,8 @@ namespace WpfApp1.BD
     public partial class Messages
     {
         public int MessageId { get; set; }
-        public Nullable<int> SenderId { get; set; }
-        public Nullable<int> ReceiverId { get; set; }
+        public int SenderId { get; set; }
+        public int ReceiverId { get; set; }
         public string Content { get; set; }
         public System.DateTime Timestamp { get; set; }
         public string SenderRole { get; set; }

@@ -9,5 +9,6 @@ namespace WpfApp1
     public static class CurrentUserClient
     {
         public static int OwnerId { get; set; }
+        public static int loggedInOwnerId { get; set; }
     }
 }

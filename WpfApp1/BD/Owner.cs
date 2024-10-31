@@ -18,6 +18,7 @@ namespace WpfApp1.BD
         public Owner()
         {
             this.Animal = new HashSet<Animal>();
+            this.Appointment = new HashSet<Appointment>();
             this.Messages = new HashSet<Messages>();
         }
     
@@ -31,6 +32,8 @@ namespace WpfApp1.BD
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Animal> Animal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messages> Messages { get; set; }
     }

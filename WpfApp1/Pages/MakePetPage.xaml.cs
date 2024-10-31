@@ -25,13 +25,13 @@ namespace WpfApp1.Pages
     public partial class MakePetPage : Page
     {
 
-        private VetClinicaEntities _context;
+        private VetClinica1Entities _context;
         private int _ownerId;
         public MakePetPage(int ownerId)
         {
             InitializeComponent();
             _ownerId = ownerId;
-            _context = new VetClinicaEntities();
+            _context = new VetClinica1Entities();
             LoadAnimals();
             LoadVeterinarians();
         }

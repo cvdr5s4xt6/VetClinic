@@ -45,7 +45,7 @@ namespace WpfApp1.Pages
 
         private void LoadAnimalTypeSuggestions(string query)
         {
-            using (var context = new VetClinicaEntities())
+            using (var context = new VetClinica1Entities())
             {
                 animalTypeSuggestions = context.AnimalType
                     .Where(at => at.animal_type_name.StartsWith(query))
@@ -83,7 +83,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            using (var context = new VetClinicaEntities())
+            using (var context = new VetClinica1Entities())
             {
                 // Проверяем наличие типа животного
                 string animalTypeName = AnimalTypeTextBox.Text.Trim();

@@ -24,7 +24,7 @@ namespace WpfApp1.Pages
     {
         private ObservableCollection<Messages> messages;
         private int? selectedReceiverId;
-        private static VetClinicaEntities db = new VetClinicaEntities();
+        private static VetClinica1Entities db = new VetClinica1Entities();
         private string userRole; // Роль пользователя, может быть "Veterinarian" или "Owner"
         private int? userId; // ID авторизованного пользователя
         private string loggedInUsername;
@@ -162,8 +162,8 @@ namespace WpfApp1.Pages
 
                 var newMessage = new Messages
                 {
-                    SenderId = userId,
-                    ReceiverId = selectedReceiverId,
+                    //SenderId = userId,
+                    //ReceiverId = selectedReceiverId,
                     Content = content,
                     Timestamp = DateTime.Now,
                     SenderRole = userRole,

@@ -21,7 +21,7 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
-        private VetClinicaEntities _context = new VetClinicaEntities();
+        private VetClinica1Entities _context = new VetClinica1Entities();
         private bool isPasswordVisible = false;
 
         public LoginPage()
@@ -99,6 +99,7 @@ namespace WpfApp1.Pages
             var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username);
             if (veterinarian != null && VerifyPassword(enteredPassword, veterinarian.password)) 
             {
+                MessageBox.Show($"Добро пожаловать, {veterinarian.last_name} {veterinarian.first_name}!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationVeterenarianPage navPage = new NavigationVeterenarianPage(veterinarian);
                 NavigationService.Navigate(navPage);
 

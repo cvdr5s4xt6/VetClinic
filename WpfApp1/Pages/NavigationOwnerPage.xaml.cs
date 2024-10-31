@@ -21,7 +21,7 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class NavigationOwnerPage : Page
     {
-        private VetClinicaEntities _context;
+        private VetClinica1Entities _context;
         private Owner owner; // Поле для хранения данных о владельце
 
         public NavigationOwnerPage(Owner owner)

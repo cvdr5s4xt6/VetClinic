@@ -23,6 +23,7 @@ namespace WpfApp1.BD
         public int appointment_id { get; set; }
         public int animal_id { get; set; }
         public int veterenarian_id { get; set; }
+        public int owner_id { get; set; }
         public System.DateTime appointment_date { get; set; }
         public string reason { get; set; }
         public string appointment_result { get; set; }
@@ -30,6 +31,7 @@ namespace WpfApp1.BD
         public string status { get; set; }
     
         public virtual Animal Animal { get; set; }
+        public virtual Owner Owner { get; set; }
         public virtual Veterenarian Veterenarian { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabTest> LabTest { get; set; }

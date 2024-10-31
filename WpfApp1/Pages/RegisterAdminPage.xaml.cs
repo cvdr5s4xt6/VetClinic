@@ -29,7 +29,7 @@ namespace WpfApp1.Pages
 
         private void LoadSpecialties()
         {
-            using (var context = new VetClinicaEntities())
+            using (var context = new VetClinica1Entities())
             {
                 // Получаем список специальностей
                 var specialties = context.Specialty.Select(s => new
@@ -176,7 +176,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var context = new VetClinicaEntities();
+            var context = new VetClinica1Entities();
 
             bool loginExists = context.Owner.Any(o => o.login == login) ||
                                context.Veterenarian.Any(v => v.login == login);

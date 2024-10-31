@@ -23,12 +23,12 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class PetImagePage : Page
     {
-        private VetClinicaEntities _context;
+        private VetClinica1Entities _context;
 
         public PetImagePage(int imageId)
         {
             InitializeComponent();
-            _context = new VetClinicaEntities();
+            _context = new VetClinica1Entities();
             LoadImagesByDate(DateTime.Today);
         }
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
               Title="Ветеринарная клиника" 
-        Height="800" 
+        Height="820" 
         Width="800" 
         Background="#FFFAEAEA" 
         WindowStartupLocation="CenterScreen">

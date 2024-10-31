@@ -140,7 +140,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var context = new VetClinicaEntities();
+            var context = new VetClinica1Entities();
 
             bool loginExists = context.Owner.Any(o => o.login == login) ||
                                context.Veterenarian.Any(v => v.login == login);
