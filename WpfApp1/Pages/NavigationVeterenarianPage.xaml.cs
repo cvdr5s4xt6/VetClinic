@@ -44,24 +44,6 @@ namespace WpfApp1.Pages
             AppointmentsCalendar.DisplayDateEnd = DateTime.MaxValue;
         }
 
-
-
-        private void NavigateToAddAppointmentPage(Animal selectedAnimal = null)
-        {
-            // Создаем новую страницу приема, передавая логин ветеринара
-            var appointmentPage = new AddAppointmentPage(_veterinarian.login);
-
-            // Если выбранное животное передано, устанавливаем его как выбранный элемент
-            if (selectedAnimal != null)
-            {
-                appointmentPage.PetComboBox.SelectedItem = selectedAnimal;
-            }
-
-            NavigationService.Navigate(appointmentPage);
-        }
-
-
-
         //private void AddAppointment_Click(object sender, RoutedEventArgs e)
         //{
         //    AddAppointmentPage appointmentPage = new AddAppointmentPage(_veterinarian.login);
@@ -108,12 +90,9 @@ namespace WpfApp1.Pages
 
                     if (ownerAppointments.Any())
                     {
-                        // Получаем выбранное животное
-                        Animal selectedAnimal = ownerAppointments.First().Animal; // Берем первое животное из записей
-
                         // Открываем кастомное окно с деталями приема, передавая животное и выбранную дату
-                        var detailsWindow = new AppointmentDetailsWindow(selectedAnimal, selectedDate);
-                        detailsWindow.ShowDialog(); // Открываем окно как диалог
+                        var detailsWindow = new AppointmentDetailsPage(selectedDate);
+                        NavigationService.Navigate(detailsWindow); // Открываем окно как диалог
                     }
                     else
                     {

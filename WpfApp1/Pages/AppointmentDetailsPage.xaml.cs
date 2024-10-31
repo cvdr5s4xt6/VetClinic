@@ -18,59 +18,50 @@ using WpfApp1.BD;
 namespace WpfApp1.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для AppointmentDetailsWindow.xaml
+    /// Логика взаимодействия для AppointmentDetailsPage.xaml
     /// </summary>
-    public partial class AppointmentDetailsWindow : Window
+    public partial class AppointmentDetailsPage : Page
     {
         private List<Appointment> _appointments; // Храним список записей
-        private Animal _selectedAnimal;
         private DateTime _selectedDate; // Поле для хранения выбранной даты
 
         // Конструктор для установки выбранного животного и даты
-        public AppointmentDetailsWindow(Animal selectedAnimal, DateTime selectedDate)
+        public AppointmentDetailsPage(DateTime selectedDate)
         {
             InitializeComponent();
-            _selectedAnimal = selectedAnimal;
             _selectedDate = selectedDate;
 
             // Получаем записи для выбранного животного на выбранную дату и на следующий день
-            _appointments = GetAppointmentsForAnimalOnDate(_selectedAnimal.animal_id, _selectedDate);
-            var tomorrowAppointments = GetAppointmentsForAnimalOnDate(_selectedAnimal.animal_id, _selectedDate.AddDays(1));
+
+            DateTime startOfDay = _selectedDate.Date;
+            DateTime middleDate = _selectedDate.AddDays(1);
+            DateTime endOfDay = startOfDay.AddDays(2);
+
+            _appointments = App.bd.Appointment.Where(
+                a => a.appointment_date >= startOfDay &&
+                            a.appointment_date < endOfDay &&
+                            a.veterenarian_id == CurrentUser.VeterinarianId).ToList();
+            int todayAppointmentsCount = 0;
+            int tommorowAppointmentsCount = 0;
+            foreach (Appointment appointment in _appointments)
+            {
+                if(appointment.appointment_date < middleDate)
+                {
+                    todayAppointmentsCount++;
+                }
+                else
+                {
+                    tommorowAppointmentsCount++;
+                }
+            }
 
             // Проверка количества записей на текущую и следующую дату
-            Debug.WriteLine($"Сегодня: {_appointments.Count}, Завтра: {tomorrowAppointments.Count}");
+            Debug.WriteLine($"Сегодня: {todayAppointmentsCount}, Завтра: {tommorowAppointmentsCount}");
 
-            // Объединяем списки записей
-            _appointments.AddRange(tomorrowAppointments);
             Debug.WriteLine($"Общее количество записей: {_appointments.Count}"); // Проверка общего количества
 
             // Отобразим записи в UI
             DisplayAppointments();
-        }
-
-        private List<Appointment> GetAppointmentsForAnimalOnDate(int animalId, DateTime date)
-        {
-            using (var context = new VetClinica1Entities())
-            {
-                DateTime startOfDay = date.Date;
-                DateTime endOfDay = startOfDay.AddDays(1);
-
-                var appointments = context.Appointment
-                    .Where(a => a.animal_id == animalId &&
-                                a.appointment_date >= startOfDay &&
-                                a.appointment_date < endOfDay)
-                    .ToList();
-
-                // Выводим количество записей в лог
-                Debug.WriteLine($"Записей найдено: {appointments.Count}");
-
-                return appointments;
-            }
-        }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         // Метод для отображения записей в UI
@@ -97,7 +88,7 @@ namespace WpfApp1.Pages
                     var item = new StackPanel { Orientation = Orientation.Horizontal };
                     var appointmentInfo = new TextBlock
                     {
-                        Text = $"Питомец: {_selectedAnimal.name}, Владелец: {owner.first_name} {owner.last_name}, " +
+                        Text = $"Питомец: {appointment.Animal.name}, Владелец: {owner.first_name} {owner.last_name}, " +
                                $"Ветеринар: {veterinarian.first_name} {veterinarian.last_name}, " +
                                $"Время: {appointment.appointment_date.ToShortTimeString()}",
                         Margin = new Thickness(0, 0, 5, 0)
@@ -106,10 +97,10 @@ namespace WpfApp1.Pages
                     {
                         Content = "Начать прием",
                         Margin = new Thickness(5, 0, 0, 0),
-                        Tag = appointment // Сохраняем объект записи в теге кнопки
+                        Tag = appointment, // Сохраняем объект записи в теге кнопки
+
                     };
                     startButton.Click += StartAppointmentButton_Click;
-
                     item.Children.Add(appointmentInfo);
                     item.Children.Add(startButton);
                     AppointmentsListBox.Items.Add(item);
@@ -133,20 +124,11 @@ namespace WpfApp1.Pages
             if (appointment != null)
             {
                 // Логика для открытия страницы приема с использованием информации о записи
-                var appointmentPage = new AddAppointmentPage(appointment.owner_id.ToString());
+
 
                 // Проверьте, есть ли NavigationService
-                var navigationService = NavigationService.GetNavigationService(this);
-                if (navigationService != null)
-                {
-                    navigationService.Navigate(appointmentPage);
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось перейти на страницу приема.");
-                }
+                App.mainFrame.Navigate(new AddAppointmentPage(appointment.Veterenarian.login, appointment.Animal));
 
-                this.Close(); // Закрываем текущее окно
             }
             else
             {
@@ -170,6 +152,11 @@ namespace WpfApp1.Pages
             {
                 return context.Veterenarian.FirstOrDefault(v => v.veterenarian_id == veterinarianId);
             }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

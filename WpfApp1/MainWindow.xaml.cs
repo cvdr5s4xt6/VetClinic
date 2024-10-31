@@ -25,7 +25,7 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            App.mainWindow = this;
+            App.mainFrame = MainFrame;
             MainFrame.NavigationService.Navigate(new Uri("Pages/LoginPage.xaml", UriKind.Relative));
         }
     }

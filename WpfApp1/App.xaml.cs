@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp1.BD;
 
 namespace WpfApp1
@@ -14,7 +15,7 @@ namespace WpfApp1
     /// </summary>
     public partial class App : Application
     {
-        public static MainWindow mainWindow;
+        public static Frame mainFrame;
         public static VetClinica1Entities bd = new VetClinica1Entities();
     }
 }

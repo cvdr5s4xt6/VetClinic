@@ -99,6 +99,7 @@ namespace WpfApp1.Pages
             var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username);
             if (veterinarian != null && VerifyPassword(enteredPassword, veterinarian.password)) 
             {
+                CurrentUser.VeterinarianId = veterinarian.veterenarian_id;
                 MessageBox.Show($"Добро пожаловать, {veterinarian.last_name} {veterinarian.first_name}!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationVeterenarianPage navPage = new NavigationVeterenarianPage(veterinarian);
                 NavigationService.Navigate(navPage);

@@ -24,33 +24,24 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AddAppointmentPage : Page
     {
-
+        private Animal _selectedAnimal;
         private string _username;
-        private VetClinica1Entities _context = new VetClinica1Entities();
-        public AddAppointmentPage(string username, Animal selectedAnimal = null)
+        public AddAppointmentPage(string username,Animal selectedAnimal)
         {
 
             _username = username;
             InitializeComponent();
             LoadPets();
             LoadVeterinarianData();
-            if (selectedAnimal != null)
-            {
-                PetComboBox.SelectedItem = selectedAnimal;
-            }
-
+            PetTextBox.Text = selectedAnimal.name;
+            _selectedAnimal = selectedAnimal;
         }
-    
-
 
         private void LoadPets()
         {
             try
             {
                 var pets = App.bd.Animal.ToList();
-                PetComboBox.ItemsSource = pets;
-                PetComboBox.DisplayMemberPath = "name";
-                PetComboBox.SelectedValuePath = "animal_id";
             }
             catch (Exception ex)
             {
@@ -60,13 +51,8 @@ namespace WpfApp1.Pages
 
         private void SaveVisitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PetComboBox.SelectedItem is Animal selectedPet)
-            {
-                using (var context = new VetClinica1Entities())
-                {
-                    // Проверка существования записи
-                    var existingRecord = context.MedicalRecord
-                        .FirstOrDefault(m => m.animal_id == selectedPet.animal_id && m.diagnosis == DiagnosisTextBox.Text);
+            var existingRecord = App.bd.MedicalRecord
+                        .FirstOrDefault(m => m.animal_id == _selectedAnimal.animal_id && m.diagnosis == DiagnosisTextBox.Text);
 
                     if (existingRecord != null)
                     {
@@ -81,7 +67,7 @@ namespace WpfApp1.Pages
                         {
                             test_type_name = AnalysisTextBox.Text
                         };
-                        context.TestTypes.Add(testType);
+                        App.bd.TestTypes.Add(testType);
                     }
 
                     // Проверка существования ветеринара
@@ -91,29 +77,22 @@ namespace WpfApp1.Pages
                     {
                         var medicalRecord = new MedicalRecord
                         {
-                            animal_id = selectedPet.animal_id,
+                            animal_id = _selectedAnimal.animal_id,
                             diagnosis = DiagnosisTextBox.Text,
                             treatment = PrescriptionsTextBox.Text,
                             created_at = DateTime.Now,
                             veterenarian_id = _currentVeterinarian.veterenarian_id // используем ID из _currentVeterinarian
                         };
 
-                        context.MedicalRecord.Add(medicalRecord);
-                        context.SaveChanges();
+                        App.bd.MedicalRecord.Add(medicalRecord);
+                        App.bd.SaveChanges();
                         MessageBox.Show("Запись о приеме успешно сохранена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                NavigationService.GoBack();
                     }
                     else
                     {
                         Console.WriteLine("Ошибка: Ветеринар с указанным ID не найден.");
                     }
-                }
-            }
-
-            else
-            {
-                MessageBox.Show("Пожалуйста, выберите питомца.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void ClearInputs()
@@ -121,12 +100,11 @@ namespace WpfApp1.Pages
             DiagnosisTextBox.Clear();
             PrescriptionsTextBox.Clear();
             AnalysisTextBox.Clear();
-            PetComboBox.SelectedIndex = -1;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new LoginPage());
+            NavigationService.GoBack();
             ClearInputs();
 
         }
@@ -146,29 +124,20 @@ namespace WpfApp1.Pages
             AnalysisTextBox.Clear();
         }
 
-        private void ClearPetComboBoxButton_Click(object sender, RoutedEventArgs e)
-        {
-            PetComboBox.SelectedItem = null;
-        }
-
 
         private Veterenarian GetVeterinarianByLogin(string login)
         {
-            using (var context = new VetClinica1Entities())
-            {
-                return context.Veterenarian.FirstOrDefault(v => v.login == login);
-            }
+            return App.bd.Veterenarian.FirstOrDefault(v => v.login == login);
         }
 
         private Veterenarian _currentVeterinarian; // поле класса для хранения текущего ветеринара
 
         private void LoadVeterinarianData()
         {
-            _currentVeterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == _username);
+            _currentVeterinarian = App.bd.Veterenarian.FirstOrDefault(v => v.login == _username);
 
             if (_currentVeterinarian != null)
             {
-                MessageBox.Show($"Добро пожаловать, {_currentVeterinarian.first_name} {_currentVeterinarian.last_name}!");
                 LoggedInVeterinarianTextBlock.Text = $"Врач: {_currentVeterinarian.first_name} {_currentVeterinarian.last_name}";
             }
             else

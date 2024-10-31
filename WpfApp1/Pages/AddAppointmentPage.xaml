@@ -50,24 +50,16 @@
                         CornerRadius="0" 
                         Width="150">
                     
-                    <ComboBox x:Name="PetComboBox" 
+                    <TextBox x:Name="PetTextBox" 
                         FontSize="15" 
                         Width="150" 
                         MinHeight="30" 
-                        Foreground="Black">
-                    </ComboBox>
+                        Foreground="Black"
+                             IsReadOnly="True">
+                    </TextBox>
                     
                 </Border>
-                
-                <Button Content="Очистить" 
-                        FontWeight="Light"
-                        Width="80" 
-                        Margin="5,0" 
-                        Foreground="Black" 
-                        Background="Transparent" 
-                        BorderThickness="1"
-                        BorderBrush="Black" 
-                        Click="ClearPetComboBoxButton_Click"/>
+               
 
                 <TextBlock x:Name="LoggedInVeterinarianTextBlock" 
                        Width="200"
