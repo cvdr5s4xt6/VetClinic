@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" 
       d:DesignWidth="500" 
-      Background="Silver"
+      Background="#FFFAEAEA"
       Title="LoginPage">
 
     <Grid Margin="10">

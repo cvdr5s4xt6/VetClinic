@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="650" 
       d:DesignWidth="800" 
-      Background="Silver"
+      Background="#FFFAEAEA"
       Title="История посещений">
 
     <Grid>

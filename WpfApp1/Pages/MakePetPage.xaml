@@ -8,7 +8,7 @@
       d:DesignHeight="700" 
       d:DesignWidth="700"
       Title="MakePetPage"
-      Background="Silver">
+      Background="#FFFAEAEA">
 
     <Grid Margin="10">
         <TextBlock Text="Запись на прием" 
@@ -36,10 +36,11 @@
                     <ComboBox x:Name="AnimalComboBox" 
                               VerticalAlignment="Center" 
                               MinHeight="30" 
-                              Opacity="0.1"
+                              
                               DisplayMemberPath="animal_type_name" 
                               SelectedValuePath="animal_type_id" 
-                              Foreground="Black" 
+                              Background="White" 
+                              Foreground="Black"  
                               FontSize="15"/>
                 </Border>
 
@@ -61,7 +62,7 @@
                     <ComboBox x:Name="VeterinarianComboBox" 
                               VerticalAlignment="Center" 
                               MinHeight="30" 
-                              Opacity="0.1"
+                              Background="White" 
                               Foreground="Black" 
                               FontSize="15"/>
                 </Border>
@@ -81,10 +82,9 @@
                         CornerRadius="0" 
                         Width="200">
 
-                    <ComboBox x:Name="TimeComboBox" 
+                    <ComboBox x:Name="TimeComboBox"         
                               VerticalAlignment="Center" 
-                              MinHeight="30"
-                              Opacity="0.1">
+                              MinHeight="30">
 
                         <ComboBoxItem Content="09:00"/>
                         <ComboBoxItem Content="10:00"/>

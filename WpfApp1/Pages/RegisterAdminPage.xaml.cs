@@ -24,6 +24,25 @@ namespace WpfApp1.Pages
         public RegisterAdminPage()
         {
             InitializeComponent();
+            LoadSpecialties();
+        }
+
+        private void LoadSpecialties()
+        {
+            using (var context = new VetClinicaEntities())
+            {
+                // Получаем список специальностей
+                var specialties = context.Specialty.Select(s => new
+                {
+                    s.specialty_id,
+                    s.specialty_name
+                }).ToList();
+
+                // Устанавливаем источник данных для ComboBox
+                SpecialtyComboBox.ItemsSource = specialties;
+                SpecialtyComboBox.DisplayMemberPath = "specialty_name"; // Что будет отображаться
+                SpecialtyComboBox.SelectedValuePath = "specialty_id"; // Что будет использоваться как значение
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -133,10 +152,22 @@ namespace WpfApp1.Pages
                 string.IsNullOrWhiteSpace(email) ||
                 string.IsNullOrWhiteSpace(password) ||
                 string.IsNullOrWhiteSpace(login))
+               
+
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+
+            if (SpecialtyComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите специальность.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            int selectedSpecialtyId = (int)SpecialtyComboBox.SelectedValue;
+
 
             string selectedRole = ((ComboBoxItem)RoleComboBox.SelectedItem)?.Content.ToString();
             if (string.IsNullOrEmpty(selectedRole))
@@ -190,7 +221,8 @@ namespace WpfApp1.Pages
                     phone_number = phone,
                     email = email,
                     login = login,
-                    password = password
+                    password = password,
+                    specialty_id = selectedSpecialtyId
                 };
                 context.Veterenarian.Add(veterenarian);
             

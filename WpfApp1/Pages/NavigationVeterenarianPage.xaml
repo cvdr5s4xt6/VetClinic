@@ -7,38 +7,60 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="800"
-      Background="Silver"
+      Background="#FFFAEAEA"
       Title="Страница навигации ветеринара">
-
+    
     <Grid>
+
+        <TextBlock Text="Страница навигации ветеринара" 
+                   FontSize="24" 
+                   FontWeight="Light" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" 
+                   Margin="0,20,0,0"/>
+
         <StackPanel VerticalAlignment="Center" 
-              HorizontalAlignment="Center">
+                    HorizontalAlignment="Center">
 
-            <Button Content="Проведение приема питомцев" 
-              Width="200" 
-              Height="50" 
-              Click="AddAppointment_Click"/>
 
-            <Button Content="Просмотр всех записей" 
-              Width="200" 
-              Height="50" 
-              Margin="0,20,0,0" 
-              Click="A_Click"/>
+            <Button Content="Запись питомца на прием" 
+                    FontSize="15" 
+                    FontWeight="Light" 
+                    Width="200" 
+                    Height="50" 
+                    Margin="0,10,0,0" 
+                    Foreground="Black" 
+                    BorderBrush="Black" 
+                    Background="Transparent" 
+                    BorderThickness="1" 
+                    Click="AddAppointment_Click"/>
 
-            <Button Content="Чат с клиентом" 
+            <Button Content="Чат с клиентами" 
+                    FontSize="15" 
+                    FontWeight="Light" 
                     Width="200" 
                     Height="50" 
                     Margin="0,20,0,0" 
+                    Foreground="Black" 
+                    BorderBrush="Black" 
+                    Background="Transparent" 
+                    BorderThickness="1" 
                     Click="Chat_Click"/>
 
             <Button Content="Назад" 
-            Width="200" 
-            Height="50" 
-            Margin="0,20,0,0" 
-            Click="BackButton_Click"/>
+                    FontSize="15" 
+                    FontWeight="Light" 
+                    Width="200" 
+                    Height="50" 
+                    Margin="0,20,0,0" 
+                    Foreground="Black" 
+                    BorderBrush="Black" 
+                    Background="Transparent" 
+                    BorderThickness="1" 
+                    Click="BackButton_Click"/>
 
         </StackPanel>
 
     </Grid>
-    
+
 </Page>

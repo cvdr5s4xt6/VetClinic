@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" 
       Width="800" 
-      Background="Silver"
+      Background="#FFFAEAEA"
       Title="RegisterUserPage">
 
     <Grid x:Name="MainGrid">
@@ -238,10 +238,10 @@
             <StackPanel Orientation="Horizontal" 
                         Margin="0,10">
 
-                <TextBlock Text="Роль:" 
+                <TextBlock Text="Пользователь:" 
                        Width="100" 
                        VerticalAlignment="Center" 
-                       FontSize="17" 
+                       FontSize="14" 
                        FontWeight="Light" 
                        Foreground="Black"/>
 
@@ -253,18 +253,13 @@
                     <ComboBox x:Name="RoleComboBox"
                               Height="30"
                               FontSize="15" 
-                              Width="200"  
-                              Opacity="0.3">
+                              Width="200">
 
 
-                        <ComboBoxItem Background="Silver" 
-                              BorderBrush="Silver" 
-                              Opacity="0.8"    
+                        <ComboBoxItem
                               Content="Клиент"/>
 
-                        <ComboBoxItem Background="Silver" 
-                              BorderBrush="Silver" 
-                              Opacity="0.8" 
+                        <ComboBoxItem
                               Content="Ветеринар"/>
 
                     </ComboBox>

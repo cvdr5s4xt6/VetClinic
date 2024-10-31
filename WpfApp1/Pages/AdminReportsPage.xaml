@@ -8,7 +8,7 @@
       Title="Отчеты администратора" 
       Height="450" 
       Width="800"
-      Background="Silver">
+      Background="#FFFAEAEA">
     <Grid>
 
         <TextBlock Grid.Row="0" 

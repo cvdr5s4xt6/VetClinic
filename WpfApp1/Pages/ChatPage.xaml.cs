@@ -27,6 +27,8 @@ namespace WpfApp1.Pages
         private static VetClinicaEntities db = new VetClinicaEntities();
         private string userRole; // Роль пользователя, может быть "Veterinarian" или "Owner"
         private int? userId; // ID авторизованного пользователя
+        private string loggedInUsername;
+        private Messages selectedMessage;
 
         public ChatPage(string userRole, int userId, string login)
         {
@@ -34,13 +36,16 @@ namespace WpfApp1.Pages
             messages = new ObservableCollection<Messages>();
             MessagesListBox.ItemsSource = messages;
 
+            this.userRole = userRole; // Сохраняем роль пользователя
+            this.userId = userId; // Сохраняем ID пользователя
+            loggedInUsername = login; // Сохраняем имя пользователя
             AuthenticateUser(login);
             SetupPage();
         }
 
         private void AuthenticateUser(string login)
         {
-            var owner = db.Owner.FirstOrDefault(o => o.login == login );
+            var owner = db.Owner.FirstOrDefault(o => o.login == login);
             if (owner != null)
             {
                 userRole = "Owner";
@@ -74,14 +79,14 @@ namespace WpfApp1.Pages
         private void LoadClients()
         {
             UserComboBox.ItemsSource = db.Owner.ToList();
-            UserComboBox.DisplayMemberPath = "first_name"; 
+            UserComboBox.DisplayMemberPath = "first_name";
             UserComboBox.SelectedValuePath = "owner_id";
         }
 
         private void LoadVeterinarians()
         {
             UserComboBox.ItemsSource = db.Veterenarian.ToList();
-            UserComboBox.DisplayMemberPath = "first_name"; 
+            UserComboBox.DisplayMemberPath = "first_name";
             UserComboBox.SelectedValuePath = "veterenarian_id";
         }
 
@@ -137,21 +142,40 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var newMessage = new Messages
+            if (selectedMessage != null) // Проверяем, редактируем ли мы сообщение
             {
-                SenderId = userId,
-                ReceiverId = selectedReceiverId,
-                Content = content,
-                Timestamp = DateTime.Now,
-                SenderRole = userRole,
-                ReceiverRole = userRole == "Owner" ? "Veterinarian" : "Owner"
-            };
+                // Проверяем, является ли текущий пользователь отправителем сообщения
+                if (selectedMessage.SenderId == userId)
+                {
+                    selectedMessage.Content = content; // Обновляем содержимое сообщения
+                    db.SaveChanges(); // Сохраняем изменения в базе данных
+                    MessageTextBox.Clear(); // Очищаем текстовое поле
+                    selectedMessage = null; // Сбрасываем выбранное сообщение
+                }
+                else
+                {
+                    MessageBox.Show("Вы не можете редактировать это сообщение.");
+                }
+            }
+            else
+            {
 
-            db.Messages.Add(newMessage);
-            db.SaveChanges();
-            messages.Add(newMessage);
+                var newMessage = new Messages
+                {
+                    SenderId = userId,
+                    ReceiverId = selectedReceiverId,
+                    Content = content,
+                    Timestamp = DateTime.Now,
+                    SenderRole = userRole,
+                    ReceiverRole = userRole == "Owner" ? "Veterinarian" : "Owner"
+                };
 
-            MessageTextBox.Clear();
+                db.Messages.Add(newMessage);
+                db.SaveChanges();
+                messages.Add(newMessage);
+
+                MessageTextBox.Clear();
+            }
         }
 
         private void DeleteChatHistory_Click(object sender, RoutedEventArgs e)
@@ -181,14 +205,55 @@ namespace WpfApp1.Pages
             NavigationService.GoBack();
         }
 
-        //private string _veterinarianName; // Имя ветеринара
-        //private string _veterinarianSurname; // Фамилия ветеринара
-        //private void SendMessage(string message)
-        //{
-        //    // Логика для отправки сообщения
-        //    string fullMessage = $"{_veterinarianName} {_veterinarianSurname}: {message}";
-        //    // Отправить fullMessage в чат
-        //}
+        // Метод для удаления конкретного сообщения
+        private void DeleteMessage_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int MessageId) // Получаем ID сообщения из кнопки
+            {
+                var messageToDelete = db.Messages.Find(MessageId); // Ищем сообщение в базе данных
+                if (messageToDelete != null)
+                {
+                    // Проверяем, является ли текущий пользователь отправителем сообщения
+                    if (messageToDelete.SenderId == userId)
+                    {
+                        db.Messages.Remove(messageToDelete); // Удаляем сообщение
+                        db.SaveChanges(); // Сохраняем изменения
+                        messages.Remove(messageToDelete); // Удаляем сообщение из коллекции
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы не можете удалить это сообщение.");
+                    }
+                }
+            }
+        }
+
+
+        // Метод для редактирования сообщения
+        private void EditMessage_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int MessageId) // Получаем ID сообщения из кнопки
+            {
+                var messageToEdit = db.Messages.Find(MessageId); // Ищем сообщение в базе данных
+                if (messageToEdit != null)
+                {
+                    // Проверяем, является ли текущий пользователь отправителем сообщения
+                    if (messageToEdit.SenderId == userId)
+                    {
+                        selectedMessage = messageToEdit; // Устанавливаем выбранное сообщение для редактирования
+                        MessageTextBox.Text = selectedMessage.Content; // Загружаем содержимое сообщения в текстовое поле для редактирования
+                        MessageTextBox.Focus(); // Устанавливаем фокус на текстовое поле
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы не можете редактировать это сообщение.");
+                    }
+                }
+            }
+        }
+
+
+
 
     }
 }

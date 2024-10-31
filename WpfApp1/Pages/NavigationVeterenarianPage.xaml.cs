@@ -51,9 +51,9 @@ namespace WpfApp1.Pages
             return;
         }
 
-        private void A_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new VeterinaryRecordsPage());
-        }
+        //private void A_Click(object sender, RoutedEventArgs e)
+        //{
+        //    NavigationService.Navigate(new VeterinaryRecordsPage());
+        //}
     }
 }

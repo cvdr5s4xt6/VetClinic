@@ -7,8 +7,10 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="800"
-      Background="Silver"
+      Background="#FFFAEAEA"
       Title="Чат">
+
+    
 
     <Grid>
         <Button Content="Назад" 
@@ -32,11 +34,20 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Sender.Username}" 
                                    FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Content}" 
-                                   TextWrapping="Wrap"/>
+                        <Border Background="{Binding Sender.Username}">
+                            <TextBlock Text="{Binding Content}" 
+                                       TextWrapping="Wrap"/>
+                        </Border>
                         <TextBlock Text="{Binding Timestamp, StringFormat={}{0:HH:mm dd.MM.yyyy}}" 
                                    FontSize="10" 
                                    Foreground="Gray"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            
+                            <Button Content="✏️" Click="EditMessage_Click" Tag="{Binding MessageId}" 
+                                    />
+                            <Button Content="🗑️" Click="DeleteMessage_Click" Tag="{Binding MessageId}" />
+                            
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -61,5 +72,4 @@
                 HorizontalAlignment="Right" 
                 Click="SendMessageButton_Click"/>
     </Grid>
-    
 </Page>

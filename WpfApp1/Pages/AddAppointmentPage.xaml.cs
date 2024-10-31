@@ -25,18 +25,17 @@ namespace WpfApp1.Pages
     public partial class AddAppointmentPage : Page
     {
 
-        public DateTime visit_date { get; set; }
-
         private string _username;
         private VetClinicaEntities _context = new VetClinicaEntities();
         public AddAppointmentPage(string username)
         {
-            visit_date = DateTime.Now;
             _username = username;
             InitializeComponent();
             LoadPets();
             LoadVeterinarianData();
         }
+
+
         private void LoadPets()
         {
             try
@@ -77,19 +76,27 @@ namespace WpfApp1.Pages
                         context.TestTypes.Add(testType);
                     }
 
-                    var medicalRecord = new MedicalRecord
+                    var veterenarianExists = context.Veterenarian.Any(v => v.veterenarian_id == CurrentUser.VeterinarianId);
+
+                    if (veterenarianExists)
                     {
-                        animal_id = selectedPet.animal_id,
-                        diagnosis = DiagnosisTextBox.Text,
-                        treatment = PrescriptionsTextBox.Text,
-                        
-                        veterenarian_id = CurrentUser.VeterinarianId
-                    };
+                        var medicalRecord = new MedicalRecord
+                        {
+                            animal_id = selectedPet.animal_id,
+                            diagnosis = DiagnosisTextBox.Text,
+                            treatment = PrescriptionsTextBox.Text,
+                            created_at = DateTime.Now,
+                            veterenarian_id = CurrentUser.VeterinarianId
+                        };
 
-                    context.MedicalRecord.Add(medicalRecord);
-                    context.SaveChanges();
+                        context.MedicalRecord.Add(medicalRecord);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка: Ветеринар с указанным ID не найден.");
+                    }
 
-                    MessageBox.Show("Прием успешно сохранен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             else

@@ -99,15 +99,9 @@ namespace WpfApp1.Pages
             var veterinarian = _context.Veterenarian.FirstOrDefault(v => v.login == username);
             if (veterinarian != null && VerifyPassword(enteredPassword, veterinarian.password)) 
             {
-                
-                // Создаем страницы с передачей необходимых параметров
-                //AddAppointmentPage appointmentPage = new AddAppointmentPage(username);
-                //ChatPage chatPage = new ChatPage("Veterinarian", veterinarian.veterenarian_id, veterinarian.login);
-                // Создаем экземпляр NavigationVeterenarianPage с передачей данных о ветеринаре
                 NavigationVeterenarianPage navPage = new NavigationVeterenarianPage(veterinarian);
                 NavigationService.Navigate(navPage);
-                //NavigationService.Navigate(appointmentPage); // Переход на AddAppointmentPage
-                //NavigationService.Navigate(chatPage); // Переход на ChatPage, если нужно
+
                 return;
             }
 
@@ -134,7 +128,6 @@ namespace WpfApp1.Pages
             LogPassPanel.Visibility = Visibility.Collapsed;
             var registerPage = new RegisterUserPage();
             registerPage.IsAdminMode = false;  // Устанавливаем режим для клиента
-            //registerPage.IsReturnButtonVisible = false; // Скрываем кнопку
             NavigationService.Navigate(registerPage);
         }
     }

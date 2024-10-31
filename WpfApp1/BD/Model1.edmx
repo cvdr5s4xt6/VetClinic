@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище VetClinicaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="admin_id" />
@@ -138,6 +138,7 @@
           <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="isvet" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Animal_AnimalType">
           <End Role="AnimalType" Type="Self.AnimalType" Multiplicity="1" />
@@ -332,8 +333,7 @@
             <End Role="PetImages" EntitySet="PetImages" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VetClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -492,6 +492,7 @@
           <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Veterenarian" FromRole="Veterenarian" ToRole="Appointment" />
           <NavigationProperty Name="MedicalRecord" Relationship="Self.FK_MedicalRecord_Veterenarian" FromRole="Veterenarian" ToRole="MedicalRecord" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Receiver_Veterinarian" FromRole="Veterenarian" ToRole="Messages" />
+          <Property Name="isvet" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Animal_AnimalType">
           <End Role="AnimalType" Type="Self.AnimalType" Multiplicity="1" />
@@ -828,6 +829,7 @@
           <EntitySetMapping Name="Veterenarian">
             <EntityTypeMapping TypeName="VetClinicaModel.Veterenarian">
               <MappingFragment StoreEntitySet="Veterenarian">
+                <ScalarProperty Name="isvet" ColumnName="isvet" />
                 <ScalarProperty Name="veterenarian_id" ColumnName="veterenarian_id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="last_name" ColumnName="last_name" />
