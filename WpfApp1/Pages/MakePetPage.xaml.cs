@@ -107,6 +107,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
+            
             if (selectedDate < new DateTime(1753, 1, 1) || selectedDate > new DateTime(9999, 12, 31))
             {
                 MessageBox.Show("Дата приема выходит за пределы допустимого диапазона.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -153,6 +154,7 @@ namespace WpfApp1.Pages
 
             var appointment = new Appointment
             {
+                owner_id = CurrentUserClient.OwnerId,
                 animal_id = selectedAnimalId,
                 veterenarian_id = selectedVeterinarianId,
                 appointment_date = appointmentDateTime,
@@ -164,6 +166,7 @@ namespace WpfApp1.Pages
             _context.SaveChanges();
 
             MessageBox.Show("Животное успешно записано на прием!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            NavigationService.GoBack();
         }
 
         private void ClearAnalysisButton_Click(object sender, RoutedEventArgs e)

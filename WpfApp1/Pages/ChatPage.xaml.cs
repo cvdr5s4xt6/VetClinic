@@ -162,8 +162,8 @@ namespace WpfApp1.Pages
 
                 var newMessage = new Messages
                 {
-                    //SenderId = userId,
-                    //ReceiverId = selectedReceiverId,
+                    SenderId = (int)userId,
+                    ReceiverId = (int)selectedReceiverId,
                     Content = content,
                     Timestamp = DateTime.Now,
                     SenderRole = userRole,
@@ -175,7 +175,9 @@ namespace WpfApp1.Pages
                 messages.Add(newMessage);
 
                 MessageTextBox.Clear();
+                
             }
+            LoadMessages();
         }
 
         private void DeleteChatHistory_Click(object sender, RoutedEventArgs e)
@@ -242,7 +244,7 @@ namespace WpfApp1.Pages
                     {
                         selectedMessage = messageToEdit; // Устанавливаем выбранное сообщение для редактирования
                         MessageTextBox.Text = selectedMessage.Content; // Загружаем содержимое сообщения в текстовое поле для редактирования
-                        MessageTextBox.Focus(); // Устанавливаем фокус на текстовое поле
+                       
                     }
                     else
                     {

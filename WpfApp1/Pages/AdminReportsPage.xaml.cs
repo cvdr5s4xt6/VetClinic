@@ -94,10 +94,8 @@ namespace WpfApp1.Pages
 
             if (printDialog.ShowDialog() == true)
             {
-                // Создаем объект Visual для печати
                 var printVisual = new StackPanel();
 
-                // Заголовок страницы печати
                 var headerTextBlock = new TextBlock
                 {
                     Text = "Отчеты о работе ветеринара",
@@ -151,13 +149,11 @@ namespace WpfApp1.Pages
                         }
                     }
 
-                    // Печать созданного Visual
                     printDialog.PrintVisual(printVisual, "Отчеты о работе ветеринара");
                 }
             }
         }
 
-        // Вспомогательный метод для поиска элемента в визуальной иерархии
         private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)

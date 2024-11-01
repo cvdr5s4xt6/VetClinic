@@ -75,7 +75,7 @@ namespace WpfApp1.Pages
 
                 // Загружаем записи на выбранный день
                 var appointments = _context.MedicalRecord
-                    .Where(record => record.created_at >= startOfDay && record.created_at < endOfDay)
+                    .Where(record =>record.created_at < endOfDay)
                     .ToList();
 
                 // Проверка на наличие записей

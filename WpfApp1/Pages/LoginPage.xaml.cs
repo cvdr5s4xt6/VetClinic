@@ -91,6 +91,7 @@ namespace WpfApp1.Pages
             var owner = _context.Owner.FirstOrDefault(o => o.login == username);
             if (owner != null && VerifyPassword(enteredPassword, owner.password)) 
             {
+                CurrentUserClient.OwnerId = owner.owner_id;
                 MessageBox.Show($"Добро пожаловать, {owner.last_name} {owner.first_name}!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.Navigate(new NavigationOwnerPage(owner));
                 return;

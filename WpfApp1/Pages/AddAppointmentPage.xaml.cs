@@ -87,7 +87,7 @@ namespace WpfApp1.Pages
                         App.bd.MedicalRecord.Add(medicalRecord);
                         App.bd.SaveChanges();
                         MessageBox.Show("Запись о приеме успешно сохранена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationService.GoBack();
+                        NavigationService.GoBack();
                     }
                     else
                     {
