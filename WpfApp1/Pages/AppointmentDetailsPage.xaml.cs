@@ -22,16 +22,14 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AppointmentDetailsPage : Page
     {
-        private List<Appointment> _appointments; // Храним список записей
-        private DateTime _selectedDate; // Поле для хранения выбранной даты
+        private List<Appointment> _appointments; 
+        private DateTime _selectedDate; 
 
         // Конструктор для установки выбранного животного и даты
         public AppointmentDetailsPage(DateTime selectedDate)
         {
             InitializeComponent();
             _selectedDate = selectedDate;
-
-            // Получаем записи для выбранного животного на выбранную дату и на следующий день
 
             DateTime startOfDay = _selectedDate.Date;
             DateTime middleDate = _selectedDate.AddDays(1);
@@ -55,33 +53,26 @@ namespace WpfApp1.Pages
                 }
             }
 
-            // Проверка количества записей на текущую и следующую дату
             Debug.WriteLine($"Сегодня: {todayAppointmentsCount}, Завтра: {tommorowAppointmentsCount}");
-
-            Debug.WriteLine($"Общее количество записей: {_appointments.Count}"); // Проверка общего количества
-
-            // Отобразим записи в UI
+            Debug.WriteLine($"Общее количество записей: {_appointments.Count}"); 
             DisplayAppointments();
         }
 
-        // Метод для отображения записей в UI
         private void DisplayAppointments()
         {
-            AppointmentsListBox.Items.Clear(); // Очистка списка перед заполнением
+            AppointmentsListBox.Items.Clear(); 
 
             if (_appointments != null && _appointments.Any())
             {
                 foreach (var appointment in _appointments)
                 {
-                    // Получаем владельца и ветеринара, связанного с записью
                     var owner = GetOwnerById(appointment.owner_id);
                     var veterinarian = GetVeterinarianById(appointment.veterenarian_id);
 
-                    // Проверка на null для владельца и ветеринара
                     if (owner == null || veterinarian == null)
                     {
                         Debug.WriteLine($"Владелец или ветеринар не найден для записи ID: {appointment.appointment_id}");
-                        continue; // Пропустить эту запись, если данные отсутствуют
+                        continue; 
                     }
 
                     // Создаем элемент для отображения записи
@@ -97,7 +88,7 @@ namespace WpfApp1.Pages
                     {
                         Content = "Начать прием",
                         Margin = new Thickness(5, 0, 0, 0),
-                        Tag = appointment, // Сохраняем объект записи в теге кнопки
+                        Tag = appointment, 
 
                     };
                     startButton.Click += StartAppointmentButton_Click;
@@ -114,21 +105,14 @@ namespace WpfApp1.Pages
             }
         }
 
-
-        // Обработчик нажатия кнопки "Начать прием"
         private void StartAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var appointment = button.Tag as Appointment; // Получаем объект записи
+            var appointment = button.Tag as Appointment;
 
             if (appointment != null)
             {
-                // Логика для открытия страницы приема с использованием информации о записи
-
-
-                // Проверьте, есть ли NavigationService
                 App.mainFrame.Navigate(new AddAppointmentPage(appointment.Veterenarian.login, appointment.Animal));
-
             }
             else
             {
@@ -136,7 +120,6 @@ namespace WpfApp1.Pages
             }
         }
 
-        // Метод для получения владельца по его ID
         private Owner GetOwnerById(int ownerId)
         {
             using (var context = new VetClinica1Entities())
@@ -145,7 +128,6 @@ namespace WpfApp1.Pages
             }
         }
 
-        // Метод для получения ветеринара по его ID
         private Veterenarian GetVeterinarianById(int veterinarianId)
         {
             using (var context = new VetClinica1Entities())

@@ -142,8 +142,7 @@ namespace WpfApp1.Pages
                 {
                     animal_id = selectedAnimalId,
                     image = image,
-                    created_at = DateTime.Now  // Явно указываем текущую дату
-                    // Можно добавить описание, если нужно
+                    created_at = DateTime.Now
                 };
 
                 _context.PetImages.Add(animalImage);
@@ -177,13 +176,13 @@ namespace WpfApp1.Pages
             LoadAnimals();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
 
-            AddPetPage addPetPage = new AddPetPage();
-            addPetPage.PetAdded += OnPetAdded;
-            NavigationService.Navigate(addPetPage);
-        }
+        //    AddPetPage addPetPage = new AddPetPage();
+        //    addPetPage.PetAdded += OnPetAdded;
+        //    NavigationService.Navigate(addPetPage);
+        //}
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

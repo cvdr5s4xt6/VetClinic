@@ -213,7 +213,7 @@
                 BorderThickness="1" 
                 Foreground="Black" />
 
-        <Button Content="Добавить животное" 
+        <!--<Button Content="Добавить животное" 
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Center" 
                 Width="150" 
@@ -223,7 +223,7 @@
                 Background="Transparent" 
                 BorderBrush="Black" 
                 BorderThickness="1" 
-                Foreground="Black" />
+                Foreground="Black" />-->
 
         <Button Content="Назад" 
                 VerticalAlignment="Top" 
